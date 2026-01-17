@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useScrollPast } from "@/hooks/useScrollAnimation";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/shared/Logo";
 import { mainNavigation } from "@/content/navigation";
 import { MobileMenu } from "./MobileMenu";
 
@@ -37,23 +38,19 @@ export function Header({ transparent = false }: HeaderProps) {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isTransparent ? "bg-transparent" : "bg-white shadow-md"
+          isTransparent
+            ? "bg-transparent"
+            : "glass-header shadow-sm"
         )}
       >
         <nav className="container mx-auto px-4 lg:px-8">
           <div className="flex h-16 items-center justify-between lg:h-20">
             {/* Logo */}
-            <Link
-              href="/"
-              className={cn(
-                "text-2xl font-display font-bold transition-colors",
-                isTransparent
-                  ? "text-white hover:text-green-100"
-                  : "text-green-700 hover:text-green-600"
-              )}
-            >
-              FoodPulse
-            </Link>
+            <Logo
+              variant={isTransparent ? "white" : "default"}
+              size="xl"
+              showText={false}
+            />
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
@@ -165,22 +162,22 @@ function NavItem({ item, isTransparent }: NavItemProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 pt-2 w-64">
+        <div className="absolute top-full left-0 pt-2 w-72">
           {/* Invisible bridge area to prevent dropdown from closing when moving cursor */}
           <div className="absolute top-0 left-0 right-0 h-2" />
-          <div className="rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+          <div className="glass-dropdown rounded-xl shadow-xl border border-white/20">
             <div className="p-2">
               {item.children.map((child) => (
                 <Link
                   key={child.href}
                   href={child.href}
-                  className="block rounded-md px-4 py-3 hover:bg-green-50 transition-colors"
+                  className="block rounded-lg px-4 py-3 hover:bg-white/10 hover:backdrop-blur-md transition-all duration-200"
                 >
-                  <div className="font-medium text-neutral-900">
+                  <div className="font-semibold text-neutral-900">
                     {child.label}
                   </div>
                   {child.description && (
-                    <div className="text-sm text-neutral-600">
+                    <div className="text-sm text-neutral-700 mt-0.5">
                       {child.description}
                     </div>
                   )}

@@ -25,6 +25,16 @@ export const SOCIAL_LINKS = {
   pinterest: "https://pinterest.com/foodpulse",
   youtube: "https://youtube.com/@foodpulse",
   twitter: "@foodpulse",
+  linkedin: "https://linkedin.com/company/foodpulseco",
+} as const;
+
+// Founder information
+export const FOUNDER = {
+  name: "Etornam C. Tsyawo",
+  title: "Food Systems Research Engineer",
+  website: "https://ectsyawo.com/",
+  linkedin: "https://www.linkedin.com/in/etornam-c-tsyawo/",
+  buyMeACoffee: "https://foodpulse.kit.com/products/cup-of-tea",
 } as const;
 
 // Content reading settings

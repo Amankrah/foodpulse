@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Instagram, Youtube } from "lucide-react";
 import { Container } from "./Container";
+import { Logo } from "@/components/shared/Logo";
 import { footerNavigation, legalNavigation } from "@/content/navigation";
 import { SITE_NAME, CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/constants";
 
@@ -11,6 +12,17 @@ export function Footer() {
     <footer className="bg-green-800 text-white">
       {/* Main Footer Content */}
       <Container className="py-12 lg:py-16">
+        {/* Logo Section */}
+        <div className="mb-8 pb-8 border-b border-green-700 flex items-start gap-4">
+          <Logo variant="white" size="xl" showText={false} />
+          <div>
+            <h2 className="text-2xl font-display font-bold text-white mb-2">FoodPulse</h2>
+            <p className="text-green-100 max-w-md">
+              Your hub for all things food. Evidence-based nutrition science, practical tips, and insights into food systems.
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Explore */}
           <div>
