@@ -103,9 +103,9 @@ export const footerNavigation = {
 
 // Legal navigation (bottom of footer)
 export const legalNavigation: NavItem[] = [
-  { label: "Privacy Policy", href: "/legal/privacy-policy" },
-  { label: "Terms of Use", href: "/legal/terms-of-use" },
-  { label: "Cookie Policy", href: "/legal/cookie-policy" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Use", href: "/terms" },
+  { label: "Cookie Policy", href: "/cookies" },
 ];
 
 // Mobile navigation (hamburger menu)
