@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { Clock, ChefHat } from "lucide-react";
 import {
   Card,
   CardImage,
@@ -10,10 +10,11 @@ import {
 } from "@/components/ui/Card";
 import { CategoryBadge } from "@/components/ui/Badge";
 import { formatDate } from "@/lib/utils";
-import type { Article, CardVariant } from "@/types";
+import type { ArticleListItem } from "@/lib/sanity";
+import type { CardVariant } from "@/types";
 
 interface ArticleCardProps {
-  article: Article;
+  article: ArticleListItem;
   variant?: CardVariant;
   showExcerpt?: boolean;
   showDate?: boolean;
@@ -27,14 +28,14 @@ export function ArticleCard({
   showDate = false,
   showAuthor = false,
 }: ArticleCardProps) {
-  const articleUrl = `/articles/${article.category}/${article.slug}`;
+  const articleUrl = `/articles/${article.category.slug}/${article.slug}`;
 
   return (
     <Link href={articleUrl} className="group block">
       <Card variant={variant} padding="none" hover>
         {/* Image */}
         <CardImage
-          src={article.image.src}
+          src={article.image.url}
           alt={article.image.alt}
           aspectRatio="16/10"
           className="rounded-t-xl"
@@ -44,8 +45,14 @@ export function ArticleCard({
         <div className="p-5 lg:p-6">
           <CardHeader className="mb-0">
             {/* Category Badge */}
-            <div className="mb-3">
-              <CategoryBadge category={article.category} />
+            <div className="mb-3 flex items-center gap-2">
+              <CategoryBadge category={article.category.slug} />
+              {article.isRecipe && (
+                <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
+                  <ChefHat className="h-3 w-3" />
+                  Recipe
+                </span>
+              )}
             </div>
 
             {/* Title */}
@@ -61,13 +68,18 @@ export function ArticleCard({
 
           {/* Footer Meta */}
           <CardFooter className="mt-4 text-sm text-neutral-500">
-            {/* Read Time */}
-            {article.readTime && (
+            {/* Read Time or Recipe Time */}
+            {article.isRecipe && article.recipePreview ? (
               <div className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
-                <span>{article.readTime} min read</span>
+                <span>{article.recipePreview.prepTime + (article.recipePreview.cookTime || 0)} min</span>
               </div>
-            )}
+            ) : article.readingTime ? (
+              <div className="flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                <span>{article.readingTime} min read</span>
+              </div>
+            ) : null}
 
             {/* Date */}
             {showDate && article.publishedAt && (
@@ -86,11 +98,11 @@ export function ArticleCard({
 }
 
 interface FeaturedArticleCardProps {
-  article: Article;
+  article: ArticleListItem;
 }
 
 export function FeaturedArticleCard({ article }: FeaturedArticleCardProps) {
-  const articleUrl = `/articles/${article.category}/${article.slug}`;
+  const articleUrl = `/articles/${article.category.slug}/${article.slug}`;
 
   return (
     <Link href={articleUrl} className="group block">
@@ -99,12 +111,18 @@ export function FeaturedArticleCard({ article }: FeaturedArticleCardProps) {
           {/* Image */}
           <div className="relative h-64 lg:h-full">
             <img
-              src={article.image.src}
+              src={article.image.url}
               alt={article.image.alt}
               className="h-full w-full object-cover rounded-tl-xl lg:rounded-l-xl lg:rounded-tr-none transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="absolute top-4 left-4">
-              <CategoryBadge category={article.category} />
+            <div className="absolute top-4 left-4 flex gap-2">
+              <CategoryBadge category={article.category.slug} />
+              {article.isRecipe && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
+                  <ChefHat className="h-4 w-4" />
+                  Recipe
+                </span>
+              )}
             </div>
           </div>
 
@@ -121,12 +139,17 @@ export function FeaturedArticleCard({ article }: FeaturedArticleCardProps) {
             </p>
 
             <div className="flex items-center gap-4 text-sm text-neutral-500">
-              {article.readTime && (
+              {article.isRecipe && article.recipePreview ? (
                 <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
-                  <span>{article.readTime} min read</span>
+                  <span>{article.recipePreview.prepTime + (article.recipePreview.cookTime || 0)} min</span>
                 </div>
-              )}
+              ) : article.readingTime ? (
+                <div className="flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  <span>{article.readingTime} min read</span>
+                </div>
+              ) : null}
               {article.author && <span>By {article.author.name}</span>}
             </div>
           </div>

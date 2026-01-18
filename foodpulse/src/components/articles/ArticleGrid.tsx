@@ -1,9 +1,9 @@
 import { ArticleCard, FeaturedArticleCard } from "./ArticleCard";
-import type { Article } from "@/types";
+import type { ArticleListItem } from "@/lib/sanity";
 
 interface ArticleGridProps {
-  articles: Article[];
-  featured?: Article;
+  articles: ArticleListItem[];
+  featured?: ArticleListItem;
   columns?: 2 | 3 | 4;
   showExcerpt?: boolean;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/layout/Section";
 import { ArticleGrid } from "@/components/articles/ArticleGrid";
 import { SITE_NAME } from "@/lib/constants";
+import { getArticles, getFeaturedArticles } from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: `All Articles | ${SITE_NAME}`,
@@ -9,10 +10,15 @@ export const metadata: Metadata = {
     "Explore all our evidence-based articles on food systems, nutrition, healthy eating, and practical food tips.",
 };
 
-export default function AllArticlesPage() {
-  // TODO: Fetch articles from CMS or API
-  const articles = [];
-  const featuredArticle = null;
+export const revalidate = 60; // Revalidate every 60 seconds
+
+export default async function AllArticlesPage() {
+  const [articles, featuredArticles] = await Promise.all([
+    getArticles(12),
+    getFeaturedArticles(1),
+  ]);
+
+  const featuredArticle = featuredArticles[0] || null;
 
   return (
     <Section background="white" padding="lg">

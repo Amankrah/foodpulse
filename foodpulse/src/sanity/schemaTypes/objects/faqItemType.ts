@@ -1,0 +1,34 @@
+import {defineField, defineType} from 'sanity'
+
+export const faqItemType = defineType({
+  name: 'faqItem',
+  title: 'FAQ Item',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'question',
+      title: 'Question',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'answer',
+      title: 'Answer',
+      type: 'text',
+      rows: 4,
+      validation: (rule) => rule.required(),
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'question',
+      subtitle: 'answer',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title,
+        subtitle: subtitle?.slice(0, 60) + '...',
+      }
+    },
+  },
+})

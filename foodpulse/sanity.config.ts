@@ -25,4 +25,13 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({defaultApiVersion: apiVersion}),
   ],
+  document: {
+    actions: (prev, context) => {
+      // Remove delete action for settings singleton
+      if (context.schemaType === 'settings') {
+        return prev.filter((action) => action.action !== 'delete')
+      }
+      return prev
+    },
+  },
 })
