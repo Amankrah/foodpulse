@@ -489,3 +489,7 @@ a:focus-visible {
     0 12px 40px rgba(0, 51, 23, 0.15),
     0 4px 12px rgba(0, 51, 23, 0.1);
 }
+
+/* ========== Article Prose Styles ========== */
+/* Styles for article content from Sanity */
+@plugin "@tailwindcss/typography";
