@@ -318,17 +318,18 @@ export const articleType = defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
+      authorName: 'author.name',
       media: 'image',
-      category: 'category.title',
+      categoryTitle: 'category.title',
       metaDescription: 'seo.metaDescription',
     },
     prepare(selection) {
-      const {author, category, metaDescription} = selection
+      const {authorName, categoryTitle, metaDescription} = selection
       const seoStatus = metaDescription ? '✓ SEO' : '⚠️ No meta'
       return {
-        ...selection,
-        subtitle: `${author || 'No author'} | ${category || 'No category'} | ${seoStatus}`,
+        title: selection.title,
+        subtitle: `${authorName || 'No author'} | ${categoryTitle || 'No category'} | ${seoStatus}`,
+        media: selection.media,
       }
     },
   },

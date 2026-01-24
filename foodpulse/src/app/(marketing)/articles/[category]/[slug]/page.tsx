@@ -12,6 +12,7 @@ import { getArticleBySlug, getAllArticlePaths } from "@/lib/sanity";
 import { Clock, Calendar, User, RefreshCw } from "lucide-react";
 import { PortableText } from "@portabletext/react";
 import { ArticleCard } from "@/components/articles/ArticleCard";
+import { portableTextComponents } from "@/components/articles/PortableTextComponents";
 
 interface ArticlePageProps {
   params: Promise<{
@@ -174,7 +175,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Article Content */}
           <div className="prose prose-lg prose-green max-w-none">
-            <PortableText value={article.body} />
+            <PortableText value={article.body} components={portableTextComponents} />
           </div>
 
           {/* Sources & References */}
