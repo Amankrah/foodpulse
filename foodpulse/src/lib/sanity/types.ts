@@ -313,3 +313,48 @@ export interface GlossaryTermListItem {
   category: string
   letter: string
 }
+
+// ========================================
+// FAQ (Document-level FAQs for /resources/faq page)
+// ========================================
+
+export interface FAQDocument {
+  _id: string
+  question: string
+  slug: string
+  shortAnswer: string
+  fullAnswer?: PortableTextBlock[]
+  category: 'about-foodpulse' | 'food-nutrition' | 'food-labels' | 'food-systems' | 'using-foodpulse'
+  relatedArticle?: {
+    title: string
+    slug: string
+    category: string
+  }
+  relatedGlossaryTerm?: {
+    term: string
+    slug: string
+  }
+  order?: number
+  isPublished?: boolean
+  isFeatured?: boolean
+}
+
+export interface FAQCategory {
+  slug: string
+  title: string
+  icon: string
+  description: string
+  faqs: FAQDocument[]
+}
+
+export interface FAQPageData {
+  categories: FAQCategory[]
+  totalCount: number
+  featuredFaqs: {
+    _id: string
+    question: string
+    slug: string
+    shortAnswer: string
+    category: string
+  }[]
+}

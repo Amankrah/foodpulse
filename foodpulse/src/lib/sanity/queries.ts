@@ -586,3 +586,111 @@ export const ALL_GLOSSARY_SLUGS_QUERY = `
   "slug": slug.current
 }
 `
+
+// ========================================
+// FAQ Queries
+// ========================================
+
+export const FAQ_PAGE_QUERY = `
+{
+  "categories": [
+    {
+      "slug": "about-foodpulse",
+      "title": "About FoodPulse",
+      "icon": "🏠",
+      "description": "Learn about our mission, team, and how we create content.",
+      "faqs": *[_type == "faqDocument" && category == "about-foodpulse" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    },
+    {
+      "slug": "food-nutrition",
+      "title": "Food & Nutrition Basics",
+      "icon": "🥗",
+      "description": "Common questions about nutrients, diet, and healthy eating.",
+      "faqs": *[_type == "faqDocument" && category == "food-nutrition" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    },
+    {
+      "slug": "food-labels",
+      "title": "Understanding Food Labels",
+      "icon": "🏷️",
+      "description": "Decode nutrition labels, certifications, and marketing claims.",
+      "faqs": *[_type == "faqDocument" && category == "food-labels" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    },
+    {
+      "slug": "food-systems",
+      "title": "Food Systems & Sustainability",
+      "icon": "🌾",
+      "description": "Understand where food comes from and its environmental impact.",
+      "faqs": *[_type == "faqDocument" && category == "food-systems" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    },
+    {
+      "slug": "using-foodpulse",
+      "title": "Using FoodPulse",
+      "icon": "💻",
+      "description": "Get the most out of FoodPulse content and features.",
+      "faqs": *[_type == "faqDocument" && category == "using-foodpulse" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    }
+  ],
+  "totalCount": count(*[_type == "faqDocument" && isPublished == true]),
+  "featuredFaqs": *[_type == "faqDocument" && isFeatured == true && isPublished == true] | order(order asc) {
+    _id,
+    question,
+    "slug": slug.current,
+    shortAnswer,
+    category
+  }
+}
+`
+
+export const FAQ_SEARCH_QUERY = `
+*[_type == "faqDocument" && isPublished == true && (
+  question match $query + "*" ||
+  shortAnswer match $query + "*" ||
+  pt::text(fullAnswer) match $query + "*"
+)] | order(order asc) {
+  _id,
+  question,
+  "slug": slug.current,
+  shortAnswer,
+  category
+}[0...20]
+`

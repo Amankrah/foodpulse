@@ -179,6 +179,107 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // FAQ Section
+      S.listItem()
+        .title('FAQ')
+        .child(
+          S.list()
+            .title('FAQ')
+            .items([
+              // All FAQs
+              S.listItem()
+                .title('All Questions')
+                .child(
+                  S.documentTypeList('faqDocument')
+                    .title('All FAQ Items')
+                    .defaultOrdering([
+                      {field: 'category', direction: 'asc'},
+                      {field: 'order', direction: 'asc'},
+                    ])
+                    .apiVersion(apiVersion),
+                ),
+
+              // By Category
+              S.listItem()
+                .title('By Category')
+                .child(
+                  S.list()
+                    .title('Categories')
+                    .items([
+                      S.listItem()
+                        .title('🏠 About FoodPulse')
+                        .child(
+                          S.documentList()
+                            .title('About FoodPulse')
+                            .filter('_type == "faqDocument" && category == "about-foodpulse"')
+                            .defaultOrdering([{field: 'order', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🥗 Food & Nutrition')
+                        .child(
+                          S.documentList()
+                            .title('Food & Nutrition')
+                            .filter('_type == "faqDocument" && category == "food-nutrition"')
+                            .defaultOrdering([{field: 'order', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🏷️ Food Labels')
+                        .child(
+                          S.documentList()
+                            .title('Food Labels')
+                            .filter('_type == "faqDocument" && category == "food-labels"')
+                            .defaultOrdering([{field: 'order', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🌾 Food Systems')
+                        .child(
+                          S.documentList()
+                            .title('Food Systems')
+                            .filter('_type == "faqDocument" && category == "food-systems"')
+                            .defaultOrdering([{field: 'order', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('💻 Using FoodPulse')
+                        .child(
+                          S.documentList()
+                            .title('Using FoodPulse')
+                            .filter('_type == "faqDocument" && category == "using-foodpulse"')
+                            .defaultOrdering([{field: 'order', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                    ]),
+                ),
+
+              S.divider(),
+
+              // Featured
+              S.listItem()
+                .title('⭐ Featured Questions')
+                .child(
+                  S.documentList()
+                    .title('Featured')
+                    .filter('_type == "faqDocument" && isFeatured == true')
+                    .apiVersion(apiVersion),
+                ),
+
+              // Drafts
+              S.listItem()
+                .title('Unpublished')
+                .child(
+                  S.documentList()
+                    .title('Unpublished')
+                    .filter('_type == "faqDocument" && isPublished != true')
+                    .apiVersion(apiVersion),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
       // Redirects
       S.listItem()
         .title('Redirects')
