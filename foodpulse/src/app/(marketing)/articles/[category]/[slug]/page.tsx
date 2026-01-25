@@ -183,7 +183,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Recipe Card (if this is a recipe article) */}
           {article.isRecipe && article.recipeData && (
-            <RecipeCard recipe={article.recipeData} title={article.title} />
+            <RecipeCard
+              recipe={article.recipeData}
+              title={article.title}
+              description={article.excerpt}
+              image={article.image?.asset.url}
+              author={{ name: article.author.name }}
+              publishedAt={article.publishedAt}
+              url={articleUrl}
+            />
           )}
 
           {/* Article Content */}

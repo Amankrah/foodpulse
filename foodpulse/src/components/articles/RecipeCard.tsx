@@ -1,481 +1,769 @@
 "use client";
 
 import type { RecipeData } from "@/lib/sanity/types";
-import { Clock, Users, ChefHat, Download, Printer } from "lucide-react";
+import {
+  Clock,
+  Users,
+  ChefHat,
+  Download,
+  Copy,
+  Check,
+  ChevronDown,
+} from "lucide-react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { RecipeJsonLd } from "./RecipeJsonLd";
+import { toPng } from "html-to-image";
+import jsPDF from "jspdf";
 
 interface RecipeCardProps {
   recipe: RecipeData;
-  title?: string;
+  title: string;
+  description?: string;
+  image?: string;
+  author?: { name: string };
+  publishedAt?: string;
+  url?: string;
 }
 
-const difficultyColors = {
-  easy: "bg-green-100 text-green-700 border-green-300",
-  medium: "bg-yellow-100 text-yellow-700 border-yellow-300",
-  hard: "bg-red-100 text-red-700 border-red-300",
+const difficultyConfig = {
+  easy: {
+    color: "bg-green-100 text-green-700 border-green-300",
+    label: "Easy",
+  },
+  medium: {
+    color: "bg-yellow-100 text-yellow-700 border-yellow-300",
+    label: "Medium",
+  },
+  hard: { color: "bg-red-100 text-red-700 border-red-300", label: "Hard" },
 };
 
-export function RecipeCard({ recipe, title }: RecipeCardProps) {
+export function RecipeCard({
+  recipe,
+  title,
+  description,
+  image,
+  author,
+  publishedAt,
+  url,
+}: RecipeCardProps) {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showDownloadMenu, setShowDownloadMenu] = useState(false);
+  const [checkedIngredients, setCheckedIngredients] = useState<Set<string>>(
+    new Set()
+  );
+  const [copiedIngredients, setCopiedIngredients] = useState(false);
+  const [servingMultiplier, setServingMultiplier] = useState(1);
+
+  const downloadMenuRef = useRef<HTMLDivElement>(null);
 
   const totalTime =
     recipe.prepTime + (recipe.cookTime || 0) + (recipe.restingTime || 0);
+  const adjustedServings = recipe.servings * servingMultiplier;
 
-  const handleDownload = () => {
-    setIsDownloading(true);
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        downloadMenuRef.current &&
+        !downloadMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowDownloadMenu(false);
+      }
+    };
 
-    // Create text content
-    let content = `${title || "Recipe"}\n`;
-    content += `${"=".repeat(title?.length || 6)}\n\n`;
-    content += `From FoodPulse.co\n\n`;
-
-    // Meta information
-    content += `RECIPE INFORMATION\n`;
-    content += `------------------\n`;
-    content += `Prep Time: ${recipe.prepTime} minutes\n`;
-    if (recipe.cookTime) content += `Cook Time: ${recipe.cookTime} minutes\n`;
-    if (recipe.restingTime)
-      content += `Resting Time: ${recipe.restingTime} minutes\n`;
-    content += `Total Time: ${totalTime} minutes\n`;
-    content += `Servings: ${recipe.servings}\n`;
-    if (recipe.yield) content += `Yield: ${recipe.yield}\n`;
-    if (recipe.difficulty)
-      content += `Difficulty: ${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}\n`;
-    if (recipe.cuisine) content += `Cuisine: ${recipe.cuisine}\n`;
-    if (recipe.course) content += `Course: ${recipe.course}\n`;
-    if (recipe.diet && recipe.diet.length > 0)
-      content += `Diet: ${recipe.diet.join(", ")}\n`;
-    content += `\n`;
-
-    // Ingredients
-    if (recipe.ingredientGroups && recipe.ingredientGroups.length > 0) {
-      content += `INGREDIENTS\n`;
-      content += `-----------\n`;
-      recipe.ingredientGroups.forEach((group) => {
-        if (group.groupName) {
-          content += `\n${group.groupName}:\n`;
-        }
-        group.ingredients.forEach((ingredient) => {
-          const line = [
-            ingredient.amount,
-            ingredient.unit,
-            ingredient.ingredient,
-            ingredient.notes ? `(${ingredient.notes})` : "",
-          ]
-            .filter(Boolean)
-            .join(" ");
-          content += `  • ${line}\n`;
-        });
-      });
-      content += `\n`;
+    if (showDownloadMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
-    // Instructions
-    if (recipe.instructions && recipe.instructions.length > 0) {
-      content += `INSTRUCTIONS\n`;
-      content += `------------\n`;
-      recipe.instructions.forEach((instruction, index) => {
-        content += `${index + 1}. ${instruction.step}\n`;
-        if (instruction.tip) {
-          content += `   TIP: ${instruction.tip}\n`;
-        }
-        content += `\n`;
-      });
-    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDownloadMenu]);
 
-    // Nutrition
-    if (recipe.nutrition) {
-      content += `NUTRITION (per serving)\n`;
-      content += `-----------------------\n`;
-      if (recipe.nutrition.calories)
-        content += `Calories: ${recipe.nutrition.calories}\n`;
-      if (recipe.nutrition.protein)
-        content += `Protein: ${recipe.nutrition.protein}\n`;
-      if (recipe.nutrition.carbohydrates)
-        content += `Carbohydrates: ${recipe.nutrition.carbohydrates}\n`;
-      if (recipe.nutrition.fat) content += `Fat: ${recipe.nutrition.fat}\n`;
-      if (recipe.nutrition.fiber)
-        content += `Fiber: ${recipe.nutrition.fiber}\n`;
-      if (recipe.nutrition.sugar)
-        content += `Sugar: ${recipe.nutrition.sugar}\n`;
-      if (recipe.nutrition.sodium)
-        content += `Sodium: ${recipe.nutrition.sodium}\n`;
-      content += `\n`;
-    }
-
-    // Notes
-    if (recipe.notes && recipe.notes.length > 0) {
-      content += `NOTES\n`;
-      content += `-----\n`;
-      recipe.notes.forEach((note) => {
-        content += `• ${note}\n`;
-      });
-      content += `\n`;
-    }
-
-    content += `\n---\nRecipe from FoodPulse.co\nYour trusted source for food & nutrition insights\n`;
-
-    // Create and download file
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${(title || "recipe").toLowerCase().replace(/\s+/g, "-")}-foodpulse.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    setTimeout(() => setIsDownloading(false), 2000);
+  // Scale ingredient amounts based on serving multiplier
+  const scaleAmount = (amount: string | undefined) => {
+    if (!amount || servingMultiplier === 1) return amount;
+    const num = parseFloat(amount);
+    if (isNaN(num)) return amount;
+    const scaled = num * servingMultiplier;
+    return scaled === Math.floor(scaled)
+      ? scaled.toString()
+      : scaled.toFixed(1).replace(/\.0$/, "");
   };
 
-  const handlePrint = () => {
-    window.print();
+  // Toggle ingredient checkbox
+  const toggleIngredient = (id: string) => {
+    setCheckedIngredients((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  // Copy ingredients to clipboard
+  const copyIngredients = async () => {
+    const text = recipe.ingredientGroups
+      ?.map((group) => {
+        const header = group.groupName ? `${group.groupName}:\n` : "";
+        const items = group.ingredients
+          .map((ing) =>
+            [
+              scaleAmount(ing.amount),
+              ing.unit,
+              ing.ingredient,
+              ing.notes && `(${ing.notes})`,
+            ]
+              .filter(Boolean)
+              .join(" ")
+          )
+          .join("\n");
+        return header + items;
+      })
+      .join("\n\n");
+
+    if (text) {
+      await navigator.clipboard.writeText(text);
+      setCopiedIngredients(true);
+      setTimeout(() => setCopiedIngredients(false), 2000);
+    }
+  };
+
+  // Download recipe card as PNG image
+  const handleDownloadPNG = async () => {
+    setIsDownloading(true);
+    setShowDownloadMenu(false);
+
+    try {
+      const recipeElement = document.getElementById("recipe-card");
+      if (!recipeElement) {
+        console.error("Recipe card element not found");
+        setIsDownloading(false);
+        return;
+      }
+
+      // Use html-to-image to capture the recipe card
+      const dataUrl = await toPng(recipeElement, {
+        backgroundColor: "#f0fdf4",
+        pixelRatio: 2, // Higher quality (2x resolution)
+        cacheBust: true, // Prevent caching issues
+      });
+
+      // Create download link
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `${title.toLowerCase().replace(/\s+/g, "-")}-foodpulse.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      setTimeout(() => setIsDownloading(false), 1000);
+    } catch (error) {
+      console.error("Error generating recipe image:", error);
+      setIsDownloading(false);
+    }
+  };
+
+  // Download recipe card as PDF
+  const handleDownloadPDF = async () => {
+    setIsDownloading(true);
+    setShowDownloadMenu(false);
+
+    try {
+      const recipeElement = document.getElementById("recipe-card");
+      if (!recipeElement) {
+        console.error("Recipe card element not found");
+        setIsDownloading(false);
+        return;
+      }
+
+      // Capture the recipe card as image
+      const dataUrl = await toPng(recipeElement, {
+        backgroundColor: "#f0fdf4",
+        pixelRatio: 2,
+        cacheBust: true,
+      });
+
+      // Get element dimensions
+      const imgWidth = recipeElement.offsetWidth;
+      const imgHeight = recipeElement.offsetHeight;
+
+      // Create PDF with appropriate dimensions
+      // A4 width in mm is 210, we'll use that as reference
+      const pdfWidth = 210;
+      const pdfHeight = (imgHeight * pdfWidth) / imgWidth;
+
+      const pdf = new jsPDF({
+        orientation: pdfHeight > pdfWidth ? "portrait" : "landscape",
+        unit: "mm",
+        format: [pdfWidth, pdfHeight],
+      });
+
+      // Add image to PDF
+      pdf.addImage(dataUrl, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+      // Download PDF
+      pdf.save(`${title.toLowerCase().replace(/\s+/g, "-")}-foodpulse.pdf`);
+
+      setTimeout(() => setIsDownloading(false), 1000);
+    } catch (error) {
+      console.error("Error generating recipe PDF:", error);
+      setIsDownloading(false);
+    }
   };
 
   return (
-    <div className="my-8 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl shadow-lg overflow-hidden print:shadow-none print:border print:border-neutral-300">
-      {/* Header */}
-      <div className="bg-green-600 text-white p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-white/20 rounded-lg">
-              <ChefHat className="h-6 w-6" />
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold">Recipe Details</h2>
-          </div>
-          <div className="flex gap-2 print:hidden">
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
-              title="Print recipe"
-            >
-              <Printer className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={handleDownload}
-              disabled={isDownloading}
-              className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors disabled:opacity-50"
-              title="Download recipe"
-            >
-              <Download
-                className={`h-5 w-5 ${isDownloading ? "animate-bounce" : ""}`}
-              />
-            </button>
-          </div>
-        </div>
+    <>
+      {/* JSON-LD Schema for SEO */}
+      {description && image && author && publishedAt && url && (
+        <RecipeJsonLd
+          title={title}
+          description={description}
+          image={image}
+          author={author.name}
+          datePublished={publishedAt}
+          recipe={recipe}
+          url={url}
+        />
+      )}
+
+      {/* Skip Links for Accessibility */}
+      <div className="sr-only focus-within:not-sr-only focus-within:absolute focus-within:z-50 focus-within:left-4 focus-within:top-4">
+        <a
+          href="#ingredients"
+          className="bg-green-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+        >
+          Skip to ingredients
+        </a>
+        <a
+          href="#instructions"
+          className="bg-green-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-400 ml-2"
+        >
+          Skip to instructions
+        </a>
       </div>
 
-      <div className="p-6 md:p-8">
-        {/* Recipe Meta - Quick Info Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
-            <div className="flex items-center gap-2 mb-1">
-              <Clock className="h-4 w-4 text-green-600" />
-              <p className="text-xs font-medium text-neutral-500 uppercase">
-                Prep
-              </p>
+      <div
+        id="recipe-card"
+        className="my-8 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl shadow-lg overflow-hidden print:shadow-none print:border print:border-neutral-300 print:bg-white"
+      >
+        {/* Header */}
+        <div className="bg-green-600 text-white p-6 print:bg-white print:text-black print:border-b">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-white/20 rounded-lg print:bg-green-100">
+                <ChefHat className="h-6 w-6" aria-hidden="true" />
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold">
+                {title} Recipe
+              </h2>
             </div>
-            <p className="text-lg font-bold text-neutral-900">
-              {recipe.prepTime} min
-            </p>
-          </div>
+            <div className="flex gap-2 print:hidden relative">
+              <div className="relative" ref={downloadMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setShowDownloadMenu(!showDownloadMenu)}
+                  disabled={isDownloading}
+                  className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
+                  aria-label="Download recipe card"
+                >
+                  <Download
+                    className={`h-5 w-5 ${isDownloading ? "animate-bounce" : ""}`}
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm font-medium">
+                    {isDownloading ? "Downloading..." : "Download"}
+                  </span>
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                </button>
 
-          {recipe.cookTime && recipe.cookTime > 0 && (
+                {/* Dropdown Menu */}
+                {showDownloadMenu && !isDownloading && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-green-200 overflow-hidden z-10">
+                    <button
+                      type="button"
+                      onClick={handleDownloadPNG}
+                      className="w-full px-4 py-3 text-left hover:bg-green-50 transition-colors flex items-center gap-3 text-neutral-700"
+                    >
+                      <Download className="h-4 w-4 text-green-600" />
+                      <div>
+                        <div className="font-medium text-sm">PNG Image</div>
+                        <div className="text-xs text-neutral-500">
+                          High quality image
+                        </div>
+                      </div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleDownloadPDF}
+                      className="w-full px-4 py-3 text-left hover:bg-green-50 transition-colors flex items-center gap-3 text-neutral-700 border-t border-green-100"
+                    >
+                      <Download className="h-4 w-4 text-green-600" />
+                      <div>
+                        <div className="font-medium text-sm">PDF Document</div>
+                        <div className="text-xs text-neutral-500">
+                          Print-ready format
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 md:p-8">
+          {/* Quick Info Cards with Servings Adjuster */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            {/* Prep Time */}
+            <QuickInfoCard
+              icon={Clock}
+              label="Prep"
+              value={`${recipe.prepTime} min`}
+            />
+
+            {/* Cook Time (always show, 0 is valid for no-cook recipes) */}
+            {recipe.cookTime !== undefined && (
+              <QuickInfoCard
+                icon={Clock}
+                label="Cook"
+                value={`${recipe.cookTime} min`}
+              />
+            )}
+
+            {/* Resting Time (only show if exists and > 0) */}
+            {recipe.restingTime && recipe.restingTime > 0 && (
+              <QuickInfoCard
+                icon={Clock}
+                label="Rest"
+                value={`${recipe.restingTime} min`}
+              />
+            )}
+
+            {/* Total Time */}
+            <QuickInfoCard
+              icon={Clock}
+              label="Total"
+              value={`${totalTime} min`}
+            />
+
+            {/* Servings with Adjuster */}
             <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
               <div className="flex items-center gap-2 mb-1">
-                <Clock className="h-4 w-4 text-green-600" />
+                <Users className="h-4 w-4 text-green-600" aria-hidden="true" />
                 <p className="text-xs font-medium text-neutral-500 uppercase">
-                  Cook
+                  Serves
                 </p>
               </div>
-              <p className="text-lg font-bold text-neutral-900">
-                {recipe.cookTime} min
-              </p>
-            </div>
-          )}
-
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
-            <div className="flex items-center gap-2 mb-1">
-              <Clock className="h-4 w-4 text-green-600" />
-              <p className="text-xs font-medium text-neutral-500 uppercase">
-                Total
-              </p>
-            </div>
-            <p className="text-lg font-bold text-neutral-900">
-              {totalTime} min
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
-            <div className="flex items-center gap-2 mb-1">
-              <Users className="h-4 w-4 text-green-600" />
-              <p className="text-xs font-medium text-neutral-500 uppercase">
-                Serves
-              </p>
-            </div>
-            <p className="text-lg font-bold text-neutral-900">
-              {recipe.servings}
-            </p>
-          </div>
-        </div>
-
-        {/* Additional Meta Tags */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {recipe.difficulty && (
-            <span
-              className={`px-4 py-2 rounded-full text-sm font-semibold border ${difficultyColors[recipe.difficulty]}`}
-            >
-              {recipe.difficulty.charAt(0).toUpperCase() +
-                recipe.difficulty.slice(1)}
-            </span>
-          )}
-          {recipe.yield && (
-            <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
-              Yields: {recipe.yield}
-            </span>
-          )}
-          {recipe.cuisine && (
-            <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
-              {recipe.cuisine}
-            </span>
-          )}
-          {recipe.course && (
-            <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
-              {recipe.course}
-            </span>
-          )}
-          {recipe.diet && recipe.diet.length > 0 && (
-            <>
-              {recipe.diet.map((d) => (
-                <span
-                  key={d}
-                  className="px-4 py-2 bg-green-600 text-white rounded-full text-sm font-medium"
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setServingMultiplier((m) => Math.max(0.5, m - 0.5))
+                  }
+                  className="w-7 h-7 flex items-center justify-center bg-green-100 text-green-700 rounded-full hover:bg-green-200 font-bold text-sm print:hidden"
+                  aria-label="Decrease servings"
                 >
-                  {d}
-                </span>
-              ))}
-            </>
-          )}
-        </div>
-
-        {/* Ingredients Section */}
-        {recipe.ingredientGroups && recipe.ingredientGroups.length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-              <span className="w-1 h-8 bg-green-600 rounded"></span>
-              Ingredients
-            </h3>
-            <div className="space-y-4">
-              {recipe.ingredientGroups.map((group, groupIndex) => (
-                <div key={groupIndex}>
-                  {group.groupName && (
-                    <h4 className="font-bold text-lg text-green-800 mb-3 mt-4">
-                      {group.groupName}
-                    </h4>
-                  )}
-                  <ul className="bg-white rounded-xl p-5 shadow-sm border border-green-100 space-y-3">
-                    {group.ingredients.map((ingredient, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <span className="flex-shrink-0 w-2 h-2 bg-green-600 rounded-full mt-2"></span>
-                        <span className="text-neutral-700 leading-relaxed">
-                          {ingredient.amount && (
-                            <strong className="text-neutral-900">
-                              {ingredient.amount}
-                            </strong>
-                          )}
-                          {ingredient.unit && <> {ingredient.unit}</>}
-                          {(ingredient.amount || ingredient.unit) && <> </>}
-                          <span className="text-neutral-900">
-                            {ingredient.ingredient}
-                          </span>
-                          {ingredient.notes && (
-                            <span className="text-neutral-500 text-sm italic">
-                              {" "}
-                              ({ingredient.notes})
-                            </span>
-                          )}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                  −
+                </button>
+                <p className="text-lg font-bold text-neutral-900 min-w-[2ch] text-center">
+                  {adjustedServings}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setServingMultiplier((m) => m + 0.5)}
+                  className="w-7 h-7 flex items-center justify-center bg-green-100 text-green-700 rounded-full hover:bg-green-200 font-bold text-sm print:hidden"
+                  aria-label="Increase servings"
+                >
+                  +
+                </button>
+              </div>
+              {servingMultiplier !== 1 && (
+                <button
+                  type="button"
+                  onClick={() => setServingMultiplier(1)}
+                  className="text-xs text-green-600 mt-1 hover:underline print:hidden"
+                >
+                  Reset
+                </button>
+              )}
             </div>
           </div>
-        )}
 
-        {/* Instructions Section */}
-        {recipe.instructions && recipe.instructions.length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-              <span className="w-1 h-8 bg-green-600 rounded"></span>
-              Instructions
-            </h3>
-            <ol className="space-y-6">
-              {recipe.instructions.map((instruction, index) => (
-                <li key={index} className="flex gap-4">
-                  <span className="flex-shrink-0 w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
-                    {index + 1}
-                  </span>
-                  <div className="flex-1 pt-1">
-                    <p className="text-neutral-800 leading-relaxed mb-3 text-lg">
-                      {instruction.step}
-                    </p>
-                    {instruction.image && (
-                      <div className="my-4 rounded-xl overflow-hidden shadow-md">
-                        <Image
-                          src={urlFor(instruction.image)?.url() || ""}
-                          alt={instruction.image.alt || `Step ${index + 1}`}
-                          width={600}
-                          height={400}
-                          className="w-full h-auto"
-                        />
-                        {instruction.image.caption && (
-                          <p className="text-sm text-neutral-600 mt-2 px-2 italic">
-                            {instruction.image.caption}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    {instruction.tip && (
-                      <div className="mt-3 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
-                        <p className="text-sm text-yellow-900">
-                          <strong className="font-semibold">💡 Tip:</strong>{" "}
-                          {instruction.tip}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-
-        {/* Nutrition Section */}
-        {recipe.nutrition &&
-          Object.values(recipe.nutrition).some((val) => val) && (
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                <span className="w-1 h-8 bg-green-600 rounded"></span>
-                Nutrition Information
-                <span className="text-sm font-normal text-neutral-500">
-                  (per serving)
+          {/* Recipe Meta Information */}
+          <div className="space-y-4 mb-8">
+            {/* Difficulty Badge (if exists) */}
+            {recipe.difficulty && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                  Difficulty:
                 </span>
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                {recipe.nutrition.calories && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Calories
-                    </p>
-                    <p className="text-xl font-bold text-green-700">
-                      {recipe.nutrition.calories}
-                    </p>
+                <span
+                  className={`px-4 py-2 rounded-full text-sm font-semibold border ${difficultyConfig[recipe.difficulty].color}`}
+                >
+                  {difficultyConfig[recipe.difficulty].label}
+                </span>
+              </div>
+            )}
+
+            {/* Recipe Details Row */}
+            {(recipe.yield || recipe.cuisine || recipe.course) && (
+              <div className="flex flex-wrap gap-4">
+                {recipe.yield && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                      Yield:
+                    </span>
+                    <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
+                      {recipe.yield}
+                    </span>
                   </div>
                 )}
-                {recipe.nutrition.protein && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Protein
-                    </p>
-                    <p className="text-lg font-bold text-neutral-900">
-                      {recipe.nutrition.protein}
-                    </p>
+                {recipe.cuisine && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                      Cuisine:
+                    </span>
+                    <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
+                      {recipe.cuisine}
+                    </span>
                   </div>
                 )}
-                {recipe.nutrition.carbohydrates && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Carbs
-                    </p>
-                    <p className="text-lg font-bold text-neutral-900">
-                      {recipe.nutrition.carbohydrates}
-                    </p>
+                {recipe.course && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                      Course:
+                    </span>
+                    <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
+                      {recipe.course}
+                    </span>
                   </div>
                 )}
-                {recipe.nutrition.fat && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Fat
-                    </p>
-                    <p className="text-lg font-bold text-neutral-900">
-                      {recipe.nutrition.fat}
-                    </p>
+              </div>
+            )}
+
+            {/* Dietary Information Row (only if exists) */}
+            {recipe.diet && recipe.diet.length > 0 && (
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                  Dietary:
+                </span>
+                {recipe.diet.map((d) => (
+                  <span
+                    key={d}
+                    className="px-3 py-1.5 bg-green-600 text-white rounded-full text-xs font-medium"
+                  >
+                    {d}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Ingredients Section */}
+          {recipe.ingredientGroups && recipe.ingredientGroups.length > 0 && (
+            <div id="ingredients" className="mb-8 scroll-mt-20">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
+                  <span
+                    className="w-1 h-8 bg-green-600 rounded"
+                    aria-hidden="true"
+                  ></span>
+                  Ingredients
+                  {servingMultiplier !== 1 && (
+                    <span className="text-sm font-normal text-green-600">
+                      (adjusted for {adjustedServings} servings)
+                    </span>
+                  )}
+                </h3>
+                <button
+                  type="button"
+                  onClick={copyIngredients}
+                  className="text-sm text-green-600 hover:text-green-700 flex items-center gap-1 print:hidden"
+                  aria-label="Copy ingredients to clipboard"
+                >
+                  {copiedIngredients ? (
+                    <>
+                      <Check className="w-4 h-4" aria-hidden="true" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" aria-hidden="true" />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Ingredient groups with checkboxes */}
+              <div className="space-y-4">
+                {recipe.ingredientGroups.map((group, groupIndex) => (
+                  <div key={groupIndex}>
+                    {group.groupName && (
+                      <h4 className="font-bold text-lg text-green-800 mb-3 mt-4">
+                        {group.groupName}
+                      </h4>
+                    )}
+                    <ul className="bg-white rounded-xl p-5 shadow-sm border border-green-100 space-y-3">
+                      {group.ingredients.map((ingredient, index) => {
+                        const ingredientId = `${groupIndex}-${index}`;
+                        const isChecked = checkedIngredients.has(ingredientId);
+
+                        return (
+                          <li key={index} className="flex items-start gap-3">
+                            <button
+                              type="button"
+                              onClick={() => toggleIngredient(ingredientId)}
+                              className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 transition-colors print:hidden ${
+                                isChecked
+                                  ? "bg-green-600 border-green-600"
+                                  : "border-neutral-300 hover:border-green-400"
+                              }`}
+                              aria-label={`Mark ${ingredient.ingredient} as ${isChecked ? "not gathered" : "gathered"}`}
+                            >
+                              {isChecked && (
+                                <Check
+                                  className="w-full h-full text-white p-0.5"
+                                  aria-hidden="true"
+                                />
+                              )}
+                            </button>
+                            {/* Print-only bullet */}
+                            <span
+                              className="hidden print:flex w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"
+                              aria-hidden="true"
+                            />
+                            <span
+                              className={`text-neutral-700 leading-relaxed transition-opacity ${
+                                isChecked ? "opacity-50 line-through" : ""
+                              }`}
+                            >
+                              {ingredient.amount && (
+                                <strong className="text-neutral-900">
+                                  {scaleAmount(ingredient.amount)}
+                                </strong>
+                              )}
+                              {ingredient.unit && <> {ingredient.unit}</>}
+                              {(ingredient.amount || ingredient.unit) && <> </>}
+                              <span className="text-neutral-900">
+                                {ingredient.ingredient}
+                              </span>
+                              {ingredient.notes && (
+                                <span className="text-neutral-500 text-sm italic">
+                                  {" "}
+                                  ({ingredient.notes})
+                                </span>
+                              )}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                )}
-                {recipe.nutrition.fiber && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Fiber
-                    </p>
-                    <p className="text-lg font-bold text-neutral-900">
-                      {recipe.nutrition.fiber}
-                    </p>
-                  </div>
-                )}
-                {recipe.nutrition.sugar && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Sugar
-                    </p>
-                    <p className="text-lg font-bold text-neutral-900">
-                      {recipe.nutrition.sugar}
-                    </p>
-                  </div>
-                )}
-                {recipe.nutrition.sodium && (
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      Sodium
-                    </p>
-                    <p className="text-lg font-bold text-neutral-900">
-                      {recipe.nutrition.sodium}
-                    </p>
-                  </div>
-                )}
+                ))}
               </div>
             </div>
           )}
 
-        {/* Notes Section */}
-        {recipe.notes && recipe.notes.length > 0 && (
-          <div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-              <span className="w-1 h-8 bg-green-600 rounded"></span>
-              Chef's Notes
-            </h3>
-            <ul className="bg-white rounded-xl p-5 shadow-sm border border-green-100 space-y-3">
-              {recipe.notes.map((note, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 text-green-600 text-xl">
-                    📝
-                  </span>
-                  <span className="text-neutral-700 leading-relaxed">
-                    {note}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          {/* Instructions Section */}
+          {recipe.instructions && recipe.instructions.length > 0 && (
+            <div id="instructions" className="mb-8 scroll-mt-20">
+              <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+                <span
+                  className="w-1 h-8 bg-green-600 rounded"
+                  aria-hidden="true"
+                ></span>
+                Instructions
+              </h3>
+              <ol className="space-y-6">
+                {recipe.instructions.map((instruction, index) => (
+                  <li key={index} className="flex gap-4">
+                    <span className="flex-shrink-0 w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md print:bg-green-100 print:text-green-800">
+                      {index + 1}
+                    </span>
+                    <div className="flex-1 pt-1">
+                      <p className="text-neutral-800 leading-relaxed mb-3 text-lg">
+                        {instruction.step}
+                      </p>
+                      {instruction.image && (
+                        <div className="my-4 rounded-xl overflow-hidden shadow-md">
+                          <Image
+                            src={urlFor(instruction.image)?.url() || ""}
+                            alt={instruction.image.alt || `Step ${index + 1}`}
+                            width={600}
+                            height={400}
+                            className="w-full h-auto"
+                          />
+                          {instruction.image.caption && (
+                            <p className="text-sm text-neutral-600 mt-2 px-2 italic">
+                              {instruction.image.caption}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      {instruction.tip && (
+                        <div className="mt-3 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
+                          <p className="text-sm text-yellow-900">
+                            <strong className="font-semibold">💡 Tip:</strong>{" "}
+                            {instruction.tip}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
-        {/* Footer */}
-        <div className="mt-8 pt-6 border-t-2 border-green-200 text-center">
-          <p className="text-sm text-neutral-600">
-            Recipe from{" "}
-            <strong className="text-green-700">FoodPulse.co</strong>
-          </p>
-          <p className="text-xs text-neutral-500 mt-1">
-            Your trusted source for food & nutrition insights
-          </p>
+          {/* Nutrition Section */}
+          {recipe.nutrition &&
+            Object.values(recipe.nutrition).some((val) => val) && (
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+                  <span
+                    className="w-1 h-8 bg-green-600 rounded"
+                    aria-hidden="true"
+                  ></span>
+                  Nutrition Information
+                  <span className="text-sm font-normal text-neutral-500">
+                    (per serving)
+                  </span>
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 print:grid-cols-4">
+                  {recipe.nutrition.calories && (
+                    <NutritionCard
+                      label="Calories"
+                      value={recipe.nutrition.calories}
+                      isCalories
+                    />
+                  )}
+                  {recipe.nutrition.protein && (
+                    <NutritionCard
+                      label="Protein"
+                      value={recipe.nutrition.protein}
+                    />
+                  )}
+                  {recipe.nutrition.carbohydrates && (
+                    <NutritionCard
+                      label="Carbs"
+                      value={recipe.nutrition.carbohydrates}
+                    />
+                  )}
+                  {recipe.nutrition.fat && (
+                    <NutritionCard label="Fat" value={recipe.nutrition.fat} />
+                  )}
+                  {recipe.nutrition.fiber && (
+                    <NutritionCard
+                      label="Fiber"
+                      value={recipe.nutrition.fiber}
+                    />
+                  )}
+                  {recipe.nutrition.sugar && (
+                    <NutritionCard
+                      label="Sugar"
+                      value={recipe.nutrition.sugar}
+                    />
+                  )}
+                  {recipe.nutrition.sodium && (
+                    <NutritionCard
+                      label="Sodium"
+                      value={recipe.nutrition.sodium}
+                    />
+                  )}
+                </div>
+              </div>
+            )}
+
+          {/* Notes Section */}
+          {recipe.notes && recipe.notes.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+                <span
+                  className="w-1 h-8 bg-green-600 rounded"
+                  aria-hidden="true"
+                ></span>
+                Chef&apos;s Notes
+              </h3>
+              <ul className="bg-white rounded-xl p-5 shadow-sm border border-green-100 space-y-3">
+                {recipe.notes.map((note, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="flex-shrink-0 text-green-600 text-xl">
+                      📝
+                    </span>
+                    <span className="text-neutral-700 leading-relaxed">
+                      {note}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Footer */}
+          <div className="mt-8 pt-6 border-t-2 border-green-200 text-center">
+            <p className="text-sm text-neutral-600">
+              Recipe from{" "}
+              <strong className="text-green-700">FoodPulse.co</strong>
+            </p>
+            <p className="text-xs text-neutral-500 mt-1">
+              Your trusted source for food & nutrition insights
+            </p>
+          </div>
         </div>
       </div>
+    </>
+  );
+}
+
+// Helper component for quick info cards
+function QuickInfoCard({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: typeof Clock;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
+      <div className="flex items-center gap-2 mb-1">
+        <Icon className="h-4 w-4 text-green-600" aria-hidden="true" />
+        <p className="text-xs font-medium text-neutral-500 uppercase">
+          {label}
+        </p>
+      </div>
+      <p className="text-lg font-bold text-neutral-900">{value}</p>
+    </div>
+  );
+}
+
+// Helper component for nutrition cards
+function NutritionCard({
+  label,
+  value,
+  isCalories,
+}: {
+  label: string;
+  value: string | number;
+  isCalories?: boolean;
+}) {
+  return (
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
+      <p className="text-xs text-neutral-500 uppercase mb-1">{label}</p>
+      <p
+        className={`font-bold ${isCalories ? "text-xl text-green-700" : "text-lg text-neutral-900"}`}
+      >
+        {value}
+      </p>
     </div>
   );
 }
