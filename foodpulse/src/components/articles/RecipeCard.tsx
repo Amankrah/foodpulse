@@ -58,9 +58,20 @@ export function RecipeCard({
 
   const downloadMenuRef = useRef<HTMLDivElement>(null);
 
-  const totalTime =
-    recipe.prepTime + (recipe.cookTime || 0) + (recipe.restingTime || 0);
+  // Total active time (excludes resting/marinating time)
+  const totalTime = recipe.prepTime + (recipe.cookTime || 0);
   const adjustedServings = recipe.servings * servingMultiplier;
+
+  // Format time display (shows hours if >= 60 minutes)
+  const formatTime = (minutes: number) => {
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      if (mins === 0) return `${hours} hr${hours > 1 ? 's' : ''}`;
+      return `${hours} hr${hours > 1 ? 's' : ''} ${mins} min`;
+    }
+    return `${minutes} min`;
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -225,7 +236,7 @@ export function RecipeCard({
           title={title}
           description={description}
           image={image}
-          author={author.name}
+          author={recipe.author || author.name}
           datePublished={publishedAt}
           recipe={recipe}
           url={url}
@@ -250,13 +261,13 @@ export function RecipeCard({
 
       <div
         id="recipe-card"
-        className="my-8 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl shadow-lg overflow-hidden print:shadow-none print:border print:border-neutral-300 print:bg-white"
+        className="my-8 bg-gradient-to-br from-[var(--green-50)] to-[var(--green-100)] border-2 border-[var(--green-200)] rounded-2xl shadow-lg overflow-hidden print:shadow-none print:border print:border-neutral-300 print:bg-white"
       >
         {/* Header */}
-        <div className="bg-green-600 text-white p-6 print:bg-white print:text-black print:border-b">
+        <div className="bg-[var(--green-600)] text-white p-6 print:bg-white print:text-black print:border-b">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/20 rounded-lg print:bg-green-100">
+              <div className="p-2 bg-white/20 rounded-lg print:bg-[var(--green-100)]">
                 <ChefHat className="h-6 w-6" aria-hidden="true" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold">
@@ -269,7 +280,7 @@ export function RecipeCard({
                   type="button"
                   onClick={() => setShowDownloadMenu(!showDownloadMenu)}
                   disabled={isDownloading}
-                  className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
+                  className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2 focus:ring-2 focus:ring-[var(--green-400)]"
                   aria-label="Download recipe card"
                 >
                   <Download
@@ -284,13 +295,13 @@ export function RecipeCard({
 
                 {/* Dropdown Menu */}
                 {showDownloadMenu && !isDownloading && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-green-200 overflow-hidden z-10">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[var(--green-200)] overflow-hidden z-10">
                     <button
                       type="button"
                       onClick={handleDownloadPNG}
-                      className="w-full px-4 py-3 text-left hover:bg-green-50 transition-colors flex items-center gap-3 text-neutral-700"
+                      className="w-full px-4 py-3 text-left hover:bg-[var(--green-50)] transition-colors flex items-center gap-3 text-[var(--neutral-700)]"
                     >
-                      <Download className="h-4 w-4 text-green-600" />
+                      <Download className="h-4 w-4 text-[var(--green-600)]" />
                       <div>
                         <div className="font-medium text-sm">PNG Image</div>
                         <div className="text-xs text-neutral-500">
@@ -301,9 +312,9 @@ export function RecipeCard({
                     <button
                       type="button"
                       onClick={handleDownloadPDF}
-                      className="w-full px-4 py-3 text-left hover:bg-green-50 transition-colors flex items-center gap-3 text-neutral-700 border-t border-green-100"
+                      className="w-full px-4 py-3 text-left hover:bg-[var(--green-50)] transition-colors flex items-center gap-3 text-[var(--neutral-700)] border-t border-[var(--green-100)]"
                     >
-                      <Download className="h-4 w-4 text-green-600" />
+                      <Download className="h-4 w-4 text-[var(--green-600)]" />
                       <div>
                         <div className="font-medium text-sm">PDF Document</div>
                         <div className="text-xs text-neutral-500">
@@ -325,7 +336,7 @@ export function RecipeCard({
             <QuickInfoCard
               icon={Clock}
               label="Prep"
-              value={`${recipe.prepTime} min`}
+              value={formatTime(recipe.prepTime)}
             />
 
             {/* Cook Time (always show, 0 is valid for no-cook recipes) */}
@@ -333,7 +344,7 @@ export function RecipeCard({
               <QuickInfoCard
                 icon={Clock}
                 label="Cook"
-                value={`${recipe.cookTime} min`}
+                value={formatTime(recipe.cookTime)}
               />
             )}
 
@@ -342,7 +353,7 @@ export function RecipeCard({
               <QuickInfoCard
                 icon={Clock}
                 label="Rest"
-                value={`${recipe.restingTime} min`}
+                value={formatTime(recipe.restingTime)}
               />
             )}
 
@@ -350,13 +361,13 @@ export function RecipeCard({
             <QuickInfoCard
               icon={Clock}
               label="Total"
-              value={`${totalTime} min`}
+              value={formatTime(totalTime)}
             />
 
             {/* Servings with Adjuster */}
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-[var(--green-100)]">
               <div className="flex items-center gap-2 mb-1">
-                <Users className="h-4 w-4 text-green-600" aria-hidden="true" />
+                <Users className="h-4 w-4 text-[var(--green-600)]" aria-hidden="true" />
                 <p className="text-xs font-medium text-neutral-500 uppercase">
                   Serves
                 </p>
@@ -367,18 +378,18 @@ export function RecipeCard({
                   onClick={() =>
                     setServingMultiplier((m) => Math.max(0.5, m - 0.5))
                   }
-                  className="w-7 h-7 flex items-center justify-center bg-green-100 text-green-700 rounded-full hover:bg-green-200 font-bold text-sm print:hidden"
+                  className="w-7 h-7 flex items-center justify-center bg-[var(--green-100)] text-[var(--green-700)] rounded-full hover:bg-[var(--green-200)] font-bold text-sm print:hidden"
                   aria-label="Decrease servings"
                 >
                   −
                 </button>
-                <p className="text-lg font-bold text-neutral-900 min-w-[2ch] text-center">
+                <p className="text-lg font-bold text-[var(--neutral-900)] min-w-[2ch] text-center">
                   {adjustedServings}
                 </p>
                 <button
                   type="button"
                   onClick={() => setServingMultiplier((m) => m + 0.5)}
-                  className="w-7 h-7 flex items-center justify-center bg-green-100 text-green-700 rounded-full hover:bg-green-200 font-bold text-sm print:hidden"
+                  className="w-7 h-7 flex items-center justify-center bg-[var(--green-100)] text-[var(--green-700)] rounded-full hover:bg-[var(--green-200)] font-bold text-sm print:hidden"
                   aria-label="Increase servings"
                 >
                   +
@@ -388,7 +399,7 @@ export function RecipeCard({
                 <button
                   type="button"
                   onClick={() => setServingMultiplier(1)}
-                  className="text-xs text-green-600 mt-1 hover:underline print:hidden"
+                  className="text-xs text-[var(--green-600)] mt-1 hover:underline print:hidden"
                 >
                   Reset
                 </button>
@@ -405,7 +416,7 @@ export function RecipeCard({
                   Difficulty:
                 </span>
                 <span
-                  className={`px-4 py-2 rounded-full text-sm font-semibold border ${difficultyConfig[recipe.difficulty].color}`}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold border ${difficultyConfig[recipe.difficulty].color} difficulty`}
                 >
                   {difficultyConfig[recipe.difficulty].label}
                 </span>
@@ -420,27 +431,27 @@ export function RecipeCard({
                     <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
                       Yield:
                     </span>
-                    <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
+                    <span className="px-4 py-2 bg-white border border-[var(--green-200)] rounded-full text-sm font-medium text-[var(--neutral-700)]">
                       {recipe.yield}
                     </span>
                   </div>
                 )}
                 {recipe.cuisine && (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-[var(--neutral-600)] uppercase tracking-wider">
                       Cuisine:
                     </span>
-                    <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
+                    <span className="px-4 py-2 bg-white border border-[var(--green-200)] rounded-full text-sm font-medium text-[var(--neutral-700)]">
                       {recipe.cuisine}
                     </span>
                   </div>
                 )}
                 {recipe.course && (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-[var(--neutral-600)] uppercase tracking-wider">
                       Course:
                     </span>
-                    <span className="px-4 py-2 bg-white border border-green-200 rounded-full text-sm font-medium text-neutral-700">
+                    <span className="px-4 py-2 bg-white border border-[var(--green-200)] rounded-full text-sm font-medium text-[var(--neutral-700)]">
                       {recipe.course}
                     </span>
                   </div>
@@ -451,13 +462,13 @@ export function RecipeCard({
             {/* Dietary Information Row (only if exists) */}
             {recipe.diet && recipe.diet.length > 0 && (
               <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[var(--neutral-600)] uppercase tracking-wider">
                   Dietary:
                 </span>
                 {recipe.diet.map((d) => (
                   <span
                     key={d}
-                    className="px-3 py-1.5 bg-green-600 text-white rounded-full text-xs font-medium"
+                    className="px-3 py-1.5 bg-[var(--green-600)] text-white rounded-full text-xs font-medium"
                   >
                     {d}
                   </span>
@@ -470,14 +481,14 @@ export function RecipeCard({
           {recipe.ingredientGroups && recipe.ingredientGroups.length > 0 && (
             <div id="ingredients" className="mb-8 scroll-mt-20">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
+                <h3 className="text-2xl font-bold text-[var(--neutral-900)] flex items-center gap-2">
                   <span
-                    className="w-1 h-8 bg-green-600 rounded"
+                    className="w-1 h-8 bg-[var(--green-600)] rounded"
                     aria-hidden="true"
                   ></span>
                   Ingredients
                   {servingMultiplier !== 1 && (
-                    <span className="text-sm font-normal text-green-600">
+                    <span className="text-sm font-normal text-[var(--green-600)]">
                       (adjusted for {adjustedServings} servings)
                     </span>
                   )}
@@ -485,7 +496,7 @@ export function RecipeCard({
                 <button
                   type="button"
                   onClick={copyIngredients}
-                  className="text-sm text-green-600 hover:text-green-700 flex items-center gap-1 print:hidden"
+                  className="text-sm text-[var(--green-600)] hover:text-[var(--green-700)] flex items-center gap-1 print:hidden"
                   aria-label="Copy ingredients to clipboard"
                 >
                   {copiedIngredients ? (
@@ -507,11 +518,11 @@ export function RecipeCard({
                 {recipe.ingredientGroups.map((group, groupIndex) => (
                   <div key={groupIndex}>
                     {group.groupName && (
-                      <h4 className="font-bold text-lg text-green-800 mb-3 mt-4">
+                      <h4 className="font-bold text-lg text-[var(--green-800)] mb-3 mt-4">
                         {group.groupName}
                       </h4>
                     )}
-                    <ul className="bg-white rounded-xl p-5 shadow-sm border border-green-100 space-y-3">
+                    <ul className="bg-white rounded-xl p-5 shadow-sm border border-[var(--green-100)] space-y-3">
                       {group.ingredients.map((ingredient, index) => {
                         const ingredientId = `${groupIndex}-${index}`;
                         const isChecked = checkedIngredients.has(ingredientId);
@@ -523,8 +534,8 @@ export function RecipeCard({
                               onClick={() => toggleIngredient(ingredientId)}
                               className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 transition-colors print:hidden ${
                                 isChecked
-                                  ? "bg-green-600 border-green-600"
-                                  : "border-neutral-300 hover:border-green-400"
+                                  ? "bg-[var(--green-600)] border-[var(--green-600)]"
+                                  : "border-[var(--neutral-300)] hover:border-[var(--green-400)]"
                               }`}
                               aria-label={`Mark ${ingredient.ingredient} as ${isChecked ? "not gathered" : "gathered"}`}
                             >
@@ -537,26 +548,26 @@ export function RecipeCard({
                             </button>
                             {/* Print-only bullet */}
                             <span
-                              className="hidden print:flex w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"
+                              className="hidden print:flex w-2 h-2 bg-[var(--green-600)] rounded-full mt-2 flex-shrink-0"
                               aria-hidden="true"
                             />
                             <span
-                              className={`text-neutral-700 leading-relaxed transition-opacity ${
+                              className={`text-[var(--neutral-700)] leading-relaxed transition-opacity ${
                                 isChecked ? "opacity-50 line-through" : ""
                               }`}
                             >
                               {ingredient.amount && (
-                                <strong className="text-neutral-900">
+                                <strong className="text-[var(--neutral-900)]">
                                   {scaleAmount(ingredient.amount)}
                                 </strong>
                               )}
                               {ingredient.unit && <> {ingredient.unit}</>}
                               {(ingredient.amount || ingredient.unit) && <> </>}
-                              <span className="text-neutral-900">
+                              <span className="text-[var(--neutral-900)]">
                                 {ingredient.ingredient}
                               </span>
                               {ingredient.notes && (
-                                <span className="text-neutral-500 text-sm italic">
+                                <span className="text-[var(--neutral-500)] text-sm italic">
                                   {" "}
                                   ({ingredient.notes})
                                 </span>
@@ -575,9 +586,9 @@ export function RecipeCard({
           {/* Instructions Section */}
           {recipe.instructions && recipe.instructions.length > 0 && (
             <div id="instructions" className="mb-8 scroll-mt-20">
-              <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+              <h3 className="text-2xl font-bold text-[var(--neutral-900)] mb-4 flex items-center gap-2">
                 <span
-                  className="w-1 h-8 bg-green-600 rounded"
+                  className="w-1 h-8 bg-[var(--green-600)] rounded"
                   aria-hidden="true"
                 ></span>
                 Instructions
@@ -585,11 +596,11 @@ export function RecipeCard({
               <ol className="space-y-6">
                 {recipe.instructions.map((instruction, index) => (
                   <li key={index} className="flex gap-4">
-                    <span className="flex-shrink-0 w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md print:bg-green-100 print:text-green-800">
+                    <span className="flex-shrink-0 w-10 h-10 bg-[var(--green-600)] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md print:bg-[var(--green-100)] print:text-[var(--green-800)]">
                       {index + 1}
                     </span>
                     <div className="flex-1 pt-1">
-                      <p className="text-neutral-800 leading-relaxed mb-3 text-lg">
+                      <p className="text-[var(--neutral-800)] leading-relaxed mb-3 text-lg">
                         {instruction.step}
                       </p>
                       {instruction.image && (
@@ -602,15 +613,15 @@ export function RecipeCard({
                             className="w-full h-auto"
                           />
                           {instruction.image.caption && (
-                            <p className="text-sm text-neutral-600 mt-2 px-2 italic">
+                            <p className="text-sm text-[var(--neutral-600)] mt-2 px-2 italic">
                               {instruction.image.caption}
                             </p>
                           )}
                         </div>
                       )}
                       {instruction.tip && (
-                        <div className="mt-3 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
-                          <p className="text-sm text-yellow-900">
+                        <div className="mt-3 p-4 bg-[var(--warning-100)] border-l-4 border-[var(--warning-500)] rounded-r-lg">
+                          <p className="text-sm text-[var(--warning-600)]">
                             <strong className="font-semibold">💡 Tip:</strong>{" "}
                             {instruction.tip}
                           </p>
@@ -627,13 +638,13 @@ export function RecipeCard({
           {recipe.nutrition &&
             Object.values(recipe.nutrition).some((val) => val) && (
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+                <h3 className="text-2xl font-bold text-[var(--neutral-900)] mb-4 flex items-center gap-2">
                   <span
-                    className="w-1 h-8 bg-green-600 rounded"
+                    className="w-1 h-8 bg-[var(--green-600)] rounded"
                     aria-hidden="true"
                   ></span>
                   Nutrition Information
-                  <span className="text-sm font-normal text-neutral-500">
+                  <span className="text-sm font-normal text-[var(--neutral-500)]">
                     (per serving)
                   </span>
                 </h3>
@@ -685,20 +696,20 @@ export function RecipeCard({
           {/* Notes Section */}
           {recipe.notes && recipe.notes.length > 0 && (
             <div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+              <h3 className="text-2xl font-bold text-[var(--neutral-900)] mb-4 flex items-center gap-2">
                 <span
-                  className="w-1 h-8 bg-green-600 rounded"
+                  className="w-1 h-8 bg-[var(--green-600)] rounded"
                   aria-hidden="true"
                 ></span>
                 Chef&apos;s Notes
               </h3>
-              <ul className="bg-white rounded-xl p-5 shadow-sm border border-green-100 space-y-3">
+              <ul className="bg-white rounded-xl p-5 shadow-sm border border-[var(--green-100)] space-y-3">
                 {recipe.notes.map((note, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <span className="flex-shrink-0 text-green-600 text-xl">
+                    <span className="flex-shrink-0 text-[var(--green-600)] text-xl">
                       📝
                     </span>
-                    <span className="text-neutral-700 leading-relaxed">
+                    <span className="text-[var(--neutral-700)] leading-relaxed">
                       {note}
                     </span>
                   </li>
@@ -708,12 +719,18 @@ export function RecipeCard({
           )}
 
           {/* Footer */}
-          <div className="mt-8 pt-6 border-t-2 border-green-200 text-center">
-            <p className="text-sm text-neutral-600">
-              Recipe from{" "}
-              <strong className="text-green-700">FoodPulse.co</strong>
+          <div className="mt-8 pt-6 border-t-2 border-[var(--green-200)] text-center">
+            {recipe.author && (
+              <p className="text-sm text-[var(--neutral-700)] mb-2">
+                Recipe by{" "}
+                <strong className="text-[var(--green-700)]">{recipe.author}</strong>
+              </p>
+            )}
+            <p className="text-sm text-[var(--neutral-600)]">
+              From{" "}
+              <strong className="text-[var(--green-700)]">FoodPulse.co</strong>
             </p>
-            <p className="text-xs text-neutral-500 mt-1">
+            <p className="text-xs text-[var(--neutral-500)] mt-1">
               Your trusted source for food & nutrition insights
             </p>
           </div>
@@ -734,14 +751,14 @@ function QuickInfoCard({
   value: string;
 }) {
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100">
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-[var(--green-100)]">
       <div className="flex items-center gap-2 mb-1">
-        <Icon className="h-4 w-4 text-green-600" aria-hidden="true" />
-        <p className="text-xs font-medium text-neutral-500 uppercase">
+        <Icon className="h-4 w-4 text-[var(--green-600)]" aria-hidden="true" />
+        <p className="text-xs font-medium text-[var(--neutral-500)] uppercase">
           {label}
         </p>
       </div>
-      <p className="text-lg font-bold text-neutral-900">{value}</p>
+      <p className="text-lg font-bold text-[var(--neutral-900)]">{value}</p>
     </div>
   );
 }
@@ -757,10 +774,10 @@ function NutritionCard({
   isCalories?: boolean;
 }) {
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm border border-green-100 text-center">
-      <p className="text-xs text-neutral-500 uppercase mb-1">{label}</p>
+    <div className="bg-white rounded-xl p-4 shadow-sm border border-[var(--green-100)] text-center">
+      <p className="text-xs text-[var(--neutral-500)] uppercase mb-1">{label}</p>
       <p
-        className={`font-bold ${isCalories ? "text-xl text-green-700" : "text-lg text-neutral-900"}`}
+        className={`font-bold ${isCalories ? "text-xl text-[var(--green-700)]" : "text-lg text-[var(--neutral-900)]"}`}
       >
         {value}
       </p>

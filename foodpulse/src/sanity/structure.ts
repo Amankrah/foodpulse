@@ -1,4 +1,5 @@
 import type {StructureResolver} from 'sanity/structure'
+import {apiVersion} from './env'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -27,7 +28,8 @@ export const structure: StructureResolver = (S) =>
                       S.documentList()
                         .title('Articles')
                         .filter('_type == "article" && category._ref == $categoryId')
-                        .params({categoryId}),
+                        .params({categoryId})
+                        .apiVersion(apiVersion),
                     ),
                 ),
 
@@ -37,7 +39,8 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('Featured')
-                    .filter('_type == "article" && featured == true'),
+                    .filter('_type == "article" && featured == true')
+                    .apiVersion(apiVersion),
                 ),
 
               // Recipes
@@ -46,7 +49,8 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('Recipes')
-                    .filter('_type == "article" && isRecipe == true'),
+                    .filter('_type == "article" && isRecipe == true')
+                    .apiVersion(apiVersion),
                 ),
 
               // Drafts
@@ -55,7 +59,8 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .title('Drafts')
-                    .filter('_type == "article" && !defined(publishedAt)'),
+                    .filter('_type == "article" && !defined(publishedAt)')
+                    .apiVersion(apiVersion),
                 ),
             ]),
         ),
@@ -108,7 +113,8 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Nutrition Science')
                             .filter('_type == "glossaryTerm" && category == "nutrition-science"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
                         ),
                       S.listItem()
                         .title('🔬 Food Science')
@@ -116,7 +122,8 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Food Science')
                             .filter('_type == "glossaryTerm" && category == "food-science"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
                         ),
                       S.listItem()
                         .title('🌾 Food Systems')
@@ -124,7 +131,8 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Food Systems')
                             .filter('_type == "glossaryTerm" && category == "food-systems"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
                         ),
                       S.listItem()
                         .title('💚 Health & Wellness')
@@ -132,7 +140,8 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Health & Wellness')
                             .filter('_type == "glossaryTerm" && category == "health-wellness"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
                         ),
                       S.listItem()
                         .title('🛒 Consumer & Practical')
@@ -140,7 +149,8 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Consumer & Practical')
                             .filter('_type == "glossaryTerm" && category == "consumer-practical"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
                         ),
                       S.listItem()
                         .title('🍳 Cooking & Kitchen')
@@ -148,7 +158,8 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Cooking & Kitchen')
                             .filter('_type == "glossaryTerm" && category == "cooking-kitchen"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
                         ),
                     ]),
                 ),
@@ -160,7 +171,8 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title('Recently Updated')
                     .filter('_type == "glossaryTerm"')
-                    .defaultOrdering([{field: '_updatedAt', direction: 'desc'}]),
+                    .defaultOrdering([{field: '_updatedAt', direction: 'desc'}])
+                    .apiVersion(apiVersion),
                 ),
             ]),
         ),

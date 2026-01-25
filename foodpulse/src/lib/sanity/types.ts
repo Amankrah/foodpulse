@@ -123,6 +123,7 @@ export interface RecipeNutrition {
 }
 
 export interface RecipeData {
+  author?: string
   prepTime: number
   cookTime?: number
   restingTime?: number

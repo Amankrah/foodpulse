@@ -10,18 +10,29 @@ export const recipeDataType = defineType({
       name: 'prepTime',
       title: 'Prep Time (minutes)',
       type: 'number',
+      description: 'Active preparation time in minutes (e.g., 30 for half hour, 90 for 1.5 hours)',
       validation: (rule) => rule.required().min(0),
     }),
     defineField({
       name: 'cookTime',
       title: 'Cook Time (minutes)',
       type: 'number',
+      description: 'Active cooking time in minutes (e.g., 60 for 1 hour, 120 for 2 hours)',
       validation: (rule) => rule.min(0),
     }),
     defineField({
       name: 'restingTime',
       title: 'Resting/Marinating Time (minutes)',
       type: 'number',
+      description: 'Passive time for resting, marinating, chilling, etc. (NOT included in total active time)',
+    }),
+
+    // Author
+    defineField({
+      name: 'author',
+      title: 'Recipe Author',
+      type: 'string',
+      description: 'Name of the recipe author or chef',
     }),
 
     // Yield

@@ -15,6 +15,7 @@ import { ArticleCard } from "@/components/articles/ArticleCard";
 import { portableTextComponents } from "@/components/articles/PortableTextComponents";
 import { PrevNextNavigation } from "@/components/articles/PrevNextNavigation";
 import { RecipeCard } from "@/components/articles/RecipeCard";
+import { ChefHat } from "lucide-react";
 
 interface ArticlePageProps {
   params: Promise<{
@@ -181,7 +182,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             />
           </div>
 
-          {/* Recipe Card (if this is a recipe article) */}
+          {/* Jump to Recipe Button (for recipe articles) */}
+          {article.isRecipe && article.recipeData && (
+            <div className="mb-8">
+              <a
+                href="#recipe-card"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors shadow-md hover:shadow-lg"
+              >
+                <ChefHat className="h-5 w-5" aria-hidden="true" />
+                Jump to Recipe
+              </a>
+            </div>
+          )}
+
+          {/* Article Content */}
+          <div className="prose prose-lg prose-green max-w-none">
+            <PortableText value={article.body} components={portableTextComponents} />
+          </div>
+
+          {/* Recipe Card (if this is a recipe article) - placed after article content */}
           {article.isRecipe && article.recipeData && (
             <RecipeCard
               recipe={article.recipeData}
@@ -193,11 +212,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               url={articleUrl}
             />
           )}
-
-          {/* Article Content */}
-          <div className="prose prose-lg prose-green max-w-none">
-            <PortableText value={article.body} components={portableTextComponents} />
-          </div>
 
           {/* Sources & References */}
           {article.sources && article.sources.length > 0 && (

@@ -187,6 +187,7 @@ export const ARTICLE_BY_SLUG_QUERY = `
 
   isRecipe,
   recipeData {
+    author,
     prepTime,
     cookTime,
     restingTime,

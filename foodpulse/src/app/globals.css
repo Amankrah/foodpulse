@@ -521,3 +521,223 @@ a:focus-visible {
 .embed-container iframe[src*="instagram.com"] {
   max-width: 540px;
 }
+
+/* ========== Recipe Card Print Styles ========== */
+/* Comprehensive print optimization for RecipeCard component */
+
+@media print {
+  /* ===== Page Setup ===== */
+  @page {
+    margin: 1.5cm;
+    size: auto;
+  }
+
+  /* ===== Hide Interactive Elements ===== */
+  .print\:hidden,
+  button,
+  nav,
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* ===== Reset Backgrounds for Printing ===== */
+  /* Remove gradients and colored backgrounds to save ink */
+  .bg-gradient-to-br,
+  .bg-gradient-to-r,
+  .bg-gradient-to-l,
+  .bg-gradient-to-t,
+  .bg-gradient-to-b,
+  [class*="bg-green-"],
+  [class*="bg-brown-"],
+  [class*="bg-yellow-"],
+  [class*="bg-red-"] {
+    background: white !important;
+    background-image: none !important;
+  }
+
+  /* Keep white backgrounds */
+  .bg-white {
+    background: white !important;
+  }
+
+  /* ===== Text Color Optimization ===== */
+  /* Ensure all text is black for readability */
+  h1, h2, h3, h4, h5, h6,
+  p, li, span, div,
+  .text-white,
+  [class*="text-green-"],
+  [class*="text-brown-"],
+  [class*="text-neutral-"] {
+    color: black !important;
+  }
+
+  /* ===== Border Simplification ===== */
+  /* Convert colored borders to simple black/gray */
+  [class*="border-green-"],
+  [class*="border-brown-"] {
+    border-color: #ccc !important;
+  }
+
+  /* ===== Badge & Pill Styling ===== */
+  /* Keep badges visible but simplified */
+  .rounded-full,
+  [class*="rounded-"] {
+    border: 1px solid #666 !important;
+    background: white !important;
+    color: black !important;
+    padding: 2px 8px !important;
+  }
+
+  /* ===== Shadow Removal ===== */
+  /* Remove shadows to reduce ink usage */
+  [class*="shadow-"] {
+    box-shadow: none !important;
+  }
+
+  /* ===== Layout Optimization ===== */
+  /* Convert grid layouts to block for better print flow */
+  .grid {
+    display: block !important;
+  }
+
+  .grid > * {
+    margin-bottom: 0.5rem !important;
+    page-break-inside: avoid;
+  }
+
+  /* ===== Prevent Page Breaks ===== */
+  /* Keep related content together */
+  .mb-8,
+  section,
+  article,
+  .recipe-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* ===== Step Numbers ===== */
+  /* Ensure step numbers are visible and simple */
+  [class*="bg-green-600"][class*="rounded-full"] {
+    background: white !important;
+    color: black !important;
+    border: 2px solid black !important;
+  }
+
+  /* ===== Ingredient Checkboxes ===== */
+  /* Hide checkboxes, show bullets instead */
+  input[type="checkbox"],
+  button[aria-label*="Mark"] {
+    display: none !important;
+  }
+
+  /* Show print-only bullets */
+  .print\:flex {
+    display: flex !important;
+  }
+
+  /* ===== Rounded Corners ===== */
+  /* Simplify rounded corners for print */
+  [class*="rounded-"] {
+    border-radius: 4px !important;
+  }
+
+  /* ===== Image Handling ===== */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+
+  /* ===== Recipe Card Specific ===== */
+  #recipe-card {
+    border: 2px solid black !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  /* Recipe card header */
+  #recipe-card > div:first-child {
+    background: white !important;
+    color: black !important;
+    border-bottom: 2px solid black !important;
+  }
+
+  /* ===== Spacing Adjustments ===== */
+  /* Reduce excessive spacing for print */
+  .p-6, .p-8 {
+    padding: 1rem !important;
+  }
+
+  .mb-6, .mb-8 {
+    margin-bottom: 1rem !important;
+  }
+
+  /* ===== Typography ===== */
+  /* Optimize font sizes for print */
+  h2 {
+    font-size: 18pt !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  h3 {
+    font-size: 14pt !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  h4 {
+    font-size: 12pt !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  p, li {
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+  }
+
+  /* ===== Links ===== */
+  /* Show URLs for links */
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666;
+  }
+
+  /* Don't show URL for internal anchor links */
+  a[href^="#"]::after {
+    content: "";
+  }
+
+  /* ===== Footer ===== */
+  /* Ensure footer is visible */
+  #recipe-card .border-t-2 {
+    border-top: 1px solid #ccc !important;
+    padding-top: 1rem !important;
+    margin-top: 1rem !important;
+  }
+
+  /* ===== Nutrition Grid ===== */
+  /* Optimize nutrition cards for print */
+  [class*="grid-cols-"] {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  /* ===== Tips & Notes ===== */
+  /* Keep tips visible with simple styling */
+  [class*="bg-yellow-"] {
+    background: #f9f9f9 !important;
+    border-left: 3px solid #666 !important;
+  }
+
+  /* ===== Difficulty Badge ===== */
+  [class*="difficulty"] {
+    display: inline-block !important;
+    padding: 2px 8px !important;
+    border: 1px solid #666 !important;
+    background: white !important;
+  }
+}

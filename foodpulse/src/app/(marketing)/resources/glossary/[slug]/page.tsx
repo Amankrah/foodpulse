@@ -9,9 +9,9 @@ import { getGlossaryTermBySlug, getAllGlossaryPaths } from "@/lib/sanity";
 import { SITE_NAME } from "@/lib/constants";
 
 interface TermPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const categoryLabels: Record<string, string> = {
@@ -31,7 +31,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: TermPageProps): Promise<Metadata> {
-  const term = await getGlossaryTermBySlug(params.slug);
+  const { slug } = await params;
+  const term = await getGlossaryTermBySlug(slug);
 
   if (!term) {
     return { title: "Term Not Found" };
@@ -49,7 +50,8 @@ export async function generateMetadata({
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function TermPage({ params }: TermPageProps) {
-  const term = await getGlossaryTermBySlug(params.slug);
+  const { slug } = await params;
+  const term = await getGlossaryTermBySlug(slug);
 
   if (!term) {
     notFound();
