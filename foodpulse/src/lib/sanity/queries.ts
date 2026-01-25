@@ -255,6 +255,7 @@ export const ARTICLES_BY_CATEGORY_QUERY = `
       "url": asset->url,
       alt
     },
+    "category": category->{${categoryFragment}},
     "author": author->{
       name,
       "slug": slug.current
@@ -434,6 +435,50 @@ export const RECIPES_QUERY = `
 `
 
 // ========================================
+// Previous/Next Article Navigation Query
+// ========================================
+
+export const PREV_NEXT_ARTICLES_QUERY = `
+{
+  "previous": *[
+    _type == "article"
+    && category->slug.current == $categorySlug
+    && publishedAt < $currentPublishedAt
+    && defined(publishedAt)
+  ] | order(publishedAt desc) [0] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    image {
+      "url": asset->url,
+      alt
+    },
+    "category": category->{${categoryFragment}}
+  },
+
+  "next": *[
+    _type == "article"
+    && category->slug.current == $categorySlug
+    && publishedAt > $currentPublishedAt
+    && defined(publishedAt)
+  ] | order(publishedAt asc) [0] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    image {
+      "url": asset->url,
+      alt
+    },
+    "category": category->{${categoryFragment}}
+  }
+}
+`
+
+// ========================================
 // Sitemap Query
 // ========================================
 
@@ -453,6 +498,90 @@ export const SITEMAP_QUERY = `
 
   "authors": *[_type == "author"] {
     "slug": slug.current
+  },
+
+  "glossaryTerms": *[_type == "glossaryTerm" && defined(publishedAt)] {
+    "slug": slug.current,
+    publishedAt,
+    updatedAt
   }
+}
+`
+
+// ========================================
+// Glossary Queries
+// ========================================
+
+export const GLOSSARY_HUB_QUERY = `
+{
+  "terms": *[_type == "glossaryTerm" && defined(publishedAt)] | order(term asc) {
+    _id,
+    term,
+    "slug": slug.current,
+    shortDefinition,
+    category,
+    "letter": upper(string::split(term, "")[0])
+  },
+  "categories": array::unique(*[_type == "glossaryTerm"].category),
+  "totalCount": count(*[_type == "glossaryTerm" && defined(publishedAt)])
+}
+`
+
+export const GLOSSARY_TERM_BY_SLUG_QUERY = `
+*[_type == "glossaryTerm" && slug.current == $slug][0] {
+  _id,
+  term,
+  "slug": slug.current,
+  pronunciation,
+  shortDefinition,
+  fullDefinition,
+  example,
+  whyItMatters,
+  commonMisconceptions,
+  category,
+  "relatedTerms": relatedTerms[]-> {
+    term,
+    "slug": slug.current,
+    shortDefinition,
+    category
+  },
+  "relatedArticles": relatedArticles[]-> {
+    title,
+    "slug": slug.current,
+    excerpt,
+    "category": category->{title, "slug": slug.current}
+  },
+  sources,
+  seo,
+  publishedAt,
+  updatedAt
+}
+`
+
+export const GLOSSARY_TERMS_BY_CATEGORY_QUERY = `
+*[_type == "glossaryTerm" && category == $category && defined(publishedAt)] | order(term asc) {
+  term,
+  "slug": slug.current,
+  shortDefinition,
+  category
+}
+`
+
+export const GLOSSARY_SEARCH_QUERY = `
+*[_type == "glossaryTerm" && (
+  term match $query + "*" ||
+  shortDefinition match $query + "*" ||
+  pt::text(fullDefinition) match $query + "*"
+) && defined(publishedAt)] | order(term asc) [0...20] {
+  term,
+  "slug": slug.current,
+  shortDefinition,
+  category
+}
+`
+
+export const ALL_GLOSSARY_SLUGS_QUERY = `
+*[_type == "glossaryTerm" && defined(publishedAt)] {
+  "slug": slug.current
 }
 `

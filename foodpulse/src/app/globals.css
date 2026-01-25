@@ -493,3 +493,31 @@ a:focus-visible {
 /* ========== Article Prose Styles ========== */
 /* Styles for article content from Sanity */
 @plugin "@tailwindcss/typography";
+
+/* ========== Embed Styles ========== */
+/* Styles for embedded content (LinkedIn, Twitter, YouTube, etc.) */
+.embed-container {
+  max-width: 100%;
+}
+
+.embed-container iframe {
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+/* LinkedIn embed specific styles */
+.embed-container iframe[src*="linkedin.com"] {
+  min-height: 400px;
+}
+
+/* Twitter/X embed specific styles */
+.embed-container iframe[src*="twitter.com"],
+.embed-container iframe[src*="x.com"] {
+  max-width: 550px;
+}
+
+/* Instagram embed specific styles */
+.embed-container iframe[src*="instagram.com"] {
+  max-width: 540px;
+}

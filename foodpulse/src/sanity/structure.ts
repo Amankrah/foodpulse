@@ -79,6 +79,94 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // Glossary Section
+      S.listItem()
+        .title('Glossary')
+        .child(
+          S.list()
+            .title('Glossary')
+            .items([
+              // All Terms
+              S.listItem()
+                .title('All Terms')
+                .child(
+                  S.documentTypeList('glossaryTerm')
+                    .title('All Glossary Terms')
+                    .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                ),
+
+              // By Category
+              S.listItem()
+                .title('By Category')
+                .child(
+                  S.list()
+                    .title('Categories')
+                    .items([
+                      S.listItem()
+                        .title('🧬 Nutrition Science')
+                        .child(
+                          S.documentList()
+                            .title('Nutrition Science')
+                            .filter('_type == "glossaryTerm" && category == "nutrition-science"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                        ),
+                      S.listItem()
+                        .title('🔬 Food Science')
+                        .child(
+                          S.documentList()
+                            .title('Food Science')
+                            .filter('_type == "glossaryTerm" && category == "food-science"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                        ),
+                      S.listItem()
+                        .title('🌾 Food Systems')
+                        .child(
+                          S.documentList()
+                            .title('Food Systems')
+                            .filter('_type == "glossaryTerm" && category == "food-systems"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                        ),
+                      S.listItem()
+                        .title('💚 Health & Wellness')
+                        .child(
+                          S.documentList()
+                            .title('Health & Wellness')
+                            .filter('_type == "glossaryTerm" && category == "health-wellness"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                        ),
+                      S.listItem()
+                        .title('🛒 Consumer & Practical')
+                        .child(
+                          S.documentList()
+                            .title('Consumer & Practical')
+                            .filter('_type == "glossaryTerm" && category == "consumer-practical"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                        ),
+                      S.listItem()
+                        .title('🍳 Cooking & Kitchen')
+                        .child(
+                          S.documentList()
+                            .title('Cooking & Kitchen')
+                            .filter('_type == "glossaryTerm" && category == "cooking-kitchen"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}]),
+                        ),
+                    ]),
+                ),
+
+              // Recently Updated
+              S.listItem()
+                .title('Recently Updated')
+                .child(
+                  S.documentList()
+                    .title('Recently Updated')
+                    .filter('_type == "glossaryTerm"')
+                    .defaultOrdering([{field: '_updatedAt', direction: 'desc'}]),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
       // Redirects
       S.listItem()
         .title('Redirects')

@@ -64,6 +64,25 @@ export const portableTextComponents: PortableTextComponents = {
         </div>
       );
     },
+    embed: ({ value }: any) => {
+      if (!value?.embedCode) {
+        return null;
+      }
+
+      return (
+        <div className="my-8">
+          <div
+            className="embed-container relative w-full overflow-hidden rounded-xl bg-neutral-50 p-4"
+            dangerouslySetInnerHTML={{ __html: value.embedCode }}
+          />
+          {value.caption && (
+            <p className="mt-2 text-sm text-neutral-600 text-center italic">
+              {value.caption}
+            </p>
+          )}
+        </div>
+      );
+    },
   },
   marks: {
     link: ({ children, value }: any) => {

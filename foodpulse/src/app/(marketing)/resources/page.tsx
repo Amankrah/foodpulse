@@ -119,7 +119,7 @@ export default function ResourcesPage() {
             More Resources Coming Soon
           </h2>
           <p className="text-lg text-neutral-600 mb-6">
-            We're constantly adding new guides, tools, and resources to help you
+            We&apos;re constantly adding new guides, tools, and resources to help you
             make better food choices. Subscribe to our newsletter to be notified
             when new resources are available.
           </p>

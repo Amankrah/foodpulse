@@ -8,11 +8,13 @@ import { CategoryBadge } from "@/components/ui/Badge";
 import { StructuredData } from "@/components/shared/StructuredData";
 import { formatDate } from "@/lib/utils";
 import { SITE_URL } from "@/lib/constants";
-import { getArticleBySlug, getAllArticlePaths } from "@/lib/sanity";
+import { getArticleBySlug, getAllArticlePaths, getPrevNextArticles } from "@/lib/sanity";
 import { Clock, Calendar, User, RefreshCw } from "lucide-react";
 import { PortableText } from "@portabletext/react";
 import { ArticleCard } from "@/components/articles/ArticleCard";
 import { portableTextComponents } from "@/components/articles/PortableTextComponents";
+import { PrevNextNavigation } from "@/components/articles/PrevNextNavigation";
+import { RecipeCard } from "@/components/articles/RecipeCard";
 
 interface ArticlePageProps {
   params: Promise<{
@@ -79,6 +81,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   if (!article) {
     notFound();
   }
+
+  // Fetch previous and next articles in the same category
+  const { previous, next } = await getPrevNextArticles(
+    categorySlug,
+    article.publishedAt
+  );
 
   const articleUrl = `${SITE_URL}/articles/${categorySlug}/${slug}`;
 
@@ -172,6 +180,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               description={article.excerpt}
             />
           </div>
+
+          {/* Recipe Card (if this is a recipe article) */}
+          {article.isRecipe && article.recipeData && (
+            <RecipeCard recipe={article.recipeData} title={article.title} />
+          )}
 
           {/* Article Content */}
           <div className="prose prose-lg prose-green max-w-none">
@@ -285,6 +298,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             </div>
           )}
+
+          {/* Previous/Next Navigation */}
+          <PrevNextNavigation
+            previous={previous}
+            next={next}
+            categorySlug={categorySlug}
+          />
         </article>
       </Section>
 

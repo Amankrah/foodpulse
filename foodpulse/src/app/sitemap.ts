@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
 import { categoryList } from "@/content/categories";
+import { getSitemapData } from "@/lib/sanity";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
@@ -15,6 +16,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}/articles`,
       lastModified: new Date(),
       changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/resources/glossary`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 0.9,
     },
     {
@@ -45,14 +52,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // TODO: Add article pages when you have articles
-  // const articles = await getArticles();
-  // const articlePages = articles.map(article => ({
-  //   url: `${SITE_URL}/articles/${article.category}/${article.slug}`,
-  //   lastModified: new Date(article.updatedAt || article.publishedAt),
-  //   changeFrequency: 'weekly',
-  //   priority: 0.7,
-  // }));
+  // Fetch dynamic content from Sanity
+  const sitemapData = await getSitemapData();
 
-  return [...staticPages, ...categoryPages];
+  // Article pages
+  const articlePages: MetadataRoute.Sitemap =
+    sitemapData.articles?.map((article: any) => ({
+      url: `${SITE_URL}/articles/${article.category}/${article.slug}`,
+      lastModified: new Date(article.updatedAt || article.publishedAt),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })) || [];
+
+  // Glossary term pages
+  const glossaryPages: MetadataRoute.Sitemap =
+    sitemapData.glossaryTerms?.map((term: any) => ({
+      url: `${SITE_URL}/resources/glossary/${term.slug}`,
+      lastModified: new Date(term.updatedAt || term.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })) || [];
+
+  return [...staticPages, ...categoryPages, ...articlePages, ...glossaryPages];
 }

@@ -150,6 +150,9 @@ export const articleType = defineType({
             },
           ],
         },
+        {
+          type: 'embed',
+        },
       ],
       validation: (rule) => rule.required(),
       group: 'content',

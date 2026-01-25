@@ -257,3 +257,58 @@ export interface Redirect {
   destination: string
   permanent: boolean
 }
+
+// ========================================
+// Glossary
+// ========================================
+
+export interface GlossarySource {
+  title: string
+  url: string
+  organization?: string
+}
+
+export interface GlossaryTerm {
+  _id: string
+  term: string
+  slug: string
+  pronunciation?: string
+  shortDefinition: string
+  fullDefinition: PortableTextBlock[]
+  example?: string
+  whyItMatters?: string
+  commonMisconceptions?: string[]
+  category: string
+  relatedTerms?: {
+    term: string
+    slug: string
+    shortDefinition: string
+    category: string
+  }[]
+  relatedArticles?: {
+    title: string
+    slug: string
+    excerpt: string
+    category: {
+      title: string
+      slug: string
+    }
+  }[]
+  sources?: GlossarySource[]
+  seo?: {
+    metaTitle?: string
+    metaDescription?: string
+    keywords?: string[]
+  }
+  publishedAt: string
+  updatedAt?: string
+}
+
+export interface GlossaryTermListItem {
+  _id: string
+  term: string
+  slug: string
+  shortDefinition: string
+  category: string
+  letter: string
+}

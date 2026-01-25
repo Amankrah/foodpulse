@@ -6,6 +6,8 @@ import type {
   Category,
   Redirect,
   SiteSettings,
+  GlossaryTerm,
+  GlossaryTermListItem,
 } from './types'
 import {
   ARTICLE_LIST_QUERY,
@@ -20,6 +22,12 @@ import {
   SEARCH_QUERY,
   RECIPES_QUERY,
   SITEMAP_QUERY,
+  PREV_NEXT_ARTICLES_QUERY,
+  GLOSSARY_HUB_QUERY,
+  GLOSSARY_TERM_BY_SLUG_QUERY,
+  GLOSSARY_TERMS_BY_CATEGORY_QUERY,
+  GLOSSARY_SEARCH_QUERY,
+  ALL_GLOSSARY_SLUGS_QUERY,
 } from './queries'
 
 // ========================================
@@ -57,6 +65,19 @@ export async function searchArticles(searchTerm: string): Promise<ArticleListIte
 
 export async function getRecipes(limit: number = 12): Promise<ArticleListItem[]> {
   return await client.fetch(RECIPES_QUERY, { limit })
+}
+
+export async function getPrevNextArticles(
+  categorySlug: string,
+  currentPublishedAt: string
+): Promise<{
+  previous: ArticleListItem | null
+  next: ArticleListItem | null
+}> {
+  return await client.fetch(PREV_NEXT_ARTICLES_QUERY, {
+    categorySlug,
+    currentPublishedAt,
+  })
 }
 
 // ========================================
@@ -147,4 +168,38 @@ export async function getAllCategoryPaths(): Promise<string[]> {
 export async function getAllAuthorPaths(): Promise<string[]> {
   const query = `*[_type == "author"].slug.current`
   return await client.fetch(query)
+}
+
+// ========================================
+// Glossary Functions
+// ========================================
+
+export async function getGlossaryHub(): Promise<{
+  terms: GlossaryTermListItem[]
+  categories: string[]
+  totalCount: number
+}> {
+  return await client.fetch(GLOSSARY_HUB_QUERY)
+}
+
+export async function getGlossaryTermBySlug(slug: string): Promise<GlossaryTerm | null> {
+  return await client.fetch(GLOSSARY_TERM_BY_SLUG_QUERY, { slug })
+}
+
+export async function getGlossaryTermsByCategory(
+  category: string
+): Promise<GlossaryTermListItem[]> {
+  return await client.fetch(GLOSSARY_TERMS_BY_CATEGORY_QUERY, { category })
+}
+
+export async function searchGlossaryTerms(query: string): Promise<GlossaryTermListItem[]> {
+  return await client.fetch(GLOSSARY_SEARCH_QUERY, { query })
+}
+
+/**
+ * Generate all glossary term paths for static generation
+ */
+export async function getAllGlossaryPaths(): Promise<string[]> {
+  const terms = await client.fetch(ALL_GLOSSARY_SLUGS_QUERY)
+  return terms.map((term: { slug: string }) => term.slug)
 }

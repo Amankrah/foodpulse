@@ -186,10 +186,9 @@ export const recipeDataType = defineType({
           ],
           preview: {
             select: {step: 'step'},
-            prepare({step}, index) {
+            prepare({step}) {
               return {
-                title: `Step ${(index || 0) + 1}`,
-                subtitle: step?.slice(0, 50) + '...',
+                title: step?.slice(0, 50) + '...' || 'Recipe step',
               }
             },
           },
