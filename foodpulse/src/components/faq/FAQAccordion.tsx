@@ -55,7 +55,7 @@ export function FAQAccordion({ faqs }: FAQAccordionProps) {
             className={`w-full flex items-center justify-between p-6 text-left transition-colors ${
               isExpanded ? 'bg-green-50' : 'hover:bg-neutral-50'
             }`}
-            aria-expanded={isExpanded}
+            {...(isExpanded ? { 'aria-expanded': true } : { 'aria-expanded': false })}
             aria-controls={`answer-${faq._id}`}
           >
             <span className={`text-base lg:text-lg font-semibold pr-4 ${

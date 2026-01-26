@@ -40,6 +40,11 @@ export const mainNavigation: NavGroup[] = [
         description: "Free & premium downloadable guides",
       },
       {
+        label: "Tools",
+        href: "/tools",
+        description: "Interactive nutrition calculators",
+      },
+      {
         label: "Glossary",
         href: "/glossary",
         description: "Food & nutrition terms explained",
@@ -63,6 +68,7 @@ export const footerNavigation = {
       { label: "Home", href: "/" },
       { label: "All Articles", href: "/articles" },
       { label: "Guides", href: "/guides" },
+      { label: "Tools", href: "/tools" },
       { label: "Glossary", href: "/glossary" },
     ],
   },
@@ -118,6 +124,7 @@ export const mobileNavigation = [
     label: "Resources",
     children: [
       { label: "Guides", href: "/guides" },
+      { label: "Tools", href: "/tools" },
       { label: "Glossary", href: "/glossary" },
       { label: "FAQ", href: "/faq" },
     ],
