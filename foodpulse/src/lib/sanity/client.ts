@@ -228,6 +228,56 @@ export async function getGuideBySlug(slug: string): Promise<Guide | null> {
   return await client.fetch(GUIDE_BY_SLUG_QUERY, { slug })
 }
 
+export async function getFeaturedGuides(limit: number = 3): Promise<GuideListItem[]> {
+  const query = `
+    *[_type == "guide" && isPublished == true && isFeatured == true] | order(publishedAt desc) [0...$limit] {
+      _id,
+      title,
+      "slug": slug.current,
+      excerpt,
+      category,
+      guideType,
+      accessType,
+      featuredImage
+    }
+  `
+  return await client.fetch(query, { limit })
+}
+
+export async function getPopularGlossaryTerms(limit: number = 6): Promise<GlossaryTermListItem[]> {
+  const query = `
+    *[_type == "glossaryTerm" && defined(publishedAt)] | order(term asc) [0...$limit] {
+      _id,
+      term,
+      "slug": slug.current,
+      shortDefinition,
+      category
+    }
+  `
+  return await client.fetch(query, { limit })
+}
+
+/**
+ * Get content counts for stats
+ */
+export async function getContentCounts(): Promise<{
+  articles: number;
+  guides: number;
+  glossaryTerms: number;
+}> {
+  const [articles, guides, glossaryTerms] = await Promise.all([
+    client.fetch<number>(`count(*[_type == "article" && isPublished == true])`),
+    client.fetch<number>(`count(*[_type == "guide" && isPublished == true])`),
+    client.fetch<number>(`count(*[_type == "glossaryTerm" && defined(publishedAt)])`),
+  ])
+
+  return {
+    articles,
+    guides: guides + 7, // Add 7 static tool pages
+    glossaryTerms,
+  }
+}
+
 /**
  * Generate all guide paths for static generation
  */
