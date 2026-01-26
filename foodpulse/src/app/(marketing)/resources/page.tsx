@@ -35,7 +35,7 @@ const resources = [
     title: "Glossary",
     description:
       "Comprehensive food and nutrition terms dictionary. Understand the jargon and make informed decisions.",
-    href: "/resources/glossary",
+    href: "/glossary",
     color: "text-amber-600",
     bgColor: "bg-amber-50",
   },

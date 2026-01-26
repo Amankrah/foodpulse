@@ -17,7 +17,7 @@ const categoryLabels: Record<string, string> = {
 export function GlossaryTermCard({ term }: GlossaryTermCardProps) {
   return (
     <Link
-      href={`/resources/glossary/${term.slug}`}
+      href={`/glossary/${term.slug}`}
       className="group block bg-white border border-neutral-200 rounded-xl p-5 transition-all hover:border-green-300 hover:shadow-md"
     >
       <div className="flex flex-col h-full">

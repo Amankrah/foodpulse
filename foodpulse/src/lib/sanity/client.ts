@@ -263,17 +263,19 @@ export async function getPopularGlossaryTerms(limit: number = 6): Promise<Glossa
 export async function getContentCounts(): Promise<{
   articles: number;
   guides: number;
+  tools: number;
   glossaryTerms: number;
 }> {
   const [articles, guides, glossaryTerms] = await Promise.all([
-    client.fetch<number>(`count(*[_type == "article" && isPublished == true])`),
+    client.fetch<number>(`count(*[_type == "article" && defined(publishedAt)])`),
     client.fetch<number>(`count(*[_type == "guide" && isPublished == true])`),
     client.fetch<number>(`count(*[_type == "glossaryTerm" && defined(publishedAt)])`),
   ])
 
   return {
     articles,
-    guides: guides + 7, // Add 7 static tool pages
+    guides,
+    tools: 7, // Static tool pages
     glossaryTerms,
   }
 }

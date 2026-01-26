@@ -7,11 +7,10 @@ import {
   Calculator,
   Book,
   HelpCircle,
-  CheckCircle,
-  FileText,
-  Sparkles
+  FileText
 } from "lucide-react";
 
+import { Hero } from "@/components/sections/Hero";
 import { CategoryGrid } from "@/components/sections/CategoryGrid";
 import { NewsletterCTA } from "@/components/sections/NewsletterCTA";
 import { Section, SectionHeader } from "@/components/layout/Section";
@@ -51,8 +50,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero Section - Enhanced */}
-      <HeroSection />
+      {/* Hero Section */}
+      <Hero />
 
       {/* Quick Stats Bar */}
       <QuickStatsBar counts={counts} />
@@ -106,159 +105,21 @@ export default async function HomePage() {
 }
 
 // ============================================
-// HERO SECTION - Enhanced
-// ============================================
-
-function HeroSection() {
-  return (
-    <section className="relative bg-gradient-to-br from-green-50 via-white to-emerald-50 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-green-200 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-emerald-200 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text Content */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full text-green-700 text-sm font-medium mb-6">
-              <Sparkles className="h-4 w-4" />
-              Free food education for everyone
-            </div>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-neutral-900 leading-tight mb-6">
-              Make{" "}
-              <span className="text-green-600">Smarter</span>{" "}
-              Food Choices
-            </h1>
-
-            <p className="text-xl text-neutral-600 mb-8 max-w-lg">
-              Evidence-based guides, practical tools, and clear explanations
-              to help you understand nutrition and eat better.
-            </p>
-
-            {/* Value Props */}
-            <div className="space-y-3 mb-8">
-              {[
-                "Learn to read nutrition labels like a pro",
-                "Understand what's really in your food",
-                "Get personalized nutrition calculations",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                  <span className="text-neutral-700">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
-              <Link
-                href="/guides"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20"
-              >
-                <BookOpen className="h-5 w-5" />
-                Browse Free Guides
-              </Link>
-              <Link
-                href="/tools"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-green-700 font-semibold rounded-xl hover:bg-green-50 transition-colors border-2 border-green-200"
-              >
-                <Calculator className="h-5 w-5" />
-                Try Our Tools
-              </Link>
-            </div>
-          </div>
-
-          {/* Right: Featured Visual */}
-          <div className="relative hidden lg:block">
-            <div className="relative bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
-              {/* Mock Tool Preview */}
-              <div className="bg-green-50 rounded-xl p-6">
-                <div className="text-sm text-green-600 font-medium mb-2">
-                  Protein Calculator
-                </div>
-                <div className="text-4xl font-bold text-neutral-900 mb-1">
-                  120g
-                </div>
-                <div className="text-neutral-500 text-sm">
-                  Your daily protein goal
-                </div>
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  <div className="bg-white rounded-lg p-2 text-center">
-                    <div className="text-lg font-semibold text-neutral-900">30g</div>
-                    <div className="text-xs text-neutral-500">per meal</div>
-                  </div>
-                  <div className="bg-white rounded-lg p-2 text-center">
-                    <div className="text-lg font-semibold text-neutral-900">1.5g</div>
-                    <div className="text-xs text-neutral-500">per kg</div>
-                  </div>
-                  <div className="bg-white rounded-lg p-2 text-center">
-                    <div className="text-lg font-semibold text-neutral-900">480</div>
-                    <div className="text-xs text-neutral-500">calories</div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm text-neutral-500">Try it free →</span>
-                <div className="flex -space-x-2">
-                  {[1,2,3].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-green-100 border-2 border-white" />
-                  ))}
-                  <div className="w-8 h-8 rounded-full bg-green-600 border-2 border-white flex items-center justify-center text-white text-xs">
-                    +2k
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Elements */}
-            <div className="absolute -top-4 -left-4 bg-white rounded-xl shadow-lg p-3 transform -rotate-6">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
-                  <Book className="h-4 w-4 text-amber-600" />
-                </div>
-                <div>
-                  <div className="text-xs text-neutral-500">Glossary</div>
-                  <div className="text-sm font-semibold">150+ terms</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute -bottom-4 -right-4 bg-white rounded-xl shadow-lg p-3 transform rotate-6">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <FileText className="h-4 w-4 text-blue-600" />
-                </div>
-                <div>
-                  <div className="text-xs text-neutral-500">Articles</div>
-                  <div className="text-sm font-semibold">50+ guides</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ============================================
 // QUICK STATS BAR
 // ============================================
 
-function QuickStatsBar({ counts }: { counts: { articles: number; guides: number; glossaryTerms: number } }) {
+function QuickStatsBar({ counts }: { counts: { articles: number; guides: number; tools: number; glossaryTerms: number } }) {
   const stats = [
-    { label: "Free Articles", value: counts.articles.toString(), icon: FileText },
-    { label: "Guides & Tools", value: counts.guides.toString(), icon: BookOpen },
+    { label: "Articles", value: counts.articles.toString(), icon: FileText },
+    { label: "Guides", value: counts.guides.toString(), icon: BookOpen },
+    { label: "Tools", value: counts.tools.toString(), icon: Calculator },
     { label: "Glossary Terms", value: counts.glossaryTerms.toString(), icon: Book },
   ];
 
   return (
     <div className="bg-green-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="flex items-center gap-3">
               <div className="w-10 h-10 bg-green-800 rounded-lg flex items-center justify-center">

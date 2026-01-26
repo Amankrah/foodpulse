@@ -69,11 +69,7 @@ export default async function TermPage({ params }: TermPageProps) {
               Home
             </Link>
             <span className="mx-2">&gt;</span>
-            <Link href="/resources" className="hover:text-green-700">
-              Resources
-            </Link>
-            <span className="mx-2">&gt;</span>
-            <Link href="/resources/glossary" className="hover:text-green-700">
+            <Link href="/glossary" className="hover:text-green-700">
               Glossary
             </Link>
             <span className="mx-2">&gt;</span>
@@ -170,7 +166,7 @@ export default async function TermPage({ params }: TermPageProps) {
               {/* Back to Glossary */}
               <div className="mt-12 pt-8 border-t border-neutral-200">
                 <Link
-                  href="/resources/glossary"
+                  href="/glossary"
                   className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-medium"
                 >
                   ← Back to Glossary
@@ -190,7 +186,7 @@ export default async function TermPage({ params }: TermPageProps) {
                     {term.relatedTerms.map((relatedTerm) => (
                       <Link
                         key={relatedTerm.slug}
-                        href={`/resources/glossary/${relatedTerm.slug}`}
+                        href={`/glossary/${relatedTerm.slug}`}
                         className="block py-2 text-neutral-700 hover:text-green-700 border-b border-neutral-100 transition-colors"
                       >
                         {relatedTerm.term}

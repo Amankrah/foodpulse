@@ -10,11 +10,11 @@ export function TermJsonLd({ term }: TermJsonLdProps) {
     "@type": "DefinedTerm",
     name: term.term,
     description: term.shortDefinition,
-    url: `https://foodpulse.co/resources/glossary/${term.slug}`,
+    url: `https://foodpulse.co/glossary/${term.slug}`,
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
       name: "FoodPulse Food & Nutrition Glossary",
-      url: "https://foodpulse.co/resources/glossary",
+      url: "https://foodpulse.co/glossary",
     },
   };
 
@@ -46,20 +46,14 @@ export function TermJsonLd({ term }: TermJsonLdProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Resources",
-        item: "https://foodpulse.co/resources",
+        name: "Glossary",
+        item: "https://foodpulse.co/glossary",
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: "Glossary",
-        item: "https://foodpulse.co/resources/glossary",
-      },
-      {
-        "@type": "ListItem",
-        position: 4,
         name: term.term,
-        item: `https://foodpulse.co/resources/glossary/${term.slug}`,
+        item: `https://foodpulse.co/glossary/${term.slug}`,
       },
     ],
   };

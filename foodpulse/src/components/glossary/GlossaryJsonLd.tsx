@@ -15,7 +15,7 @@ export function GlossaryJsonLd({ terms }: GlossaryJsonLdProps) {
       "@type": "ListItem",
       position: index + 1,
       name: term.term,
-      url: `https://foodpulse.co/resources/glossary/${term.slug}`,
+      url: `https://foodpulse.co/glossary/${term.slug}`,
     })),
   };
 
