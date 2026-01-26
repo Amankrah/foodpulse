@@ -83,10 +83,9 @@ export const footerNavigation = {
     title: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Our Mission", href: "/about/our-mission" },
-      { label: "Our Team", href: "/about/our-team" },
-      { label: "Editorial Guidelines", href: "/about/editorial-guidelines" },
-      { label: "Careers", href: "/about/careers" },
+      { label: "Contact", href: "/contact" },
+      { label: "Coaching", href: "/coaching" },
+      { label: "Newsletter", href: "/newsletter" },
     ],
   },
   connect: {
