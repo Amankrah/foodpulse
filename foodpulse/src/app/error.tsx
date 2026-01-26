@@ -22,7 +22,7 @@ export default function Error({
           Something went wrong
         </h1>
         <p className="text-xl text-neutral-600 mb-8">
-          We're sorry, but something unexpected happened. Please try again.
+          We&apos;re sorry, but something unexpected happened. Please try again.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button variant="primary" size="lg" onClick={reset}>

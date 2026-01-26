@@ -82,7 +82,7 @@ export function EmailGate({
       >
         <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-green-800 mb-2">
-          You're all set!
+          You&apos;re all set!
         </h3>
         <p className="text-green-700 mb-4">
           Your download should start automatically. If not, click below.
@@ -190,7 +190,7 @@ export function EmailGate({
         </button>
 
         <p className="text-xs text-neutral-500 text-center">
-          We'll also send you our weekly newsletter with food tips and guides.
+          We&apos;ll also send you our weekly newsletter with food tips and guides.
           Unsubscribe anytime.
         </p>
       </form>

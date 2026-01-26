@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Section, SectionHeader } from "@/components/layout/Section";
+import { Section } from "@/components/layout/Section";
 import { Input, Textarea } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -29,7 +29,7 @@ export default function ContactPage() {
     // Validate form data
     const validation = contactSchema.safeParse(formData);
     if (!validation.success) {
-      setError(validation.error.errors[0].message);
+      setError(validation.error.issues[0].message);
       setIsLoading(false);
       return;
     }
@@ -41,7 +41,7 @@ export default function ContactPage() {
       } else {
         setError(result.message);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to send message. Please try again later.");
     } finally {
       setIsLoading(false);
@@ -66,7 +66,7 @@ export default function ContactPage() {
             Get in Touch
           </h1>
           <p className="text-xl text-green-800">
-            Have questions, feedback, or ideas? We'd love to hear from you.
+            Have questions, feedback, or ideas? We&apos;d love to hear from you.
             We typically respond within 24-48 hours.
           </p>
         </div>
@@ -161,7 +161,7 @@ export default function ContactPage() {
                     Message Sent!
                   </h2>
                   <p className="text-neutral-600 mb-6">
-                    Thank you for reaching out. We'll get back to you within
+                    Thank you for reaching out. We&apos;ll get back to you within
                     24-48 hours.
                   </p>
                   <Button
@@ -234,7 +234,7 @@ export default function ContactPage() {
               <p className="text-neutral-700 text-sm mb-4">
                 Check out our FAQ page. Your question might already be answered!
               </p>
-              <Button variant="outline" size="sm" href="/resources/faq">
+              <Button variant="outline" size="sm" href="/faq">
                 View FAQ
               </Button>
             </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Clock, ChefHat } from "lucide-react";
 import {
   Card,
@@ -110,10 +111,11 @@ export function FeaturedArticleCard({ article }: FeaturedArticleCardProps) {
         <div className="grid lg:grid-cols-2 gap-0">
           {/* Image */}
           <div className="relative h-64 lg:h-full">
-            <img
+            <Image
               src={article.image.url}
               alt={article.image.alt}
-              className="h-full w-full object-cover rounded-tl-xl lg:rounded-l-xl lg:rounded-tr-none transition-transform duration-300 group-hover:scale-105"
+              fill
+              className="object-cover rounded-tl-xl lg:rounded-l-xl lg:rounded-tr-none transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute top-4 left-4 flex gap-2">
               <CategoryBadge category={article.category.slug} />

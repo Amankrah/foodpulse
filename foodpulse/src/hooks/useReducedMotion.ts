@@ -7,18 +7,27 @@ import { useState, useEffect } from "react";
  * Respects the prefers-reduced-motion media query
  */
 export function useReducedMotion(): boolean {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    // Lazy initialization: only access window on client side
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    // Set initial value
-    setPrefersReducedMotion(mediaQuery.matches);
 
     // Create event listener
     const handler = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches);
     };
+
+    // Update state asynchronously if it changed
+    if (mediaQuery.matches !== prefersReducedMotion) {
+      // Use requestAnimationFrame to avoid synchronous setState
+      requestAnimationFrame(() => {
+        setPrefersReducedMotion(mediaQuery.matches);
+      });
+    }
 
     // Modern browsers
     if (mediaQuery.addEventListener) {
@@ -35,7 +44,7 @@ export function useReducedMotion(): boolean {
         mediaQuery.removeListener(handler);
       }
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return prefersReducedMotion;
 }

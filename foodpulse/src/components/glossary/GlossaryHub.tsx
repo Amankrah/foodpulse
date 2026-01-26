@@ -8,14 +8,10 @@ import { AlphabetNavigation } from "./AlphabetNavigation";
 
 interface GlossaryHubProps {
   groupedTerms: Record<string, GlossaryTermListItem[]>;
-  categories: string[];
-  totalCount: number;
 }
 
 export function GlossaryHub({
   groupedTerms,
-  categories,
-  totalCount,
 }: GlossaryHubProps) {
   const allTerms = useMemo(
     () => Object.values(groupedTerms).flat(),

@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 import { newsletterSchema } from "@/lib/schemas";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,7 +13,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           message: "Invalid request data",
-          errors: validationResult.error.errors,
+          errors: validationResult.error.issues,
         },
         { status: 400 }
       );
@@ -24,20 +21,55 @@ export async function POST(request: NextRequest) {
 
     const { email, firstName, tags } = validationResult.data;
 
-    // TODO: Add to your email service provider (Resend, Mailchimp, ConvertKit, etc.)
-    // This is a placeholder implementation
+    // Subscribe to ConvertKit
+    const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY;
+    const CONVERTKIT_FORM_ID = process.env.CONVERTKIT_FORM_ID;
 
-    // Example with Resend (uncomment when configured):
-    /*
-    await resend.contacts.create({
-      email,
-      firstName: firstName || undefined,
-      unsubscribed: false,
-      audienceId: process.env.RESEND_AUDIENCE_ID!,
-    });
-    */
+    if (!CONVERTKIT_API_KEY || !CONVERTKIT_FORM_ID) {
+      console.error("ConvertKit credentials not configured");
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Newsletter service not configured. Please contact support.",
+        },
+        { status: 500 }
+      );
+    }
 
-    console.log("Newsletter subscription:", { email, firstName, tags });
+    // Add subscriber to ConvertKit
+    const convertkitResponse = await fetch(
+      `https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          api_key: CONVERTKIT_API_KEY,
+          email,
+          first_name: firstName || undefined,
+          tags: tags || [],
+        }),
+      }
+    );
+
+    const convertkitData = await convertkitResponse.json();
+
+    if (!convertkitResponse.ok) {
+      console.error("ConvertKit API error:", convertkitData);
+
+      // Check for duplicate subscriber
+      if (convertkitData.message?.includes("already subscribed")) {
+        return NextResponse.json({
+          success: true,
+          message: "You're already subscribed to our newsletter!",
+        });
+      }
+
+      throw new Error(convertkitData.message || "Failed to subscribe");
+    }
+
+    console.log("Newsletter subscription successful:", { email, firstName, tags });
 
     return NextResponse.json({
       success: true,

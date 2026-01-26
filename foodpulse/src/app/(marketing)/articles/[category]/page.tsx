@@ -81,7 +81,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               No articles in this category yet. Check back soon!
             </p>
             <p className="text-neutral-500">
-              We're working on bringing you quality content about {category.title.toLowerCase()}.
+              We&apos;re working on bringing you quality content about {category.title.toLowerCase()}.
             </p>
           </div>
         )}

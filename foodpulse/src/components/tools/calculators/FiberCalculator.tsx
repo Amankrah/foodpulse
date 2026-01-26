@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Wheat, TrendingUp, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Wheat, CheckCircle2, AlertCircle } from 'lucide-react'
 import { ToolLayout } from '../ToolLayout'
 import { NumberInput } from '../shared/NumberInput'
 import { SelectInput } from '../shared/SelectInput'

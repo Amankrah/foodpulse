@@ -122,22 +122,22 @@ export const MAIN_NAVIGATION = [
     href: "/resources",
     children: [
       {
-        href: "/resources/guides",
+        href: "/guides",
         label: "Guides",
         description: "In-depth resources on key topics",
       },
       {
-        href: "/resources/tools",
+        href: "/tools",
         label: "Tools",
         description: "Calculators & planners",
       },
       {
-        href: "/resources/glossary",
+        href: "/glossary",
         label: "Glossary",
         description: "Food & nutrition terms",
       },
       {
-        href: "/resources/faq",
+        href: "/faq",
         label: "FAQ",
         description: "Common questions answered",
       },
@@ -173,9 +173,8 @@ export const FOOTER_NAVIGATION = {
     { label: "YouTube", href: SOCIAL_LINKS.youtube, external: true },
   ],
   legal: [
-    { label: "Privacy Policy", href: "/legal/privacy-policy" },
-    { label: "Terms of Use", href: "/legal/terms-of-use" },
-    { label: "Cookie Policy", href: "/legal/cookie-policy" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Cookie Policy", href: "/cookies" },
   ],
 } as const;
 

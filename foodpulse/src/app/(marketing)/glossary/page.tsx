@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Section, SectionHeader } from "@/components/layout/Section";
 import { GlossaryHub } from "@/components/glossary/GlossaryHub";
 import { GlossaryJsonLd } from "@/components/glossary/GlossaryJsonLd";
@@ -35,13 +36,13 @@ export default async function GlossaryPage() {
       <Section background="green" padding="lg">
         <div className="max-w-4xl mx-auto text-center">
           <nav className="text-sm text-neutral-600 mb-4">
-            <a href="/" className="hover:text-green-700">
+            <Link href="/" className="hover:text-green-700">
               Home
-            </a>
+            </Link>
             <span className="mx-2">&gt;</span>
-            <a href="/resources" className="hover:text-green-700">
+            <Link href="/resources" className="hover:text-green-700">
               Resources
-            </a>
+            </Link>
             <span className="mx-2">&gt;</span>
             <span>Glossary</span>
           </nav>
@@ -60,8 +61,6 @@ export default async function GlossaryPage() {
           {terms.length > 0 ? (
             <GlossaryHub
               groupedTerms={grouped}
-              categories={categories}
-              totalCount={totalCount}
             />
           ) : (
             <div className="text-center py-12">
@@ -69,7 +68,7 @@ export default async function GlossaryPage() {
                 No glossary terms available yet. Check back soon!
               </p>
               <p className="text-neutral-500">
-                We're building a comprehensive food and nutrition glossary.
+                We&apos;re building a comprehensive food and nutrition glossary.
               </p>
             </div>
           )}

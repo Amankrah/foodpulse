@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Coffee, AlertTriangle, Clock, TrendingUp } from 'lucide-react'
+import { Coffee, AlertTriangle, Clock } from 'lucide-react'
 import { ToolLayout } from '../ToolLayout'
 import { NumberInput } from '../shared/NumberInput'
 import { SelectInput } from '../shared/SelectInput'
@@ -238,10 +238,14 @@ export function CaffeineCalculator() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                <label 
+                  htmlFor="caffeine-source-select"
+                  className="block text-sm font-medium text-neutral-700 mb-2"
+                >
                   Caffeine Source
                 </label>
                 <select
+                  id="caffeine-source-select"
                   value={selectedSource}
                   onChange={(e) => setSelectedSource(e.target.value)}
                   className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:border-green-500 focus:outline-none bg-white"
@@ -269,10 +273,14 @@ export function CaffeineCalculator() {
                   unit="servings"
                 />
                 <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label 
+                    htmlFor="consumption-time-input"
+                    className="block text-sm font-medium text-neutral-700 mb-2"
+                  >
                     Time Consumed
                   </label>
                   <input
+                    id="consumption-time-input"
                     type="time"
                     value={consumptionTime}
                     onChange={(e) => setConsumptionTime(e.target.value)}

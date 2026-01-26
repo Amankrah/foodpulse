@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useId } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,12 +12,15 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ question, answer, isOpen, onToggle }: AccordionItemProps) {
+  const contentId = useId();
+  
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <button
         onClick={onToggle}
         className="w-full px-6 py-4 text-left flex items-center justify-between gap-4 hover:bg-neutral-50 transition-colors"
-        aria-expanded={isOpen}
+        {...(isOpen ? { "aria-expanded": "true" } : { "aria-expanded": "false" })}
+        aria-controls={contentId}
       >
         <h3 className="text-lg font-semibold text-neutral-800 flex-1">
           {question}
@@ -30,10 +33,12 @@ function AccordionItem({ question, answer, isOpen, onToggle }: AccordionItemProp
         />
       </button>
       <div
+        id={contentId}
         className={cn(
           "grid transition-all duration-200 ease-in-out",
           isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
+        {...(isOpen ? {} : { "aria-hidden": "true" })}
       >
         <div className="overflow-hidden">
           <div className="px-6 pb-4 pt-0">

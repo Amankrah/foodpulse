@@ -576,9 +576,9 @@ export const GLOSSARY_TERMS_BY_CATEGORY_QUERY = `
 
 export const GLOSSARY_SEARCH_QUERY = `
 *[_type == "glossaryTerm" && (
-  term match $query + "*" ||
-  shortDefinition match $query + "*" ||
-  pt::text(fullDefinition) match $query + "*"
+  term match $searchTerm ||
+  shortDefinition match $searchTerm ||
+  pt::text(fullDefinition) match $searchTerm
 ) && defined(publishedAt)] | order(term asc) [0...20] {
   term,
   "slug": slug.current,
@@ -689,9 +689,9 @@ export const FAQ_PAGE_QUERY = `
 
 export const FAQ_SEARCH_QUERY = `
 *[_type == "faqDocument" && isPublished == true && (
-  question match $query + "*" ||
-  shortAnswer match $query + "*" ||
-  pt::text(fullAnswer) match $query + "*"
+  question match $searchTerm ||
+  shortAnswer match $searchTerm ||
+  pt::text(fullAnswer) match $searchTerm
 )] | order(order asc) {
   _id,
   question,

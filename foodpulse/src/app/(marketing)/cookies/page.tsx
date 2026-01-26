@@ -230,7 +230,7 @@ export default function CookiePolicyPage() {
                 rel="noopener noreferrer"
                 className="text-green-600 hover:text-green-700 underline"
               >
-                Google's Privacy & Terms
+                Google&apos;s Privacy & Terms
               </a>
               .
             </p>
@@ -319,7 +319,7 @@ export default function CookiePolicyPage() {
               5.2 Cookie Consent Tool
             </h3>
             <p className="text-neutral-700">
-              When you first visit our website, you'll see a cookie consent banner. You can manage your
+              When you first visit our website, you&apos;ll see a cookie consent banner. You can manage your
               preferences through this banner or update them at any time.
             </p>
           </section>
@@ -330,8 +330,8 @@ export default function CookiePolicyPage() {
               6. Do Not Track Signals
             </h2>
             <p className="text-neutral-700">
-              Some browsers have a "Do Not Track" feature that lets you tell websites that you do not want to
-              have your online activities tracked. At this time, we do not respond to browser "Do Not Track"
+              Some browsers have a &quot;Do Not Track&quot; feature that lets you tell websites that you do not want to
+              have your online activities tracked. At this time, we do not respond to browser &quot;Do Not Track&quot;
               signals. We will honor your cookie preferences as set through our cookie consent tool or your
               browser settings.
             </p>
@@ -348,7 +348,7 @@ export default function CookiePolicyPage() {
             </p>
             <p className="text-neutral-700">
               We encourage you to review this Cookie Policy periodically to stay informed about how we use
-              cookies. The "Last updated" date at the top of this page indicates when this policy was last
+              cookies. The &quot;Last updated&quot; date at the top of this page indicates when this policy was last
               revised.
             </p>
           </section>

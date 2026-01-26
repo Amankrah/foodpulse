@@ -198,7 +198,9 @@ export async function getGlossaryTermsByCategory(
 }
 
 export async function searchGlossaryTerms(query: string): Promise<GlossaryTermListItem[]> {
-  return await client.fetch(GLOSSARY_SEARCH_QUERY, { query })
+  // Add wildcards for partial matching
+  const searchTerm = `*${query}*`
+  return await client.fetch(GLOSSARY_SEARCH_QUERY, { searchTerm })
 }
 
 /**

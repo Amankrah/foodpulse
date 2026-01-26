@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
               We use the information we collect to:
             </p>
             <ul className="list-disc list-inside space-y-2 text-neutral-700">
-              <li>Send you our newsletter (if you've subscribed)</li>
+              <li>Send you our newsletter (if you&apos;ve subscribed)</li>
               <li>Respond to your inquiries and provide customer support</li>
               <li>Improve our website and content</li>
               <li>Understand how our website is used and optimize user experience</li>
@@ -203,7 +203,7 @@ export default function PrivacyPolicyPage() {
               about food education, nutrition tips, and new content.
             </p>
             <p className="text-neutral-700">
-              You can unsubscribe from our newsletter at any time by clicking the "unsubscribe" link at the
+              You can unsubscribe from our newsletter at any time by clicking the &quot;unsubscribe&quot; link at the
               bottom of any email we send you, or by contacting us directly.
             </p>
           </section>
@@ -223,7 +223,7 @@ export default function PrivacyPolicyPage() {
           {/* Children's Privacy */}
           <section className="mb-10">
             <h2 className="text-2xl font-semibold text-neutral-900 mb-4">
-              10. Children's Privacy
+              10. Children&apos;s Privacy
             </h2>
             <p className="text-neutral-700">
               Our website is not intended for children under 13 years of age. We do not knowingly collect
@@ -252,7 +252,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p className="text-neutral-700 mb-4">
               We may update our privacy policy from time to time. We will notify you of any changes by posting
-              the new privacy policy on this page and updating the "Last updated" date.
+              the new privacy policy on this page and updating the &quot;Last updated&quot; date.
             </p>
             <p className="text-neutral-700">
               We encourage you to review this privacy policy periodically for any changes. Changes to this

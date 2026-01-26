@@ -1,24 +1,209 @@
+# FoodPulse Search Page — Updated Implementation
+
+## What's Changing
+
+Your current search only searches articles. Now you need to search across:
+- Articles
+- Guides
+- Glossary terms
+- FAQ items
+- Tools (by title/description)
+
+---
+
+## 1. Updated Search API Route
+
+```typescript
+// app/api/search/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { sanityFetch } from '@/lib/sanity'
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const query = searchParams.get('q')
+  const contentType = searchParams.get('type') || 'all' // all, articles, guides, glossary, faq
+  const category = searchParams.get('category') || ''
+  const limit = parseInt(searchParams.get('limit') || '20')
+
+  if (!query || query.length < 2) {
+    return NextResponse.json({
+      success: false,
+      error: 'Query must be at least 2 characters',
+    })
+  }
+
+  try {
+    const results = await searchContent(query, contentType, category, limit)
+    
+    return NextResponse.json({
+      success: true,
+      data: {
+        query,
+        contentType,
+        results,
+        totalCount: results.length,
+      },
+    })
+  } catch (error) {
+    console.error('Search error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Search failed',
+    }, { status: 500 })
+  }
+}
+
+async function searchContent(
+  query: string,
+  contentType: string,
+  category: string,
+  limit: number
+) {
+  const searchQuery = `*${query}*` // Wildcard search
+
+  // Build queries for each content type
+  const queries: Record<string, string> = {
+    articles: `
+      *[_type == "article" && (
+        title match $query ||
+        excerpt match $query ||
+        pt::text(body) match $query
+      ) ${category ? '&& category->slug.current == $category' : ''}] | order(_createdAt desc) [0...$limit] {
+        _id,
+        _type,
+        title,
+        "slug": slug.current,
+        excerpt,
+        "category": category->{title, "slug": slug.current},
+        featuredImage,
+        publishedAt
+      }
+    `,
+    guides: `
+      *[_type == "guide" && isPublished == true && (
+        title match $query ||
+        excerpt match $query ||
+        pt::text(chapters[].content) match $query
+      )] | order(publishedAt desc) [0...$limit] {
+        _id,
+        _type,
+        title,
+        "slug": slug.current,
+        excerpt,
+        category,
+        guideType,
+        accessType,
+        featuredImage
+      }
+    `,
+    glossary: `
+      *[_type == "glossaryTerm" && (
+        term match $query ||
+        shortDefinition match $query ||
+        pt::text(fullDefinition) match $query ||
+        $rawQuery in aliases
+      )] | order(term asc) [0...$limit] {
+        _id,
+        _type,
+        "title": term,
+        "slug": slug.current,
+        "excerpt": shortDefinition,
+        category
+      }
+    `,
+    faq: `
+      *[_type == "faqItem" && isPublished == true && (
+        question match $query ||
+        shortAnswer match $query
+      )] | order(category asc, order asc) [0...$limit] {
+        _id,
+        _type,
+        "title": question,
+        "slug": slug.current,
+        "excerpt": shortAnswer,
+        category
+      }
+    `,
+  }
+
+  const params = { 
+    query: searchQuery, 
+    rawQuery: query.toLowerCase(),
+    category, 
+    limit 
+  }
+
+  if (contentType === 'all') {
+    // Search all content types
+    const [articles, guides, glossary, faq] = await Promise.all([
+      sanityFetch({ query: queries.articles, params }),
+      sanityFetch({ query: queries.guides, params }),
+      sanityFetch({ query: queries.glossary, params }),
+      sanityFetch({ query: queries.faq, params }),
+    ])
+
+    // Combine and sort by relevance (title match first)
+    const allResults = [
+      ...articles.map((r: any) => ({ ...r, _type: 'article' })),
+      ...guides.map((r: any) => ({ ...r, _type: 'guide' })),
+      ...glossary.map((r: any) => ({ ...r, _type: 'glossaryTerm' })),
+      ...faq.map((r: any) => ({ ...r, _type: 'faqItem' })),
+    ]
+
+    // Sort: exact title matches first, then partial matches
+    const lowerQuery = query.toLowerCase()
+    return allResults.sort((a, b) => {
+      const aTitle = a.title?.toLowerCase() || ''
+      const bTitle = b.title?.toLowerCase() || ''
+      const aExact = aTitle === lowerQuery
+      const bExact = bTitle === lowerQuery
+      const aStarts = aTitle.startsWith(lowerQuery)
+      const bStarts = bTitle.startsWith(lowerQuery)
+      
+      if (aExact && !bExact) return -1
+      if (bExact && !aExact) return 1
+      if (aStarts && !bStarts) return -1
+      if (bStarts && !aStarts) return 1
+      return 0
+    }).slice(0, limit)
+  }
+
+  // Search specific content type
+  if (queries[contentType]) {
+    return sanityFetch({ query: queries[contentType], params })
+  }
+
+  return []
+}
+```
+
+---
+
+## 2. Updated Search Page Component
+
+```tsx
+// app/search/page.tsx
 "use client";
 
 import { useState, useEffect, useCallback, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/layout/Section";
+import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import {
-  Search as SearchIcon,
-  X,
-  FileText,
-  BookOpen,
-  HelpCircle,
+import { 
+  Search as SearchIcon, 
+  X, 
+  FileText, 
+  BookOpen, 
+  HelpCircle, 
+  Calculator,
   Book,
-  ArrowRight,
-  Calculator
+  ArrowRight
 } from "lucide-react";
 import { categoryList } from "@/content/categories";
 import { urlFor } from "@/sanity/image";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 // Content type configuration
 const contentTypes = [
@@ -26,7 +211,6 @@ const contentTypes = [
   { id: 'articles', label: 'Articles', icon: FileText },
   { id: 'guides', label: 'Guides', icon: BookOpen },
   { id: 'glossary', label: 'Glossary', icon: Book },
-  { id: 'tools', label: 'Tools', icon: Calculator },
   { id: 'faq', label: 'FAQ', icon: HelpCircle },
 ] as const;
 
@@ -34,19 +218,20 @@ type ContentType = typeof contentTypes[number]['id'];
 
 interface SearchResult {
   _id: string;
-  _type: 'article' | 'guide' | 'glossaryTerm' | 'faqDocument' | 'tool';
+  _type: 'article' | 'guide' | 'glossaryTerm' | 'faqItem';
   title: string;
   slug: string;
   excerpt?: string;
   category?: { title: string; slug: string } | string;
-  featuredImage?: unknown;
+  featuredImage?: any;
   guideType?: string;
   accessType?: string;
 }
 
 function SearchPageContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-
+  
   // URL params
   const initialQuery = searchParams.get("q") || "";
   const initialType = (searchParams.get("type") as ContentType) || "all";
@@ -62,7 +247,7 @@ function SearchPageContent() {
 
   // Perform search
   const performSearch = useCallback(async (
-    searchQuery: string,
+    searchQuery: string, 
     type: ContentType = "all",
     category: string = ""
   ) => {
@@ -154,12 +339,10 @@ function SearchPageContent() {
         return `/articles/${catSlug}/${result.slug}`;
       case 'guide':
         return `/guides/${result.slug}`;
-      case 'tool':
-        return `/tools/${result.slug}`;
       case 'glossaryTerm':
         return `/glossary/${result.slug}`;
-      case 'faqDocument':
-        return `/faq#${result.slug}`;
+      case 'faqItem':
+        return `/resources/faq#${result.slug}`;
       default:
         return '#';
     }
@@ -167,12 +350,11 @@ function SearchPageContent() {
 
   // Get badge for result type
   const getTypeBadge = (type: SearchResult['_type']) => {
-    const config: Record<SearchResult['_type'], { label: string; color: string }> = {
+    const config = {
       article: { label: 'Article', color: 'bg-blue-100 text-blue-700' },
       guide: { label: 'Guide', color: 'bg-purple-100 text-purple-700' },
-      tool: { label: 'Tool', color: 'bg-green-100 text-green-700' },
       glossaryTerm: { label: 'Glossary', color: 'bg-amber-100 text-amber-700' },
-      faqDocument: { label: 'FAQ', color: 'bg-emerald-100 text-emerald-700' },
+      faqItem: { label: 'FAQ', color: 'bg-green-100 text-green-700' },
     };
     return config[type] || { label: type, color: 'bg-neutral-100 text-neutral-700' };
   };
@@ -193,8 +375,8 @@ function SearchPageContent() {
           <h1 className="text-4xl lg:text-5xl font-display font-bold text-green-900 mb-4">
             Search FoodPulse
           </h1>
-          <p className="lead-text text-green-800 mb-8">
-            Find articles, guides, tools, glossary terms, and answers
+          <p className="text-xl text-green-800 mb-8">
+            Find articles, guides, glossary terms, and answers
           </p>
 
           {/* Search Form */}
@@ -207,7 +389,7 @@ function SearchPageContent() {
                   placeholder="Search for anything..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-green-200 bg-white focus:border-green-500 focus:outline-none focus:ring-4 focus:ring-green-100 text-lg transition-all"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-green-200 bg-white focus:border-green-500 focus:outline-none text-lg"
                   autoFocus
                 />
                 {query && (
@@ -215,7 +397,6 @@ function SearchPageContent() {
                     type="button"
                     onClick={() => setQuery("")}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
-                    aria-label="Clear search"
                   >
                     <X className="h-5 w-5" />
                   </button>
@@ -239,10 +420,10 @@ function SearchPageContent() {
                   key={id}
                   type="button"
                   onClick={() => handleTypeChange(id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     contentType === id
-                      ? "bg-white text-green-700 shadow-md border-2 border-white"
-                      : "bg-green-800/50 text-green-100 hover:bg-green-700/50 border-2 border-transparent"
+                      ? "bg-white text-green-700 shadow-sm"
+                      : "bg-green-800/50 text-green-100 hover:bg-green-700/50"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -254,15 +435,15 @@ function SearchPageContent() {
             {/* Category Filter (only for articles) */}
             {(contentType === 'all' || contentType === 'articles') && (
               <div className="flex flex-wrap gap-2 pt-2">
-                <span className="text-green-200 text-xs font-semibold uppercase tracking-wide self-center mr-2">
+                <span className="text-green-200 text-sm self-center mr-2">
                   Filter by category:
                 </span>
                 <button
                   type="button"
                   onClick={() => handleCategoryChange("")}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                     selectedCategory === ""
-                      ? "bg-white text-green-700 shadow-sm"
+                      ? "bg-white/90 text-green-700"
                       : "bg-green-900/30 text-green-100 hover:bg-green-800/50"
                   }`}
                 >
@@ -273,9 +454,9 @@ function SearchPageContent() {
                     key={category.slug}
                     type="button"
                     onClick={() => handleCategoryChange(category.slug)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                       selectedCategory === category.slug
-                        ? "bg-white text-green-700 shadow-sm"
+                        ? "bg-white/90 text-green-700"
                         : "bg-green-900/30 text-green-100 hover:bg-green-800/50"
                     }`}
                   >
@@ -304,7 +485,7 @@ function SearchPageContent() {
                       : "No results found"}
                   </h2>
                   <p className="text-neutral-600 mt-1">
-                    Searching for: <span className="font-semibold">&quot;{query}&quot;</span>
+                    Searching for: <span className="font-semibold">"{query}"</span>
                     {contentType !== 'all' && (
                       <> in <span className="font-semibold">{contentType}</span></>
                     )}
@@ -320,8 +501,8 @@ function SearchPageContent() {
               {results.length > 0 ? (
                 contentType === 'all' ? (
                   // Grouped results for "All" search
-                  <GroupedResults
-                    groupedResults={groupedResults}
+                  <GroupedResults 
+                    groupedResults={groupedResults} 
                     getResultUrl={getResultUrl}
                     getTypeBadge={getTypeBadge}
                   />
@@ -352,20 +533,19 @@ function SearchPageContent() {
       {!hasSearched && (
         <Section background="neutral" padding="md">
           <div className="max-w-4xl mx-auto">
-            <h3 className="eyebrow mb-4">
+            <h3 className="text-lg font-semibold text-neutral-900 mb-4">
               Popular Searches
             </h3>
             <div className="flex flex-wrap gap-2">
-              {['protein', 'macro', 'fiber', 'organic', 'meal planning', 'nutrition labels', 'calorie', 'vitamins'].map((term) => (
+              {['protein', 'macros', 'fiber', 'organic', 'meal planning', 'nutrition labels'].map((term) => (
                 <button
                   key={term}
-                  type="button"
                   onClick={() => {
                     setQuery(term);
                     performSearch(term, 'all', '');
                     updateURL(term, 'all', '');
                   }}
-                  className="px-4 py-2 bg-white rounded-full text-sm text-neutral-700 hover:bg-green-50 hover:text-green-700 border border-neutral-200 hover:border-green-300 transition-all hover:shadow-sm"
+                  className="px-4 py-2 bg-white rounded-full text-sm text-neutral-700 hover:bg-green-50 hover:text-green-700 border border-neutral-200 transition-colors"
                 >
                   {term}
                 </button>
@@ -379,22 +559,21 @@ function SearchPageContent() {
 }
 
 // Grouped Results Component
-function GroupedResults({
-  groupedResults,
-  getResultUrl,
-  getTypeBadge
-}: {
+function GroupedResults({ 
+  groupedResults, 
+  getResultUrl, 
+  getTypeBadge 
+}: { 
   groupedResults: Record<string, SearchResult[]>;
   getResultUrl: (result: SearchResult) => string;
   getTypeBadge: (type: SearchResult['_type']) => { label: string; color: string };
 }) {
-  const typeOrder: SearchResult['_type'][] = ['article', 'guide', 'tool', 'glossaryTerm', 'faqDocument'];
-  const typeLabels: Record<SearchResult['_type'], string> = {
+  const typeOrder = ['article', 'guide', 'glossaryTerm', 'faqItem'] as const;
+  const typeLabels = {
     article: 'Articles',
     guide: 'Guides',
-    tool: 'Tools',
     glossaryTerm: 'Glossary Terms',
-    faqDocument: 'FAQ',
+    faqItem: 'FAQ',
   };
 
   return (
@@ -438,41 +617,30 @@ function GroupedResults({
 }
 
 // Search Result Card Component
-function SearchResultCard({
-  result,
-  url,
+function SearchResultCard({ 
+  result, 
+  url, 
   badge,
   compact = false
-}: {
-  result: SearchResult;
-  url: string;
+}: { 
+  result: SearchResult; 
+  url: string; 
   badge: { label: string; color: string };
   compact?: boolean;
 }) {
-  // Check if we should show the image and extract image URL
-  const hasImage = !compact && 
-    result.featuredImage && 
-    typeof result.featuredImage === 'object' && 
-    result.featuredImage !== null &&
-    'url' in result.featuredImage;
-  
-  const imageUrl = hasImage 
-    ? urlFor(result.featuredImage as SanityImageSource)?.width(96).height(96).url() || ''
-    : null;
-
   return (
     <Link
       href={url}
-      className={`block bg-white rounded-xl border border-neutral-200 hover:border-green-300 hover:shadow-lg transition-all duration-200 group ${
+      className={`block bg-white rounded-xl border border-neutral-200 hover:border-green-300 hover:shadow-md transition-all ${
         compact ? 'p-4' : 'p-5'
       }`}
     >
       <div className="flex gap-4">
         {/* Image (for articles and guides) */}
-        {imageUrl && (
+        {result.featuredImage && !compact && (
           <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-neutral-100">
             <Image
-              src={imageUrl}
+              src={urlFor(result.featuredImage)?.width(96).height(96).url() || ''}
               alt=""
               width={96}
               height={96}
@@ -517,9 +685,9 @@ function SearchResultCard({
 // Loading State
 function LoadingState() {
   return (
-    <div className="text-center py-12 animate-fade-in">
+    <div className="text-center py-12">
       <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-green-200 border-t-green-600" />
-      <p className="mt-4 body-text">Searching across all content...</p>
+      <p className="mt-4 text-neutral-600">Searching across all content...</p>
     </div>
   );
 }
@@ -527,13 +695,13 @@ function LoadingState() {
 // Empty State (before search)
 function EmptyState() {
   return (
-    <div className="text-center py-16 animate-fade-in">
+    <div className="text-center py-16">
       <SearchIcon className="h-16 w-16 text-neutral-200 mx-auto mb-4" />
-      <h3 className="article-title mb-2">
+      <h3 className="text-xl font-semibold text-neutral-900 mb-2">
         What are you looking for?
       </h3>
-      <p className="body-text max-w-md mx-auto">
-        Search across articles, guides, tools, glossary terms, and frequently asked questions.
+      <p className="text-neutral-600 max-w-md mx-auto">
+        Search across articles, guides, glossary terms, and frequently asked questions.
       </p>
     </div>
   );
@@ -547,10 +715,10 @@ function NoResultsState({ query }: { query: string }) {
         <SearchIcon className="h-8 w-8 text-neutral-400" />
       </div>
       <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-        No results for &quot;{query}&quot;
+        No results for "{query}"
       </h3>
       <p className="text-neutral-600 mb-6 max-w-md mx-auto">
-        We couldn&apos;t find anything matching your search. Try different keywords or browse our content.
+        We couldn't find anything matching your search. Try different keywords or browse our content.
       </p>
       <div className="flex flex-wrap justify-center gap-3">
         <Button variant="outline" size="md" href="/articles">
@@ -575,3 +743,136 @@ export default function SearchPage() {
     </Suspense>
   );
 }
+```
+
+---
+
+## 3. Add Search to Header (Global Search)
+
+```tsx
+// components/layout/SearchTrigger.tsx
+"use client";
+
+import { useState } from "react";
+import { Search, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+export function SearchTrigger() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+      setIsOpen(false);
+      setQuery("");
+    }
+  };
+
+  return (
+    <>
+      {/* Search Icon Button */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="p-2 text-neutral-600 hover:text-green-600 transition-colors"
+        aria-label="Search"
+      >
+        <Search className="h-5 w-5" />
+      </button>
+
+      {/* Search Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsOpen(false)}
+          />
+
+          {/* Search Box */}
+          <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <form onSubmit={handleSubmit}>
+              <div className="flex items-center px-4">
+                <Search className="h-5 w-5 text-neutral-400" />
+                <input
+                  type="text"
+                  placeholder="Search articles, guides, glossary..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="flex-1 px-4 py-4 text-lg focus:outline-none"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 text-neutral-400 hover:text-neutral-600"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </form>
+
+            {/* Quick Links */}
+            <div className="border-t px-4 py-3 bg-neutral-50">
+              <p className="text-xs text-neutral-500 mb-2">Quick links:</p>
+              <div className="flex flex-wrap gap-2">
+                {['Articles', 'Guides', 'Glossary', 'FAQ'].map((link) => (
+                  <a
+                    key={link}
+                    href={`/${link.toLowerCase()}`}
+                    className="px-3 py-1 bg-white rounded-full text-sm text-neutral-600 hover:text-green-600 border"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+---
+
+## 4. Key Changes Summary
+
+| Before | After |
+|--------|-------|
+| Only searches articles | Searches articles, guides, glossary, FAQ |
+| No content type filter | Tabs to filter by content type |
+| Simple list results | Grouped results by type |
+| No visual type indicators | Colored badges per type |
+| Basic empty state | Rich empty state with suggestions |
+| No popular searches | Popular searches when empty |
+
+---
+
+## 5. SEO Metadata
+
+```tsx
+// app/search/layout.tsx
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Search | FoodPulse",
+  description: "Search FoodPulse for articles, guides, glossary terms, and answers about food and nutrition.",
+  robots: {
+    index: false, // Don't index search results pages
+    follow: true,
+  },
+};
+
+export default function SearchLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return children;
+}
+```

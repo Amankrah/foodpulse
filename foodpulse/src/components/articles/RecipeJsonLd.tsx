@@ -11,6 +11,53 @@ interface RecipeJsonLdProps {
   url: string;
 }
 
+// JSON-LD Schema types
+interface HowToStep {
+  "@type": "HowToStep";
+  position: number;
+  text: string;
+  image?: {
+    "@type": "ImageObject";
+    url: string;
+  };
+  tip?: string;
+}
+
+interface NutritionInformation {
+  "@type": "NutritionInformation";
+  calories?: string;
+  proteinContent?: string;
+  carbohydrateContent?: string;
+  fatContent?: string;
+  fiberContent?: string;
+  sugarContent?: string;
+  sodiumContent?: string;
+}
+
+interface RecipeSchema {
+  "@context": "https://schema.org";
+  "@type": "Recipe";
+  name: string;
+  description: string;
+  image: string;
+  author: {
+    "@type": "Person";
+    name: string;
+  };
+  datePublished: string;
+  prepTime: string;
+  totalTime: string;
+  recipeYield: string;
+  recipeIngredient: string[];
+  recipeInstructions: HowToStep[];
+  url: string;
+  cookTime?: string;
+  recipeCategory?: string;
+  recipeCuisine?: string;
+  suitableForDiet?: string[];
+  nutrition?: NutritionInformation;
+}
+
 export function RecipeJsonLd({
   title,
   description,
@@ -39,7 +86,7 @@ export function RecipeJsonLd({
   // Convert instructions to HowToStep format
   const instructions =
     recipe.instructions?.map((inst, index) => {
-      const step: any = {
+      const step: HowToStep = {
         "@type": "HowToStep",
         position: index + 1,
         text: inst.step,
@@ -85,7 +132,7 @@ export function RecipeJsonLd({
     "nut-free": "https://schema.org/GlutenFreeDiet",
   };
 
-  const schema: any = {
+  const schema: RecipeSchema = {
     "@context": "https://schema.org",
     "@type": "Recipe",
     name: title,
@@ -124,7 +171,7 @@ export function RecipeJsonLd({
   }
 
   if (recipe.nutrition) {
-    const nutrition: any = {
+    const nutrition: NutritionInformation = {
       "@type": "NutritionInformation",
     };
 

@@ -37,7 +37,7 @@ export default async function AllArticlesPage() {
             No articles available yet. Check back soon!
           </p>
           <p className="text-neutral-500">
-            We're working hard to bring you quality food content.
+            We&apos;re working hard to bring you quality food content.
           </p>
         </div>
       )}

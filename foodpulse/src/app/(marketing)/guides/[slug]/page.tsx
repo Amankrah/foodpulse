@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGuideBySlug, getAllGuidePaths } from "@/lib/sanity";
 import { Container } from "@/components/layout/Container";
@@ -11,7 +12,6 @@ import { DownloadButton } from "@/components/guides/DownloadButton";
 import { PurchaseCta } from "@/components/guides/PurchaseCta";
 import { GuideCard } from "@/components/guides/GuideCard";
 import { NewsletterCTA } from "@/components/sections/NewsletterCTA";
-import type { Guide } from "@/lib/sanity/types";
 
 interface GuidePageProps {
   params: {
@@ -73,9 +73,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <Section background="white" padding="none">
         <Container>
           <nav className="flex items-center gap-2 text-sm text-neutral-600 py-4">
-            <a href="/" className="hover:text-green-700 transition-colors">
+            <Link href="/" className="hover:text-green-700 transition-colors">
               Home
-            </a>
+            </Link>
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -83,12 +83,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 clipRule="evenodd"
               />
             </svg>
-            <a
+            <Link
               href="/guides"
               className="hover:text-green-700 transition-colors"
             >
               Guides
-            </a>
+            </Link>
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -166,7 +166,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
       {/* Related Guides */}
       {guide.relatedGuides && guide.relatedGuides.length > 0 && (
-        <Section background="neutral-light" padding="lg">
+        <Section background="neutral" padding="lg">
           <Container>
             <h2 className="text-3xl font-display font-bold text-neutral-900 mb-8">
               Related Guides

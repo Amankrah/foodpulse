@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/shared/Logo";
 import { mainNavigation } from "@/content/navigation";
 import { MobileMenu } from "./MobileMenu";
+import { SearchTrigger } from "./SearchTrigger";
 
 interface HeaderProps {
   transparent?: boolean;
@@ -63,8 +64,9 @@ export function Header({ transparent = false }: HeaderProps) {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
+            {/* Search & CTA */}
+            <div className="hidden lg:flex items-center gap-4">
+              <SearchTrigger />
               <Button
                 variant={isTransparent ? "accent" : "primary"}
                 size="sm"

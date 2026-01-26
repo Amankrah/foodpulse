@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/layout/Section";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -18,7 +16,7 @@ const benefits = [
   {
     icon: "🍳",
     title: "Exclusive Recipes",
-    description: "Subscriber-only healthy recipes you won't find anywhere else",
+    description: "Subscriber-only healthy recipes you won&apos;t find anywhere else",
   },
   {
     icon: "💡",
@@ -124,10 +122,10 @@ export default function NewsletterPage() {
                   <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
                 <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">
-                  You're Subscribed!
+                  You&apos;re Subscribed!
                 </h2>
                 <p className="text-neutral-600 mb-6">
-                  Check your email to confirm your subscription. You'll receive
+                  Check your email to confirm your subscription. You&apos;ll receive
                   your first newsletter this Saturday.
                 </p>
                 <Button variant="outline" size="md" href="/articles">
@@ -142,7 +140,7 @@ export default function NewsletterPage() {
       {/* Benefits Section */}
       <Section background="neutral" padding="lg">
         <SectionHeader
-          eyebrow="What You'll Get"
+          eyebrow="What You&apos;ll Get"
           title="Why Subscribe?"
           centered
         />
@@ -164,10 +162,10 @@ export default function NewsletterPage() {
       <Section background="white" padding="lg">
         <div className="max-w-3xl mx-auto text-center">
           <blockquote className="text-2xl font-display text-neutral-800 mb-4">
-            "The only food newsletter I actually read. No fluff, just solid
-            information I can use."
+            &quot;The only food newsletter I actually read. No fluff, just solid
+            information I can use.&quot;
           </blockquote>
-          <p className="text-neutral-600">— FoodPulse Reader</p>
+          <p className="text-neutral-600">• FoodPulse Reader</p>
         </div>
       </Section>
     </>

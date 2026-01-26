@@ -10,6 +10,40 @@ interface GuideContentProps {
   className?: string;
 }
 
+interface PortableTextComponentProps<T = unknown> {
+  value?: T;
+  children?: React.ReactNode;
+}
+
+interface PortableTextImage {
+  _type: "image";
+  asset?: {
+    _ref?: string;
+    _type?: "reference";
+  };
+  alt?: string;
+  caption?: string;
+}
+
+interface PortableTextCallout {
+  _type: "callout";
+  type?: "info" | "tip" | "warning" | "example";
+  title?: string;
+  content?: string;
+}
+
+interface PortableTextInlineCta {
+  _type: "inlineCta";
+  text?: string;
+  link?: string;
+  buttonText?: string;
+}
+
+interface PortableTextLink {
+  _type: "link";
+  href?: string;
+}
+
 const calloutIcons = {
   info: Info,
   tip: Lightbulb,
@@ -33,48 +67,48 @@ const calloutIconColors = {
 
 const components = {
   block: {
-    normal: ({ children }: any) => (
+    normal: ({ children }: PortableTextComponentProps) => (
       <p className="mb-6 text-neutral-700 leading-relaxed">{children}</p>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }: PortableTextComponentProps) => (
       <h3 className="text-2xl font-bold text-neutral-900 mt-8 mb-4">
         {children}
       </h3>
     ),
-    h4: ({ children }: any) => (
+    h4: ({ children }: PortableTextComponentProps) => (
       <h4 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">
         {children}
       </h4>
     ),
-    blockquote: ({ children }: any) => (
+    blockquote: ({ children }: PortableTextComponentProps) => (
       <blockquote className="border-l-4 border-green-600 pl-4 py-2 my-6 italic text-neutral-700">
         {children}
       </blockquote>
     ),
   },
   list: {
-    bullet: ({ children }: any) => (
+    bullet: ({ children }: PortableTextComponentProps) => (
       <ul className="list-disc list-inside space-y-2 mb-6 text-neutral-700">
         {children}
       </ul>
     ),
-    number: ({ children }: any) => (
+    number: ({ children }: PortableTextComponentProps) => (
       <ol className="list-decimal list-inside space-y-2 mb-6 text-neutral-700">
         {children}
       </ol>
     ),
   },
   marks: {
-    strong: ({ children }: any) => (
+    strong: ({ children }: PortableTextComponentProps) => (
       <strong className="font-semibold text-neutral-900">{children}</strong>
     ),
-    em: ({ children }: any) => <em className="italic">{children}</em>,
-    code: ({ children }: any) => (
+    em: ({ children }: PortableTextComponentProps) => <em className="italic">{children}</em>,
+    code: ({ children }: PortableTextComponentProps) => (
       <code className="px-1.5 py-0.5 bg-neutral-100 rounded text-sm font-mono text-neutral-900">
         {children}
       </code>
     ),
-    link: ({ children, value }: any) => (
+    link: ({ children, value }: PortableTextComponentProps<PortableTextLink>) => (
       <a
         href={value?.href}
         className="text-green-700 hover:text-green-800 underline"
@@ -86,7 +120,8 @@ const components = {
     ),
   },
   types: {
-    image: ({ value }: any) => {
+    image: ({ value }: PortableTextComponentProps<PortableTextImage>) => {
+      if (!value || !value.asset) return null;
       const imageUrl = urlFor(value)?.width(800).url();
       if (!imageUrl) return null;
 
@@ -95,12 +130,12 @@ const components = {
           <div className="relative aspect-video rounded-lg overflow-hidden">
             <Image
               src={imageUrl}
-              alt={value.alt || ""}
+              alt={value?.alt || ""}
               fill
               className="object-cover"
             />
           </div>
-          {value.caption && (
+          {value?.caption && (
             <figcaption className="text-sm text-neutral-600 text-center mt-2">
               {value.caption}
             </figcaption>
@@ -108,40 +143,40 @@ const components = {
         </figure>
       );
     },
-    callout: ({ value }: any) => {
-      const Icon = calloutIcons[value.type as keyof typeof calloutIcons] || Info;
+    callout: ({ value }: PortableTextComponentProps<PortableTextCallout>) => {
+      const Icon = calloutIcons[value?.type as keyof typeof calloutIcons] || Info;
       return (
         <div
           className={cn(
             "border rounded-lg p-4 my-6",
-            calloutStyles[value.type as keyof typeof calloutStyles]
+            calloutStyles[value?.type as keyof typeof calloutStyles]
           )}
         >
           <div className="flex gap-3">
             <Icon
               className={cn(
                 "w-5 h-5 flex-shrink-0 mt-0.5",
-                calloutIconColors[value.type as keyof typeof calloutIconColors]
+                calloutIconColors[value?.type as keyof typeof calloutIconColors]
               )}
             />
             <div className="flex-1">
-              {value.title && (
+              {value?.title && (
                 <div className="font-semibold mb-1">{value.title}</div>
               )}
-              <div className="text-sm">{value.content}</div>
+              <div className="text-sm">{value?.content}</div>
             </div>
           </div>
         </div>
       );
     },
-    inlineCta: ({ value }: any) => (
+    inlineCta: ({ value }: PortableTextComponentProps<PortableTextInlineCta>) => (
       <div className="bg-green-50 border border-green-200 rounded-lg p-6 my-8 text-center">
-        <p className="text-neutral-700 mb-4">{value.text}</p>
+        <p className="text-neutral-700 mb-4">{value?.text}</p>
         <a
-          href={value.link}
+          href={value?.link}
           className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
         >
-          {value.buttonText || "Learn More"}
+          {value?.buttonText || "Learn More"}
         </a>
       </div>
     ),

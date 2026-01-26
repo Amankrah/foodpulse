@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { getGuidesHub } from "@/lib/sanity";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function GuidesPage() {
-  const { featured, guides, categories, totalCount } = await getGuidesHub();
+  const { featured, guides, totalCount } = await getGuidesHub();
 
   // Group guides by access type
   const freeGuides = guides.filter((g) => g.accessType === "free");
@@ -32,14 +33,14 @@ export default async function GuidesPage() {
   return (
     <>
       {/* Hero Section */}
-      <Section background="green-light" padding="lg">
+      <Section background="green" padding="lg">
         <Container>
           <div className="max-w-3xl mx-auto text-center">
             {/* Breadcrumb */}
             <nav className="flex items-center justify-center gap-2 text-sm text-neutral-600 mb-6">
-              <a href="/" className="hover:text-green-700 transition-colors">
+              <Link href="/" className="hover:text-green-700 transition-colors">
                 Home
-              </a>
+              </Link>
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
@@ -90,7 +91,7 @@ export default async function GuidesPage() {
 
       {/* Free Guides */}
       {freeGuides.length > 0 && (
-        <Section background="neutral-light" padding="lg">
+        <Section background="neutral" padding="lg">
           <Container>
             <div className="mb-8">
               <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
@@ -134,7 +135,7 @@ export default async function GuidesPage() {
 
       {/* Premium Guides */}
       {premiumGuides.length > 0 && (
-        <Section background="neutral-light" padding="lg">
+        <Section background="neutral" padding="lg">
           <Container>
             <div className="mb-8">
               <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">

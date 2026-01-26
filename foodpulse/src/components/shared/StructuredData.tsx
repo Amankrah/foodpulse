@@ -1,9 +1,16 @@
 import { SITE_NAME, SITE_URL, SOCIAL_LINKS, CONTACT_EMAIL } from "@/lib/constants";
 import type { Article } from "@/lib/sanity";
 
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+type StructuredDataData = Article | BreadcrumbItem[] | undefined;
+
 interface StructuredDataProps {
   type: "organization" | "website" | "article" | "breadcrumbs";
-  data?: any;
+  data?: StructuredDataData;
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
@@ -54,7 +61,7 @@ export function StructuredData({ type, data }: StructuredDataProps) {
         const article = data as Article;
 
         // Base article schema
-        const articleSchema: any = {
+        const articleSchema: Record<string, unknown> = {
           "@context": "https://schema.org",
           "@type": article.isRecipe ? "Recipe" : "Article",
           headline: article.title,

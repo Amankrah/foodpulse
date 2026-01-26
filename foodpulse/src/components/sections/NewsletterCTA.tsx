@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Mail } from "lucide-react";
 import { Section } from "@/components/layout/Section";
 import { Input } from "@/components/ui/Input";
@@ -79,7 +78,7 @@ export function NewsletterCTA() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-                You're subscribed!
+                You&apos;re subscribed!
               </h3>
               <p className="text-neutral-600 mb-4">
                 Check your email to confirm your subscription.

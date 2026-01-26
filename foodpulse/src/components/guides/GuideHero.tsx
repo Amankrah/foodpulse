@@ -117,7 +117,7 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
         {guide.whatYoullLearn && guide.whatYoullLearn.length > 0 && (
           <div className="bg-white rounded-xl border border-neutral-200 p-6 mb-8">
             <h2 className="text-lg font-semibold text-neutral-900 mb-4">
-              What You'll Learn
+              What You&apos;ll Learn
             </h2>
             <ul className="grid md:grid-cols-2 gap-3">
               {guide.whatYoullLearn.map((item, index) => (

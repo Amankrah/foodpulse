@@ -4,7 +4,6 @@
  */
 
 import { type ArticleMeta, type Recipe } from "./schemas";
-import { ARTICLES_PER_PAGE } from "./constants";
 
 // Base API configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
@@ -155,7 +154,7 @@ export const newsletter = {
     firstName?: string;
     tags?: string[];
   }): Promise<{ success: boolean; message: string }> => {
-    return fetchAPI("/api/newsletter/subscribe", {
+    return fetchAPI("/api/newsletter", {
       method: "POST",
       body: JSON.stringify(data),
     });
