@@ -465,11 +465,6 @@ function WhyFoodPulseSection() {
       icon: "🔬",
     },
     {
-      title: "Free Forever",
-      description: "Core content will always be free. We believe food education should be accessible to everyone.",
-      icon: "💚",
-    },
-    {
       title: "No Fads or Gimmicks",
       description: "We focus on sustainable, practical advice—not quick fixes or trendy diets that don't last.",
       icon: "✅",
@@ -492,7 +487,7 @@ function WhyFoodPulseSection() {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         {features.map((feature) => (
           <div
             key={feature.title}
