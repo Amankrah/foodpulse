@@ -93,7 +93,6 @@ const tools = [
     description: 'Track your daily caffeine intake and stay within safe limits.',
     icon: <Coffee className="w-6 h-6" />,
     category: 'Calculator',
-    comingSoon: true,
   },
   {
     title: 'Sodium Calculator',
