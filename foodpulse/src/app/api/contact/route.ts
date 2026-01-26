@@ -3,7 +3,15 @@ import { Resend } from "resend";
 import { contactSchema } from "@/lib/schemas";
 import { CONTACT_EMAIL } from "@/lib/constants";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialization to avoid build-time errors
+let resend: Resend | null = null;
+
+function getResend() {
+  if (!resend && process.env.RESEND_API_KEY) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,7 +46,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email using Resend
-    await resend.emails.send({
+    const resendClient = getResend();
+    if (!resendClient) {
+      throw new Error("Failed to initialize Resend client");
+    }
+
+    await resendClient.emails.send({
       from: process.env.RESEND_FROM_EMAIL,
       to: CONTACT_EMAIL,
       replyTo: email,
