@@ -9,6 +9,7 @@ import {redirectType} from './documents/redirectType'
 import {settingsType} from './documents/settingsType'
 import {glossaryTermType} from './documents/glossaryTermType'
 import {faqItemType as faqItemDocumentType} from './documents/faqItemType'
+import {guideType} from './documents/guideType'
 
 // Object types
 import {seoType} from './objects/seoType'
@@ -27,6 +28,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     settingsType,
     glossaryTermType,
     faqItemDocumentType,
+    guideType,
 
     // Objects
     seoType,

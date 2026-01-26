@@ -8,6 +8,8 @@ import type {
   SiteSettings,
   GlossaryTerm,
   GlossaryTermListItem,
+  Guide,
+  GuideListItem,
 } from './types'
 import {
   ARTICLE_LIST_QUERY,
@@ -28,6 +30,9 @@ import {
   GLOSSARY_TERMS_BY_CATEGORY_QUERY,
   GLOSSARY_SEARCH_QUERY,
   ALL_GLOSSARY_SLUGS_QUERY,
+  GUIDES_HUB_QUERY,
+  GUIDE_BY_SLUG_QUERY,
+  ALL_GUIDE_SLUGS_QUERY,
 } from './queries'
 
 // ========================================
@@ -202,4 +207,29 @@ export async function searchGlossaryTerms(query: string): Promise<GlossaryTermLi
 export async function getAllGlossaryPaths(): Promise<string[]> {
   const terms = await client.fetch(ALL_GLOSSARY_SLUGS_QUERY)
   return terms.map((term: { slug: string }) => term.slug)
+}
+
+// ========================================
+// Guide Functions
+// ========================================
+
+export async function getGuidesHub(): Promise<{
+  featured: GuideListItem | null
+  guides: GuideListItem[]
+  categories: string[]
+  totalCount: number
+}> {
+  return await client.fetch(GUIDES_HUB_QUERY)
+}
+
+export async function getGuideBySlug(slug: string): Promise<Guide | null> {
+  return await client.fetch(GUIDE_BY_SLUG_QUERY, { slug })
+}
+
+/**
+ * Generate all guide paths for static generation
+ */
+export async function getAllGuidePaths(): Promise<string[]> {
+  const guides = await client.fetch(ALL_GUIDE_SLUGS_QUERY)
+  return guides.map((guide: { slug: string }) => guide.slug)
 }

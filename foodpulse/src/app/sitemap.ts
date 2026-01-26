@@ -3,6 +3,25 @@ import { SITE_URL } from "@/lib/constants";
 import { categoryList } from "@/content/categories";
 import { getSitemapData } from "@/lib/sanity";
 
+interface SitemapArticle {
+  slug: string;
+  category: string;
+  publishedAt: string;
+  updatedAt?: string;
+}
+
+interface SitemapGlossaryTerm {
+  slug: string;
+  publishedAt: string;
+  updatedAt?: string;
+}
+
+interface SitemapGuide {
+  slug: string;
+  publishedAt?: string;
+  updatedAt?: string;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -19,13 +38,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/resources/glossary`,
+      url: `${SITE_URL}/guides`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/resources/faq`,
+      url: `${SITE_URL}/glossary`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/faq`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
@@ -63,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Article pages
   const articlePages: MetadataRoute.Sitemap =
-    sitemapData.articles?.map((article: any) => ({
+    sitemapData.articles?.map((article: SitemapArticle) => ({
       url: `${SITE_URL}/articles/${article.category}/${article.slug}`,
       lastModified: new Date(article.updatedAt || article.publishedAt),
       changeFrequency: "weekly" as const,
@@ -72,12 +97,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Glossary term pages
   const glossaryPages: MetadataRoute.Sitemap =
-    sitemapData.glossaryTerms?.map((term: any) => ({
-      url: `${SITE_URL}/resources/glossary/${term.slug}`,
+    sitemapData.glossaryTerms?.map((term: SitemapGlossaryTerm) => ({
+      url: `${SITE_URL}/glossary/${term.slug}`,
       lastModified: new Date(term.updatedAt || term.publishedAt),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })) || [];
 
-  return [...staticPages, ...categoryPages, ...articlePages, ...glossaryPages];
+  // Guide pages
+  const guidePages: MetadataRoute.Sitemap =
+    sitemapData.guides?.map((guide: SitemapGuide) => ({
+      url: `${SITE_URL}/guides/${guide.slug}`,
+      lastModified: new Date(guide.updatedAt || guide.publishedAt || new Date()),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })) || [];
+
+  return [
+    ...staticPages,
+    ...categoryPages,
+    ...articlePages,
+    ...glossaryPages,
+    ...guidePages,
+  ];
 }

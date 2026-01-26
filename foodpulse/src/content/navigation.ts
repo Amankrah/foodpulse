@@ -33,26 +33,20 @@ export const mainNavigation: NavGroup[] = [
   },
   {
     label: "Resources",
-    href: "/resources",
     children: [
       {
         label: "Guides",
-        href: "/resources/guides",
-        description: "In-depth resources on key topics",
-      },
-      {
-        label: "Tools",
-        href: "/resources/tools",
-        description: "Calculators & planners",
+        href: "/guides",
+        description: "Free & premium downloadable guides",
       },
       {
         label: "Glossary",
-        href: "/resources/glossary",
-        description: "Food & nutrition terms",
+        href: "/glossary",
+        description: "Food & nutrition terms explained",
       },
       {
         label: "FAQ",
-        href: "/resources/faq",
+        href: "/faq",
         description: "Common questions answered",
       },
     ],
@@ -68,8 +62,8 @@ export const footerNavigation = {
     links: [
       { label: "Home", href: "/" },
       { label: "All Articles", href: "/articles" },
-      { label: "Resources", href: "/resources" },
-      { label: "Search", href: "/search" },
+      { label: "Guides", href: "/guides" },
+      { label: "Glossary", href: "/glossary" },
     ],
   },
   categories: {
@@ -123,11 +117,9 @@ export const mobileNavigation = [
   {
     label: "Resources",
     children: [
-      { label: "All Resources", href: "/resources" },
-      { label: "Guides", href: "/resources/guides" },
-      { label: "Tools", href: "/resources/tools" },
-      { label: "Glossary", href: "/resources/glossary" },
-      { label: "FAQ", href: "/resources/faq" },
+      { label: "Guides", href: "/guides" },
+      { label: "Glossary", href: "/glossary" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
   { label: "About", href: "/about" },

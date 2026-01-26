@@ -358,3 +358,70 @@ export interface FAQPageData {
     category: string
   }[]
 }
+
+// ========================================
+// Guides
+// ========================================
+
+export interface GuideChapter {
+  title: string
+  slug: string
+  content: PortableTextBlock[]
+}
+
+export interface GuideListItem {
+  _id: string
+  title: string
+  slug: string
+  excerpt: string
+  featuredImage: SanityImage
+  thumbnailImage?: SanityImage
+  guideType: 'quick' | 'comprehensive' | 'premium' | 'tool'
+  accessType: 'free' | 'email-gated' | 'paid'
+  price?: number
+  category: 'nutrition' | 'meal-planning' | 'food-labels' | 'healthy-eating' | 'food-systems' | 'tools'
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  readingTime?: number
+  tags?: string[]
+}
+
+export interface Guide {
+  _id: string
+  title: string
+  slug: string
+  subtitle?: string
+  excerpt: string
+  introduction?: PortableTextBlock[]
+  whatYoullLearn?: string[]
+  chapters?: GuideChapter[]
+  keyTakeaways?: string[]
+  featuredImage: SanityImage
+  downloadUrl?: string
+  downloadFileName?: string
+  guideType: 'quick' | 'comprehensive' | 'premium' | 'tool'
+  accessType: 'free' | 'email-gated' | 'paid'
+  price?: number
+  purchaseLink?: string
+  previewContent?: string
+  category: 'nutrition' | 'meal-planning' | 'food-labels' | 'healthy-eating' | 'food-systems' | 'tools'
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  readingTime?: number
+  author?: Author
+  relatedGuides?: GuideListItem[]
+  relatedArticles?: ArticleListItem[]
+  tags?: string[]
+  seo?: SEO
+  publishedAt?: string
+  updatedAt?: string
+}
+
+export interface GuidesHubData {
+  featured?: GuideListItem & {
+    subtitle?: string
+    whatYoullLearn?: string[]
+    purchaseLink?: string
+  }
+  guides: GuideListItem[]
+  categories: string[]
+  totalCount: number
+}

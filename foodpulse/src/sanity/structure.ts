@@ -280,6 +280,177 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
+      // Guides Section
+      S.listItem()
+        .title('Guides')
+        .child(
+          S.list()
+            .title('Guides')
+            .items([
+              // All Guides
+              S.listItem()
+                .title('All Guides')
+                .child(
+                  S.documentTypeList('guide')
+                    .title('All Guides')
+                    .defaultOrdering([{field: 'title', direction: 'asc'}])
+                    .apiVersion(apiVersion),
+                ),
+
+              // By Type
+              S.listItem()
+                .title('By Type')
+                .child(
+                  S.list()
+                    .title('Guide Types')
+                    .items([
+                      S.listItem()
+                        .title('📄 Quick Guides')
+                        .child(
+                          S.documentList()
+                            .title('Quick Guides')
+                            .filter('_type == "guide" && guideType == "quick"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('📚 Comprehensive Guides')
+                        .child(
+                          S.documentList()
+                            .title('Comprehensive Guides')
+                            .filter('_type == "guide" && guideType == "comprehensive"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('💎 Premium Guides')
+                        .child(
+                          S.documentList()
+                            .title('Premium Guides')
+                            .filter('_type == "guide" && guideType == "premium"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🔧 Tools')
+                        .child(
+                          S.documentList()
+                            .title('Interactive Tools')
+                            .filter('_type == "guide" && guideType == "tool"')
+                            .apiVersion(apiVersion),
+                        ),
+                    ]),
+                ),
+
+              // By Category
+              S.listItem()
+                .title('By Category')
+                .child(
+                  S.list()
+                    .title('Categories')
+                    .items([
+                      S.listItem()
+                        .title('🥗 Nutrition')
+                        .child(
+                          S.documentList()
+                            .title('Nutrition Guides')
+                            .filter('_type == "guide" && category == "nutrition"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('📅 Meal Planning')
+                        .child(
+                          S.documentList()
+                            .title('Meal Planning Guides')
+                            .filter('_type == "guide" && category == "meal-planning"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🏷️ Food Labels')
+                        .child(
+                          S.documentList()
+                            .title('Food Label Guides')
+                            .filter('_type == "guide" && category == "food-labels"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🍎 Healthy Eating')
+                        .child(
+                          S.documentList()
+                            .title('Healthy Eating Guides')
+                            .filter('_type == "guide" && category == "healthy-eating"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🌾 Food Systems')
+                        .child(
+                          S.documentList()
+                            .title('Food Systems Guides')
+                            .filter('_type == "guide" && category == "food-systems"')
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('🔧 Tools')
+                        .child(
+                          S.documentList()
+                            .title('Tools & Calculators')
+                            .filter('_type == "guide" && category == "tools"')
+                            .apiVersion(apiVersion),
+                        ),
+                    ]),
+                ),
+
+              S.divider(),
+
+              // By Access
+              S.listItem()
+                .title('Free Guides')
+                .child(
+                  S.documentList()
+                    .title('Free Guides')
+                    .filter('_type == "guide" && accessType == "free"')
+                    .apiVersion(apiVersion),
+                ),
+              S.listItem()
+                .title('📧 Email Gated')
+                .child(
+                  S.documentList()
+                    .title('Email Gated')
+                    .filter('_type == "guide" && accessType == "email-gated"')
+                    .apiVersion(apiVersion),
+                ),
+              S.listItem()
+                .title('💰 Paid Guides')
+                .child(
+                  S.documentList()
+                    .title('Paid Guides')
+                    .filter('_type == "guide" && accessType == "paid"')
+                    .apiVersion(apiVersion),
+                ),
+
+              S.divider(),
+
+              // Featured
+              S.listItem()
+                .title('⭐ Featured')
+                .child(
+                  S.documentList()
+                    .title('Featured Guides')
+                    .filter('_type == "guide" && isFeatured == true')
+                    .apiVersion(apiVersion),
+                ),
+
+              // Drafts
+              S.listItem()
+                .title('Unpublished')
+                .child(
+                  S.documentList()
+                    .title('Unpublished')
+                    .filter('_type == "guide" && isPublished != true')
+                    .apiVersion(apiVersion),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
       // Redirects
       S.listItem()
         .title('Redirects')

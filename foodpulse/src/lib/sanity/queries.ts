@@ -505,6 +505,12 @@ export const SITEMAP_QUERY = `
     "slug": slug.current,
     publishedAt,
     updatedAt
+  },
+
+  "guides": *[_type == "guide" && isPublished == true] {
+    "slug": slug.current,
+    publishedAt,
+    updatedAt
   }
 }
 `
@@ -693,4 +699,118 @@ export const FAQ_SEARCH_QUERY = `
   shortAnswer,
   category
 }[0...20]
+`
+
+// ========================================
+// Guides Queries
+// ========================================
+
+export const GUIDES_HUB_QUERY = `
+{
+  "featured": *[_type == "guide" && isFeatured == true && isPublished == true][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    subtitle,
+    excerpt,
+    featuredImage {${imageFragment}},
+    guideType,
+    accessType,
+    price,
+    purchaseLink,
+    whatYoullLearn,
+    category,
+    difficulty,
+    readingTime
+  },
+  "guides": *[_type == "guide" && isPublished == true && isFeatured != true] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    featuredImage {${imageFragment}},
+    thumbnailImage {${imageFragment}},
+    guideType,
+    accessType,
+    price,
+    category,
+    difficulty,
+    readingTime,
+    tags
+  },
+  "categories": array::unique(*[_type == "guide" && isPublished == true].category),
+  "totalCount": count(*[_type == "guide" && isPublished == true])
+}
+`
+
+export const GUIDE_BY_SLUG_QUERY = `
+*[_type == "guide" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  subtitle,
+  excerpt,
+  introduction,
+  whatYoullLearn,
+  chapters[] {
+    title,
+    "slug": slug.current,
+    content
+  },
+  keyTakeaways,
+  featuredImage {${imageFragment}},
+  "downloadUrl": downloadFile.asset->url,
+  downloadFileName,
+  guideType,
+  accessType,
+  price,
+  purchaseLink,
+  previewContent,
+  category,
+  difficulty,
+  readingTime,
+  "author": author->{${authorFragment}},
+  "relatedGuides": relatedGuides[]-> {
+    title,
+    "slug": slug.current,
+    excerpt,
+    featuredImage {${imageFragment}},
+    guideType,
+    accessType,
+    category,
+    difficulty,
+    readingTime
+  },
+  "relatedArticles": relatedArticles[]-> {
+    title,
+    "slug": slug.current,
+    excerpt,
+    "category": category->{${categoryFragment}}
+  },
+  tags,
+  seo,
+  publishedAt,
+  updatedAt
+}
+`
+
+export const GUIDES_BY_CATEGORY_QUERY = `
+*[_type == "guide" && isPublished == true && category == $category] | order(publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  featuredImage {${imageFragment}},
+  guideType,
+  accessType,
+  category,
+  difficulty,
+  readingTime
+}
+`
+
+export const ALL_GUIDE_SLUGS_QUERY = `
+*[_type == "guide" && isPublished == true] {
+  "slug": slug.current
+}
 `
