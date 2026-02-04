@@ -29,14 +29,20 @@ interface RecipeCardProps {
 
 const difficultyConfig = {
   easy: {
-    color: "bg-green-100 text-green-700 border-green-300",
+    color:
+      "bg-[var(--success-100)] text-[var(--success-600)] border-[var(--green-300)]",
     label: "Easy",
   },
   medium: {
-    color: "bg-yellow-100 text-yellow-700 border-yellow-300",
+    color:
+      "bg-[var(--warning-100)] text-[var(--warning-600)] border-[var(--warning-500)]",
     label: "Medium",
   },
-  hard: { color: "bg-red-100 text-red-700 border-red-300", label: "Hard" },
+  hard: {
+    color:
+      "bg-[var(--error-100)] text-[var(--error-600)] border-[var(--error-500)]",
+    label: "Hard",
+  },
 };
 
 export function RecipeCard({
@@ -158,9 +164,9 @@ export function RecipeCard({
         return;
       }
 
-      // Use html-to-image to capture the recipe card
+      // Use html-to-image to capture the recipe card (hex matches globals.css --green-50)
       const dataUrl = await toPng(recipeElement, {
-        backgroundColor: "#f0fdf4",
+        backgroundColor: "#e1ffed",
         pixelRatio: 2, // Higher quality (2x resolution)
         cacheBust: true, // Prevent caching issues
       });
@@ -195,7 +201,7 @@ export function RecipeCard({
 
       // Capture the recipe card as image
       const dataUrl = await toPng(recipeElement, {
-        backgroundColor: "#f0fdf4",
+        backgroundColor: "#e1ffed", // matches globals.css --green-50
         pixelRatio: 2,
         cacheBust: true,
       });
@@ -247,13 +253,13 @@ export function RecipeCard({
       <div className="sr-only focus-within:not-sr-only focus-within:absolute focus-within:z-50 focus-within:left-4 focus-within:top-4">
         <a
           href="#ingredients"
-          className="bg-green-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="bg-[var(--green-600)] text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-400)]"
         >
           Skip to ingredients
         </a>
         <a
           href="#instructions"
-          className="bg-green-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-400 ml-2"
+          className="bg-[var(--green-600)] text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-400)] ml-2"
         >
           Skip to instructions
         </a>
@@ -261,7 +267,7 @@ export function RecipeCard({
 
       <div
         id="recipe-card"
-        className="my-8 bg-gradient-to-br from-[var(--green-50)] to-[var(--green-100)] border-2 border-[var(--green-200)] rounded-2xl shadow-lg overflow-hidden print:shadow-none print:border print:border-neutral-300 print:bg-white"
+        className="my-8 bg-gradient-to-br from-[var(--green-50)] to-[var(--green-100)] border-2 border-[var(--green-200)] rounded-2xl shadow-lg overflow-hidden print:shadow-none print:border print:border-[var(--neutral-300)] print:bg-white"
       >
         {/* Header */}
         <div className="bg-[var(--green-600)] text-white p-6 print:bg-white print:text-black print:border-b">
@@ -304,7 +310,7 @@ export function RecipeCard({
                       <Download className="h-4 w-4 text-[var(--green-600)]" />
                       <div>
                         <div className="font-medium text-sm">PNG Image</div>
-                        <div className="text-xs text-neutral-500">
+                        <div className="text-xs text-[var(--neutral-500)]">
                           High quality image
                         </div>
                       </div>
@@ -317,7 +323,7 @@ export function RecipeCard({
                       <Download className="h-4 w-4 text-[var(--green-600)]" />
                       <div>
                         <div className="font-medium text-sm">PDF Document</div>
-                        <div className="text-xs text-neutral-500">
+                        <div className="text-xs text-[var(--neutral-500)]">
                           Print-ready format
                         </div>
                       </div>
@@ -368,7 +374,7 @@ export function RecipeCard({
             <div className="bg-white rounded-xl p-4 shadow-sm border border-[var(--green-100)]">
               <div className="flex items-center gap-2 mb-1">
                 <Users className="h-4 w-4 text-[var(--green-600)]" aria-hidden="true" />
-                <p className="text-xs font-medium text-neutral-500 uppercase">
+                <p className="text-xs font-medium text-[var(--neutral-500)] uppercase">
                   Serves
                 </p>
               </div>
@@ -412,7 +418,7 @@ export function RecipeCard({
             {/* Difficulty Badge (if exists) */}
             {recipe.difficulty && (
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[var(--neutral-600)] uppercase tracking-wider">
                   Difficulty:
                 </span>
                 <span
@@ -428,7 +434,7 @@ export function RecipeCard({
               <div className="flex flex-wrap gap-4">
                 {recipe.yield && (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-[var(--neutral-600)] uppercase tracking-wider">
                       Yield:
                     </span>
                     <span className="px-4 py-2 bg-white border border-[var(--green-200)] rounded-full text-sm font-medium text-[var(--neutral-700)]">

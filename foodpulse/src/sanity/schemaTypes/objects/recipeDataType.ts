@@ -5,13 +5,20 @@ export const recipeDataType = defineType({
   title: 'Recipe Data',
   type: 'object',
   fields: [
-    // Timing
+    // Timing – only required when parent article has isRecipe true
     defineField({
       name: 'prepTime',
       title: 'Prep Time (minutes)',
       type: 'number',
       description: 'Active preparation time in minutes (e.g., 30 for half hour, 90 for 1.5 hours)',
-      validation: (rule) => rule.required().min(0),
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const doc = context.document as {isRecipe?: boolean} | undefined
+          if (!doc?.isRecipe) return true
+          if (value == null || typeof value !== 'number') return 'Required for recipe articles'
+          if (value < 0) return 'Must be 0 or more'
+          return true
+        }),
     }),
     defineField({
       name: 'cookTime',
@@ -35,12 +42,19 @@ export const recipeDataType = defineType({
       description: 'Name of the recipe author or chef',
     }),
 
-    // Yield
+    // Yield – only required when parent article has isRecipe true
     defineField({
       name: 'servings',
       title: 'Servings',
       type: 'number',
-      validation: (rule) => rule.required().min(1),
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const doc = context.document as {isRecipe?: boolean} | undefined
+          if (!doc?.isRecipe) return true
+          if (value == null || typeof value !== 'number') return 'Required for recipe articles'
+          if (value < 1) return 'Must be at least 1'
+          return true
+        }),
     }),
     defineField({
       name: 'yield',
@@ -73,19 +87,32 @@ export const recipeDataType = defineType({
       description: 'e.g., Mediterranean, Asian, American',
     }),
     defineField({
-      name: 'course',
-      title: 'Course',
+      name: 'meal_type',
+      title: 'Meal Type',
       type: 'string',
       options: {
         list: [
-          'Breakfast',
-          'Lunch',
-          'Dinner',
-          'Appetizer',
-          'Side Dish',
-          'Dessert',
-          'Snack',
-          'Beverage',
+          {title: 'Breakfast', value: 'breakfast'},
+          {title: 'Brunch', value: 'brunch'},
+          {title: 'Lunch', value: 'lunch'},
+          {title: 'Dinner', value: 'dinner'},
+          {title: 'Snack', value: 'snack'},
+        ],
+      },
+    }),
+    defineField({
+      name: 'course',
+      title: 'Course',
+      type: 'string',
+      description: 'e.g., Appetizer, Main Course, Dessert',
+      options: {
+        list: [
+          {title: 'Appetizer', value: 'appetizer'},
+          {title: 'Main Course', value: 'main-course'},
+          {title: 'Side Dish', value: 'side-dish'},
+          {title: 'Palate Cleanser', value: 'palate-cleanser'},
+          {title: 'Dessert', value: 'dessert'},
+          {title: 'Beverage', value: 'beverage'},
         ],
       },
     }),
@@ -166,7 +193,7 @@ export const recipeDataType = defineType({
       ],
     }),
 
-    // Instructions
+    // Instructions – step text only required when parent article has isRecipe true
     defineField({
       name: 'instructions',
       title: 'Instructions',
@@ -180,7 +207,14 @@ export const recipeDataType = defineType({
               title: 'Step',
               type: 'text',
               rows: 3,
-              validation: (rule) => rule.required(),
+              validation: (rule) =>
+                rule.custom((value, context) => {
+                  const doc = context.document as {isRecipe?: boolean} | undefined
+                  if (!doc?.isRecipe) return true
+                  if (!value || (typeof value === 'string' && !value.trim()))
+                    return 'Required for recipe articles'
+                  return true
+                }),
             },
             {
               name: 'image',

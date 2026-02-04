@@ -195,6 +195,7 @@ export const ARTICLE_BY_SLUG_QUERY = `
     yield,
     difficulty,
     cuisine,
+    meal_type,
     course,
     diet,
     ingredientGroups[] {
@@ -429,6 +430,7 @@ export const RECIPES_QUERY = `
   "servings": recipeData.servings,
   "difficulty": recipeData.difficulty,
   "diet": recipeData.diet,
+  "meal_type": recipeData.meal_type,
   "course": recipeData.course,
   "cuisine": recipeData.cuisine,
   publishedAt

@@ -131,6 +131,7 @@ export interface RecipeData {
   yield?: string
   difficulty?: 'easy' | 'medium' | 'hard'
   cuisine?: string
+  meal_type?: string
   course?: string
   diet?: string[]
   ingredientGroups?: RecipeIngredientGroup[]

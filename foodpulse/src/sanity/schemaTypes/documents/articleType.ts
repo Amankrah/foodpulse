@@ -309,12 +309,20 @@ export const articleType = defineType({
       group: 'seo',
     }),
 
-    // RECIPE GROUP
+    // RECIPE GROUP – only shown and validated when "This is a Recipe Article" is enabled
     defineField({
       name: 'recipeData',
       title: 'Recipe Information',
       type: 'recipeData',
       hidden: ({document}) => !document?.isRecipe,
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const doc = context.document as {isRecipe?: boolean} | undefined
+          if (doc?.isRecipe && !value) {
+            return 'Recipe information is required when "This is a Recipe Article" is enabled.'
+          }
+          return true
+        }),
       group: 'recipe',
     }),
   ],
