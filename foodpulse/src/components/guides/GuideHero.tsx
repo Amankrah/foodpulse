@@ -36,9 +36,20 @@ const accessColors = {
   paid: "bg-amber-100 text-amber-700 border-amber-200",
 };
 
+const DEFAULT_ASPECT_RATIO = 16 / 9; // Fallback when dimensions missing
+
 export function GuideHero({ guide, className }: GuideHeroProps) {
-  const imageUrl = guide.featuredImage
-    ? urlFor(guide.featuredImage)?.width(1200).height(600).url()
+  const featured = guide.featuredImage;
+  const dimensions = featured?.asset?.metadata?.dimensions;
+  const aspectRatio = dimensions
+    ? dimensions.width / dimensions.height
+    : DEFAULT_ASPECT_RATIO;
+
+  const imageUrl = featured
+    ? urlFor(featured)
+        ?.width(1200)
+        .fit("max")
+        .url()
     : null;
 
   return (
@@ -179,14 +190,18 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
           </a>
         </div>
 
-        {/* Featured Image */}
+        {/* Featured Image - uses Sanity asset aspect ratio for correct sizing */}
         {imageUrl && (
-          <div className="relative aspect-[2/1] rounded-xl overflow-hidden shadow-lg">
+          <div
+            className="relative w-full rounded-xl overflow-hidden shadow-lg"
+            style={{ aspectRatio: `${aspectRatio}` }}
+          >
             <Image
               src={imageUrl}
-              alt={guide.featuredImage?.alt || guide.title}
+              alt={featured?.alt || guide.title}
               fill
-              className="object-cover"
+              className="object-contain"
+              sizes="(max-width: 896px) 100vw, 896px"
               priority
             />
           </div>
