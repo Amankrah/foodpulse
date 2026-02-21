@@ -9,7 +9,7 @@ Content is managed in Sanity CMS. The site includes calculators (e.g. BMI, calor
 - **Framework:** Next.js (App Router)
 - **UI:** React, Tailwind CSS, Radix UI, Framer Motion
 - **CMS:** Sanity (articles, guides, glossary, FAQ, authors)
-- **Email:** Resend (contact, newsletter)
+- **Email:** Resend (contact form), ConvertKit (newsletter + email-gated guide signups)
 - **Analytics:** Vercel Analytics & Speed Insights
 
 ## Getting Started
@@ -42,6 +42,19 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Deployment
 
 The app can be deployed to Vercel or any platform that supports Next.js. Configure environment variables in your hosting dashboard to match your Sanity project and any other services.
+
+### Connecting ConvertKit (newsletter)
+
+Newsletter signups (e.g. `/newsletter`, footer CTA, and email-gated guide downloads) are sent to [ConvertKit](https://convertkit.com). To connect your FoodPulse ConvertKit account:
+
+1. In ConvertKit go to **Account → Settings → Advanced → API Keys** and copy your **API Key**.
+2. Create or choose a form (e.g. “Newsletter”) and note its **Form ID** (from the form’s URL or form settings).
+3. In your project set:
+   - `CONVERTKIT_API_KEY` = your API key  
+   - `CONVERTKIT_FORM_ID` = your form ID  
+   in `.env.local` (local) and in your host’s environment (e.g. Vercel).
+
+Subscribers from the site will appear under **Subscribers** in ConvertKit.
 
 ## Learn More
 
