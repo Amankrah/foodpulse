@@ -230,7 +230,7 @@ export async function getGuideBySlug(slug: string): Promise<Guide | null> {
 
 export async function getFeaturedGuides(limit: number = 3): Promise<GuideListItem[]> {
   const query = `
-    *[_type == "guide" && isPublished == true && isFeatured == true] | order(publishedAt desc) [0...$limit] {
+    *[_type == "guide" && isFeatured == true] | order(publishedAt desc) [0...$limit] {
       _id,
       title,
       "slug": slug.current,
@@ -268,7 +268,7 @@ export async function getContentCounts(): Promise<{
 }> {
   const [articles, guides, glossaryTerms] = await Promise.all([
     client.fetch<number>(`count(*[_type == "article" && defined(publishedAt)])`),
-    client.fetch<number>(`count(*[_type == "guide" && isPublished == true])`),
+    client.fetch<number>(`count(*[_type == "guide"])`),
     client.fetch<number>(`count(*[_type == "glossaryTerm" && defined(publishedAt)])`),
   ])
 

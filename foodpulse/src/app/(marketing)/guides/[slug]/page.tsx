@@ -14,9 +14,7 @@ import { GuideCard } from "@/components/guides/GuideCard";
 import { NewsletterCTA } from "@/components/sections/NewsletterCTA";
 
 interface GuidePageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -30,7 +28,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: GuidePageProps): Promise<Metadata> {
-  const guide = await getGuideBySlug(params.slug);
+  const { slug } = await params;
+  const guide = await getGuideBySlug(slug);
 
   if (!guide) {
     return {
@@ -57,7 +56,8 @@ export async function generateMetadata({
 }
 
 export default async function GuidePage({ params }: GuidePageProps) {
-  const guide = await getGuideBySlug(params.slug);
+  const { slug } = await params;
+  const guide = await getGuideBySlug(slug);
 
   if (!guide) {
     notFound();
