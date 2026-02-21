@@ -1,0 +1,2 @@
+# Ensure patch files use LF so they parse on Linux (e.g. Vercel build)
+*.patch text eol=lf
