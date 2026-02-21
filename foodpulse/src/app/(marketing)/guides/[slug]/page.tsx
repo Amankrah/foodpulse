@@ -38,7 +38,7 @@ export async function generateMetadata({
   }
 
   const metaTitle =
-    guide.seo?.metaTitle || `${guide.title} | Free Guide | FoodPulse`;
+    guide.seo?.metaTitle || `${guide.title} | Guide | FoodPulse`;
   const metaDescription = guide.seo?.metaDescription || guide.excerpt;
 
   return {

@@ -513,6 +513,10 @@ export const SITEMAP_QUERY = `
     "slug": slug.current,
     publishedAt,
     updatedAt
+  },
+
+  "products": *[_type == "product" && isPublished == true] {
+    "slug": slug.current
   }
 }
 `
@@ -814,6 +818,45 @@ export const GUIDES_BY_CATEGORY_QUERY = `
 
 export const ALL_GUIDE_SLUGS_QUERY = `
 *[_type == "guide"] {
+  "slug": slug.current
+}
+`
+
+// ========================================
+// Product (Shop) Queries
+// ========================================
+
+export const PRODUCTS_LIST_QUERY = `
+*[_type == "product" && isPublished == true] | order(title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  image {${imageFragment}},
+  price,
+  currency,
+  stripePriceId,
+  productType
+}
+`
+
+export const PRODUCT_BY_SLUG_QUERY = `
+*[_type == "product" && slug.current == $slug && isPublished == true][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  body,
+  image {${imageFragment}},
+  price,
+  currency,
+  stripePriceId,
+  productType
+}
+`
+
+export const ALL_PRODUCT_SLUGS_QUERY = `
+*[_type == "product" && isPublished == true] {
   "slug": slug.current
 }
 `

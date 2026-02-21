@@ -401,10 +401,10 @@ export const structure: StructureResolver = (S) =>
 
               // By Access
               S.listItem()
-                .title('Free Guides')
+                .title('Guides')
                 .child(
                   S.documentList()
-                    .title('Free Guides')
+                    .title('Guides')
                     .filter('_type == "guide" && accessType == "free"')
                     .apiVersion(apiVersion),
                 ),
@@ -444,6 +444,42 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .title('Unpublished')
                     .filter('_type == "guide" && isPublished != true')
+                    .apiVersion(apiVersion),
+                ),
+            ]),
+        ),
+
+      S.divider(),
+
+      // Shop
+      S.listItem()
+        .title('Shop')
+        .child(
+          S.list()
+            .title('Shop')
+            .items([
+              S.listItem()
+                .title('All Products')
+                .child(
+                  S.documentTypeList('product')
+                    .title('Products')
+                    .defaultOrdering([{ field: 'title', direction: 'asc' }])
+                    .apiVersion(apiVersion),
+                ),
+              S.listItem()
+                .title('Published')
+                .child(
+                  S.documentList()
+                    .title('Published Products')
+                    .filter('_type == "product" && isPublished == true')
+                    .apiVersion(apiVersion),
+                ),
+              S.listItem()
+                .title('Unpublished')
+                .child(
+                  S.documentList()
+                    .title('Unpublished')
+                    .filter('_type == "product" && isPublished != true')
                     .apiVersion(apiVersion),
                 ),
             ]),

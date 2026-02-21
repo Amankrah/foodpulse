@@ -108,6 +108,7 @@ export const CONTENT_CATEGORIES = {
 // Navigation structure
 export const MAIN_NAVIGATION = [
   { href: "/", label: "Home" },
+  { href: "/shop", label: "Shop" },
   {
     label: "Articles",
     href: "/articles",
@@ -151,6 +152,7 @@ export const MAIN_NAVIGATION = [
 export const FOOTER_NAVIGATION = {
   explore: [
     { label: "Home", href: "/" },
+    { label: "Shop", href: "/shop" },
     { label: "All Articles", href: "/articles" },
     { label: "Resources", href: "/resources" },
     { label: "Search", href: "/search" },

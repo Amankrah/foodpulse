@@ -115,7 +115,7 @@ export function EmailGate({
         </div>
         <div>
           <h3 className="text-lg font-semibold text-neutral-900">
-            Get This Free Guide
+            Get This Guide
           </h3>
           <p className="text-sm text-neutral-600">
             Enter your email to download the PDF
@@ -184,7 +184,7 @@ export function EmailGate({
           ) : (
             <>
               <Download className="w-5 h-5" />
-              Download Free Guide
+              Download Guide
             </>
           )}
         </button>

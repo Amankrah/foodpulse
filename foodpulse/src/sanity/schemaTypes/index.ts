@@ -10,6 +10,7 @@ import {settingsType} from './documents/settingsType'
 import {glossaryTermType} from './documents/glossaryTermType'
 import {faqItemType as faqItemDocumentType} from './documents/faqItemType'
 import {guideType} from './documents/guideType'
+import {productType} from './documents/productType'
 
 // Object types
 import {seoType} from './objects/seoType'
@@ -29,6 +30,7 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     glossaryTermType,
     faqItemDocumentType,
     guideType,
+    productType,
 
     // Objects
     seoType,

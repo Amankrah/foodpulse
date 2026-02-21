@@ -29,10 +29,10 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 export const metadata: Metadata = {
   title: `${SITE_NAME} | Evidence-Based Food Education`,
   description:
-    "Free guides, tools, and articles to help you make smarter food choices. Learn about nutrition, read food labels, and understand what you eat.",
+    "Guides, tools, and articles to help you make smarter food choices. Learn about nutrition, read food labels, and understand what you eat.",
   openGraph: {
     title: `${SITE_NAME} | Evidence-Based Food Education`,
-    description: "Free guides, tools, and articles for smarter food choices.",
+    description: "Guides, tools, and articles for smarter food choices.",
     type: "website",
   },
 };
@@ -268,7 +268,7 @@ function ResourceShowcase() {
   const resources = [
     {
       title: "Nutrition Tools",
-      description: "Calculate your protein, macros, calories, and more with our free interactive calculators.",
+      description: "Calculate your protein, macros, calories, and more with our interactive calculators.",
       icon: Calculator,
       href: "/tools",
       color: "blue",
@@ -279,13 +279,14 @@ function ResourceShowcase() {
       ],
     },
     {
-      title: "Free Guides",
+      title: "Guides",
       description: "Comprehensive, downloadable guides on nutrition, meal planning, and reading food labels.",
       icon: BookOpen,
       href: "/guides",
       color: "purple",
       featured: [
         { name: "Browse All Guides", href: "/guides" },
+        { name: "Guides & more in Shop", href: "/shop" },
         { name: "View Resources", href: "/resources" },
         { name: "Learn More", href: "/about" },
       ],
@@ -344,7 +345,7 @@ function ResourceShowcase() {
       <SectionHeader
         eyebrow="Resources"
         title="Everything You Need"
-        description="Free tools and resources to support your food education journey"
+        description="Tools and resources to support your food education journey"
         centered
       />
 
@@ -377,7 +378,7 @@ function ResourceShowcase() {
                     href={item.href}
                     className={`block text-sm ${colors.link} hover:underline`}
                   >
-                    → {item.name}
+                    {item.name}
                   </Link>
                 ))}
               </div>
@@ -394,6 +395,14 @@ function ResourceShowcase() {
           );
         })}
       </div>
+
+      <p className="text-center text-sm text-neutral-500 mt-8">
+        Premium guides and digital resources in our{" "}
+        <Link href="/shop" className="text-green-600 hover:text-green-700 font-medium">
+          shop
+        </Link>
+        .
+      </p>
     </Section>
   );
 }

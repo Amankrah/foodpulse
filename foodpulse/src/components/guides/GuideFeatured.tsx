@@ -24,7 +24,7 @@ export function GuideFeatured({ guide, className }: GuideFeaturedProps) {
   const buttonText = isPaid
     ? `Get Yours - $${guide.price}`
     : guide.accessType === "email-gated"
-    ? "Get Free Guide"
+    ? "Get Guide"
     : "Read Guide";
 
   const buttonHref = isPaid && guide.purchaseLink ? guide.purchaseLink : `/guides/${guide.slug}`;

@@ -10,6 +10,8 @@ import type {
   GlossaryTermListItem,
   Guide,
   GuideListItem,
+  Product,
+  ProductListItem,
 } from './types'
 import {
   ARTICLE_LIST_QUERY,
@@ -33,6 +35,9 @@ import {
   GUIDES_HUB_QUERY,
   GUIDE_BY_SLUG_QUERY,
   ALL_GUIDE_SLUGS_QUERY,
+  PRODUCTS_LIST_QUERY,
+  PRODUCT_BY_SLUG_QUERY,
+  ALL_PRODUCT_SLUGS_QUERY,
 } from './queries'
 
 // ========================================
@@ -286,4 +291,24 @@ export async function getContentCounts(): Promise<{
 export async function getAllGuidePaths(): Promise<string[]> {
   const guides = await client.fetch(ALL_GUIDE_SLUGS_QUERY)
   return guides.map((guide: { slug: string }) => guide.slug)
+}
+
+// ========================================
+// Product (Shop) Functions
+// ========================================
+
+export async function getProducts(): Promise<ProductListItem[]> {
+  return await client.fetch(PRODUCTS_LIST_QUERY)
+}
+
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  return await client.fetch(PRODUCT_BY_SLUG_QUERY, { slug })
+}
+
+/**
+ * Generate all product paths for static generation
+ */
+export async function getAllProductPaths(): Promise<string[]> {
+  const products = await client.fetch(ALL_PRODUCT_SLUGS_QUERY)
+  return products.map((p: { slug: string }) => p.slug)
 }

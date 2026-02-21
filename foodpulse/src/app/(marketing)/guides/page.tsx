@@ -8,11 +8,11 @@ import { GuideFeatured } from "@/components/guides/GuideFeatured";
 import { NewsletterCTA } from "@/components/sections/NewsletterCTA";
 
 export const metadata: Metadata = {
-  title: "Free Guides & Resources | Food & Nutrition Guides | FoodPulse",
+  title: "Guides & Resources | Food & Nutrition Guides | FoodPulse",
   description:
-    "Download free guides on nutrition, meal planning, and healthy eating. Practical, evidence-based resources to help you make better food decisions.",
+    "Download guides on nutrition, meal planning, and healthy eating. Practical, evidence-based resources to help you make better food decisions.",
   openGraph: {
-    title: "Free Guides & Resources | FoodPulse",
+    title: "Guides & Resources | FoodPulse",
     description:
       "Practical guides to help you make better food decisions. Download, learn, and take action.",
     type: "website",
@@ -52,7 +52,7 @@ export default async function GuidesPage() {
             </nav>
 
             <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-4">
-              Free Guides & Resources
+              Guides & Resources
             </h1>
 
             <p className="text-xl text-neutral-600 mb-6">
@@ -72,7 +72,7 @@ export default async function GuidesPage() {
                 {totalCount} guides
               </span>
               <span className="text-neutral-300">•</span>
-              <span>Free & Premium</span>
+              <span>Guides & Premium</span>
               <span className="text-neutral-300">•</span>
               <span>Downloadable PDFs</span>
             </div>
@@ -89,13 +89,13 @@ export default async function GuidesPage() {
         </Section>
       )}
 
-      {/* Free Guides */}
+      {/* Guides (no gate) */}
       {freeGuides.length > 0 && (
         <Section background="neutral" padding="lg">
           <Container>
             <div className="mb-8">
               <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
-                Free Guides
+                Guides
               </h2>
               <p className="text-neutral-600">
                 No email required. Download and start learning right away.
@@ -117,7 +117,7 @@ export default async function GuidesPage() {
           <Container>
             <div className="mb-8">
               <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
-                Free Downloads
+                Downloads
               </h2>
               <p className="text-neutral-600">
                 Enter your email to download these guides and get weekly tips.
@@ -177,6 +177,19 @@ export default async function GuidesPage() {
           </Container>
         </Section>
       )}
+
+      {/* Shop mention */}
+      <Section background="neutral" padding="sm">
+        <Container>
+          <p className="text-center text-neutral-600">
+            More guides and digital resources in our{" "}
+            <Link href="/shop" className="text-green-700 hover:text-green-600 font-medium">
+              shop
+            </Link>
+            .
+          </p>
+        </Container>
+      </Section>
 
       {/* Newsletter CTA */}
       <NewsletterCTA />

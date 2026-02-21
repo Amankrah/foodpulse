@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/layout/Section";
 import { Card, CardTitle, CardDescription } from "@/components/ui/Card";
 import Link from "next/link";
-import { BookOpen, Calculator, List, HelpCircle } from "lucide-react";
+import { BookOpen, Calculator, List, HelpCircle, ShoppingBag } from "lucide-react";
 import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -48,6 +48,15 @@ const resources = [
     color: "text-purple-600",
     bgColor: "bg-purple-50",
   },
+  {
+    icon: ShoppingBag,
+    title: "Shop",
+    description:
+      "Guides, ebooks, and digital resources. Support our work and get premium content.",
+    href: "/shop",
+    color: "text-green-600",
+    bgColor: "bg-green-50",
+  },
 ];
 
 export default function ResourcesPage() {
@@ -74,7 +83,7 @@ export default function ResourcesPage() {
           centered
         />
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto lg:max-w-5xl">
           {resources.map((resource) => {
             const Icon = resource.icon;
             return (

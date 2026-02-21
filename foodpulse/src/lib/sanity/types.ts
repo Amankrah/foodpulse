@@ -426,3 +426,32 @@ export interface GuidesHubData {
   categories: string[]
   totalCount: number
 }
+
+// ========================================
+// Product (Shop)
+// ========================================
+
+export interface ProductListItem {
+  _id: string
+  title: string
+  slug: string
+  description?: string
+  image?: SanityImage
+  price: number
+  currency?: string
+  stripePriceId?: string
+  productType?: 'digital' | 'physical'
+}
+
+export interface Product {
+  _id: string
+  title: string
+  slug: string
+  description?: string
+  body?: PortableTextBlock[]
+  image?: SanityImage
+  price: number
+  currency?: string
+  stripePriceId?: string
+  productType?: 'digital' | 'physical'
+}

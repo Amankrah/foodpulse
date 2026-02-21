@@ -22,6 +22,7 @@ export interface NavGroup {
 // Primary navigation (header)
 export const mainNavigation: NavGroup[] = [
   { label: "Home", href: "/" },
+  { label: "Shop", href: "/shop" },
   {
     label: "Articles",
     href: "/articles",
@@ -66,6 +67,7 @@ export const footerNavigation = {
     title: "Explore",
     links: [
       { label: "Home", href: "/" },
+      { label: "Shop", href: "/shop" },
       { label: "All Articles", href: "/articles" },
       { label: "Guides", href: "/guides" },
       { label: "Tools", href: "/tools" },
@@ -110,6 +112,7 @@ export const legalNavigation: NavItem[] = [
 // Mobile navigation (hamburger menu)
 export const mobileNavigation = [
   { label: "Home", href: "/" },
+  { label: "Shop", href: "/shop" },
   {
     label: "Articles",
     children: [
@@ -158,6 +161,7 @@ export function generateBreadcrumbs(
     if (segment === "articles") label = "Articles";
     if (segment === "resources") label = "Resources";
     if (segment === "about") label = "About";
+    if (segment === "shop") label = "Shop";
 
     // Check if it's a category
     const category = Object.values(categories).find(

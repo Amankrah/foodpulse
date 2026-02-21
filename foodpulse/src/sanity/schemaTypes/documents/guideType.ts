@@ -325,7 +325,7 @@ export const guideType = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Free (No Gate)', value: 'free'},
+          {title: 'Open (No Gate)', value: 'free'},
           {title: 'Email Gated', value: 'email-gated'},
           {title: 'Paid', value: 'paid'},
         ],

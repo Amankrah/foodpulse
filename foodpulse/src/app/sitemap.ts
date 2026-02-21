@@ -121,6 +121,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.5,
     },
+    {
+      url: `${SITE_URL}/shop`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
   ];
 
   // Category pages
@@ -161,11 +167,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })) || [];
 
+  // Product (shop) pages
+  const productPages: MetadataRoute.Sitemap =
+    sitemapData.products?.map((product: { slug: string }) => ({
+      url: `${SITE_URL}/shop/${product.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })) || [];
+
   return [
     ...staticPages,
     ...categoryPages,
     ...articlePages,
     ...glossaryPages,
     ...guidePages,
+    ...productPages,
   ];
 }

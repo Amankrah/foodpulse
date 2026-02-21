@@ -25,8 +25,8 @@ const difficultyColors = {
 };
 
 const accessLabels = {
-  free: "Free",
-  "email-gated": "Free Download",
+  free: "Open",
+  "email-gated": "Download",
   paid: "Premium",
 };
 
@@ -168,7 +168,7 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
               className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
             >
               <Download className="w-5 h-5" />
-              Get Free Guide
+              Get Guide
             </a>
           )}
           {guide.accessType === "paid" && guide.purchaseLink && (

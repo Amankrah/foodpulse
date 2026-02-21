@@ -24,7 +24,7 @@ const accessColors = {
 };
 
 const accessLabels = {
-  free: "Free",
+  free: "Open",
   "email-gated": "Email Required",
   paid: "Premium",
 };
