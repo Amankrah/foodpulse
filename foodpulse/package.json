@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:icons": "node scripts/generate-icons.mjs"
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -39,6 +40,7 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "patch-package": "^8.0.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.30",
     "@types/react": "^19",

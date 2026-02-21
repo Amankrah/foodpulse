@@ -707,9 +707,10 @@ export const FAQ_SEARCH_QUERY = `
 // Guides Queries
 // ========================================
 
+// Guides appear only when: 1) document is Published in Studio (not draft), 2) isPublished != false
 export const GUIDES_HUB_QUERY = `
 {
-  "featured": *[_type == "guide" && isFeatured == true && isPublished == true][0] {
+  "featured": *[_type == "guide" && isFeatured == true && (isPublished == true || !defined(isPublished))][0] {
     _id,
     title,
     "slug": slug.current,
@@ -725,7 +726,7 @@ export const GUIDES_HUB_QUERY = `
     difficulty,
     readingTime
   },
-  "guides": *[_type == "guide" && isPublished == true && isFeatured != true] | order(publishedAt desc) {
+  "guides": *[_type == "guide" && (isPublished == true || !defined(isPublished)) && isFeatured != true] | order(publishedAt desc) {
     _id,
     title,
     "slug": slug.current,
@@ -740,8 +741,8 @@ export const GUIDES_HUB_QUERY = `
     readingTime,
     tags
   },
-  "categories": array::unique(*[_type == "guide" && isPublished == true].category),
-  "totalCount": count(*[_type == "guide" && isPublished == true])
+  "categories": array::unique(*[_type == "guide" && (isPublished == true || !defined(isPublished))].category),
+  "totalCount": count(*[_type == "guide" && (isPublished == true || !defined(isPublished))])
 }
 `
 

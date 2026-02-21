@@ -454,9 +454,11 @@ export const guideType = defineType({
 
     defineField({
       name: 'isPublished',
-      title: 'Published',
+      title: 'Show on site',
       type: 'boolean',
-      initialValue: false,
+      description:
+        'Turn ON to show this guide on the /guides page. You must also Publish the document (top right) for changes to appear.',
+      initialValue: true,
       group: 'metadata',
     }),
 
