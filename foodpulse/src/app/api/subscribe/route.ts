@@ -15,16 +15,20 @@ const subscribeSchema = z.object({
     .optional(),
 });
 
+const isDev = process.env.NODE_ENV === "development";
+
 /**
  * Subscribe endpoint for email-gated guides and other flows.
  * Adds the subscriber to the same ConvertKit form as the main newsletter.
  */
 export async function POST(request: NextRequest) {
+  console.log("[Subscribe API] POST received");
   try {
     const body = await request.json();
     const parse = subscribeSchema.safeParse(body);
 
     if (!parse.success) {
+      console.log("[Subscribe API] Validation failed:", parse.error.issues);
       return NextResponse.json(
         { success: false, error: "Invalid email address" },
         { status: 400 }
@@ -41,12 +45,17 @@ export async function POST(request: NextRequest) {
     } = parse.data;
     const slug = guideSlug ?? metadata?.guideSlug;
     const title = guideTitle ?? metadata?.guideTitle;
+    console.log("[Subscribe API] Valid payload:", { email: email?.slice(0, 3) + "***", source, guideSlug: slug });
 
     const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY;
     const CONVERTKIT_FORM_ID = process.env.CONVERTKIT_FORM_ID;
 
     if (!CONVERTKIT_API_KEY || !CONVERTKIT_FORM_ID) {
-      console.error("ConvertKit credentials not configured");
+      console.error("[Subscribe API] ConvertKit not configured:", {
+        hasApiKey: !!CONVERTKIT_API_KEY,
+        hasFormId: !!CONVERTKIT_FORM_ID,
+        formId: CONVERTKIT_FORM_ID || "(missing)",
+      });
       return NextResponse.json(
         { success: false, error: "Newsletter service not configured." },
         { status: 500 }
@@ -59,40 +68,47 @@ export async function POST(request: NextRequest) {
       first_name: firstName || undefined,
     };
 
-    // Optional: pass custom fields if you've created them in ConvertKit (Settings → Custom fields)
     const fields: Record<string, string> = {};
     if (source) fields.source = source;
     if (slug) fields.guide_slug = slug;
     if (title) fields.guide_title = title;
     if (Object.keys(fields).length > 0) payload.fields = fields;
 
-    const convertkitResponse = await fetch(
-      `https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      }
-    );
+    const convertkitUrl = `https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`;
+    console.log("[Subscribe API] Calling ConvertKit:", convertkitUrl);
+
+    const convertkitResponse = await fetch(convertkitUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     const data = await convertkitResponse.json();
+    console.log("[Subscribe API] ConvertKit response:", {
+      status: convertkitResponse.status,
+      ok: convertkitResponse.ok,
+      body: data,
+    });
 
     if (!convertkitResponse.ok) {
       if (data.message?.toLowerCase().includes("already subscribed")) {
         return NextResponse.json({ success: true });
       }
-      console.error("ConvertKit API error:", data);
+      console.error("[Subscribe API] ConvertKit API error:", data);
+      const errMessage = data.message || "Subscription failed";
       return NextResponse.json(
-        { success: false, error: data.message || "Subscription failed" },
+        { success: false, error: isDev ? errMessage : "Subscription failed. Please try again." },
         { status: 500 }
       );
     }
 
+    console.log("[Subscribe API] Subscription successful");
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Subscribe API error:", error);
+    console.error("[Subscribe API] Error:", error);
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { success: false, error: "Something went wrong. Please try again." },
+      { success: false, error: isDev ? message : "Something went wrong. Please try again." },
       { status: 500 }
     );
   }

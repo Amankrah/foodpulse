@@ -96,7 +96,7 @@ export function EmailGate({
           Download Again
         </a>
         <p className="text-sm text-green-600 mt-4">
-          Check your email to confirm your subscription and get weekly guides.
+          Check your inbox (and spam folder) for a confirmation email—click the link to confirm. Then you&apos;ll get weekly guides.
         </p>
       </div>
     );

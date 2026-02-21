@@ -5,8 +5,11 @@
 
 import { type ArticleMeta, type Recipe } from "./schemas";
 
-// Base API configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+// Base API configuration (use full origin in browser so CTA works from any page)
+function getBaseUrl(): string {
+  if (typeof window !== "undefined") return window.location.origin;
+  return process.env.NEXT_PUBLIC_API_URL || "";
+}
 
 /**
  * Generic fetch wrapper with error handling
@@ -15,9 +18,10 @@ async function fetchAPI<T>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
+  const base = getBaseUrl();
   const url = endpoint.startsWith("http")
     ? endpoint
-    : `${API_BASE_URL}${endpoint}`;
+    : `${base}${endpoint}`;
 
   try {
     const response = await fetch(url, {
@@ -28,11 +32,16 @@ async function fetchAPI<T>(
       },
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
+      const message =
+        (data as { message?: string })?.message ||
+        `API error: ${response.status} ${response.statusText}`;
+      throw new Error(message);
     }
 
-    return response.json();
+    return data as T;
   } catch (error) {
     console.error("API fetch error:", error);
     throw error;
