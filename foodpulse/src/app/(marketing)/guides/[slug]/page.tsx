@@ -124,7 +124,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                   )}
 
                   {showDownloadButton && guide.downloadUrl && (
-                    <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
+                    <div id="download" className="max-w-md mx-auto bg-green-50 border border-green-200 rounded-xl p-8 text-center">
                       <h3 className="text-2xl font-bold text-neutral-900 mb-3">
                         Download This Guide
                       </h3>

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Download } from "lucide-react";
 import type { Guide, GuideListItem } from "@/lib/sanity/types";
 
 interface GuideSidebarProps {
@@ -73,26 +72,6 @@ export function GuideSidebar({
               })}
             </ul>
           </nav>
-        </div>
-      )}
-
-      {/* Download Box */}
-      {guide.downloadUrl && (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-6" id="download">
-          <h3 className="text-sm font-semibold text-green-900 uppercase tracking-wide mb-3">
-            Download PDF
-          </h3>
-          <p className="text-sm text-green-800 mb-4">
-            Get the full guide as a PDF to read offline or print.
-          </p>
-          <a
-            href={guide.downloadUrl}
-            download={guide.downloadFileName}
-            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            Download Free
-          </a>
         </div>
       )}
 
