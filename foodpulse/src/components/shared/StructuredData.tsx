@@ -27,8 +27,7 @@ export function StructuredData({ type, data }: StructuredDataProps) {
         description:
           "Evidence-based food education platform covering nutrition science, food systems, and healthy eating guidance.",
         sameAs: [
-          SOCIAL_LINKS.instagram,
-          SOCIAL_LINKS.pinterest,
+          SOCIAL_LINKS.kit,
           SOCIAL_LINKS.youtube,
         ],
         contactPoint: {

@@ -21,11 +21,11 @@ export const TAGLINES = {
 // Contact information
 export const CONTACT_EMAIL = "hello@foodpulse.co";
 export const SOCIAL_LINKS = {
-  instagram: "https://instagram.com/foodpulse",
-  pinterest: "https://pinterest.com/foodpulse",
-  youtube: "https://youtube.com/@foodpulse",
+  kit: "https://foodpulse.kit.com/",
+  youtube: "https://www.youtube.com/@foodpulsehq",
   twitter: "@foodpulse",
-  linkedin: "https://linkedin.com/company/foodpulseco",
+  linkedin: "https://www.linkedin.com/company/foodpulseco/posts/?feedView=all",
+  instagram: "https://instagram.com/foodpulse", // kept for author/sanity social fields
 } as const;
 
 // Founder information
@@ -170,8 +170,8 @@ export const FOOTER_NAVIGATION = {
   connect: [
     { label: "Newsletter", href: "/newsletter" },
     { label: "Contact", href: "/contact" },
-    { label: "Instagram", href: SOCIAL_LINKS.instagram, external: true },
-    { label: "Pinterest", href: SOCIAL_LINKS.pinterest, external: true },
+    { label: "Kit", href: SOCIAL_LINKS.kit, external: true },
+    { label: "LinkedIn", href: SOCIAL_LINKS.linkedin, external: true },
     { label: "YouTube", href: SOCIAL_LINKS.youtube, external: true },
   ],
   legal: [

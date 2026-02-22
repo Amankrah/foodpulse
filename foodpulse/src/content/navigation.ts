@@ -95,8 +95,8 @@ export const footerNavigation = {
     links: [
       { label: "Newsletter", href: "/newsletter" },
       { label: "Contact", href: "/contact" },
-      { label: "Instagram", href: SOCIAL_LINKS.instagram, external: true },
-      { label: "Pinterest", href: SOCIAL_LINKS.pinterest, external: true },
+      { label: "Kit", href: SOCIAL_LINKS.kit, external: true },
+      { label: "LinkedIn", href: SOCIAL_LINKS.linkedin, external: true },
       { label: "YouTube", href: SOCIAL_LINKS.youtube, external: true },
     ],
   },

@@ -8,7 +8,7 @@ import {
   Search,
   PenLine,
   RefreshCw,
-  Instagram,
+  ExternalLink,
   Youtube,
   Coffee,
   Globe,
@@ -113,7 +113,7 @@ const faqs = [
   },
   {
     question: "How can I contact FoodPulse?",
-    answer: `Email us at ${CONTACT_EMAIL} or connect on LinkedIn, Instagram, or YouTube. You can also subscribe to our newsletter for monthly updates.`,
+    answer: `Email us at ${CONTACT_EMAIL} or connect on Kit, LinkedIn, or YouTube. You can also subscribe to our newsletter for monthly updates.`,
   },
 ];
 
@@ -453,13 +453,13 @@ export default function AboutPage() {
               <Linkedin className="h-6 w-6" />
             </a>
             <a
-              href={SOCIAL_LINKS.instagram}
+              href={SOCIAL_LINKS.kit}
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-600 hover:text-green-700 transition-colors"
-              aria-label="Instagram"
+              aria-label="FoodPulse on Kit"
             >
-              <Instagram className="h-6 w-6" />
+              <ExternalLink className="h-6 w-6" />
             </a>
             <a
               href={SOCIAL_LINKS.youtube}
