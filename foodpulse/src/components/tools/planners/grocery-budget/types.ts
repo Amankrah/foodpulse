@@ -107,10 +107,40 @@ export interface PrioritizedList {
   remaining: number
 }
 
+export type InsightType = 'budget' | 'seasonal' | 'waste' | 'nutrition'
+
+export interface Insight {
+  type: InsightType
+  title: string
+  message: string
+  items?: string[]
+}
+
+export interface SwapSuggestion {
+  originalId: string
+  originalName: string
+  originalPrice: number
+  suggestedId: string
+  suggestedName: string
+  suggestedPrice: number
+  savings: number
+  rationale: string
+}
+
+export interface WasteWarning {
+  itemId: string
+  itemName: string
+  shelfLifeDays: number
+  tip: string
+}
+
 export interface PlannerResults {
   totalPlanned: number
   remaining: number
   costPerDay: number
   categoryBreakdown: CategoryBreakdown[]
   prioritizedList: PrioritizedList
+  insights: Insight[]
+  swapSuggestions: SwapSuggestion[]
+  wasteWarnings: WasteWarning[]
 }

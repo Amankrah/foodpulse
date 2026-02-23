@@ -10,6 +10,7 @@ import {
   ExternalLink,
   UtensilsCrossed,
   BookMarked,
+  ShoppingCart,
 } from 'lucide-react'
 import Link from 'next/link'
 import type { QuizResults, DietResult, RoadmapPhase, PredictedBarrier } from '@/types/diet-quiz'
@@ -245,6 +246,25 @@ export function ResultsView({ results, onRetake }: ResultsViewProps) {
             </div>
           )}
         </div>
+
+        {/* Grocery Budget Planner CTA */}
+        <Link
+          href={`/tools/grocery-budget?diet=${encodeURIComponent(results.primaryMatch.dietId)}`}
+          className="mt-6 flex items-center gap-4 p-4 bg-green-50 border-2 border-green-200 rounded-xl hover:bg-green-100 hover:border-green-300 transition-colors group"
+        >
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+            <ShoppingCart className="w-6 h-6 text-green-700" />
+          </div>
+          <div className="min-w-0">
+            <h3 className="font-semibold text-green-900 group-hover:text-green-800">
+              Plan your grocery budget
+            </h3>
+            <p className="text-sm text-green-700 mt-0.5">
+              Get a weekly shopping list and budget allocation tailored to {primaryDiet.name}. We&apos;ll pre-fill your diet and suggest swaps to save.
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-green-600 flex-shrink-0" />
+        </Link>
       </div>
 
       {/* Actions */}

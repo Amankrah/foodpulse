@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { FoodCategory, SelectedItem, CategoryBudget } from '../types'
 import { groceryDatabase, getItemsForDiet } from '../data/groceryDatabase'
 import { CATEGORY_LABELS } from '../data/dietTemplates'
+import { isItemSeasonal } from '../data/seasonalProduce'
 import { formatPrice } from '../utils/calculations'
 
 interface SelectionStepProps {
@@ -75,6 +76,7 @@ export function SelectionStep({
     onSelectedItemsChange(updated)
   }
 
+  const currentMonth = new Date().getMonth() + 1
   const currentItems = itemsByCategory.find((x) => x.category === activeCategory)?.items ?? []
   const allocated = categoryBudgets[activeCategory]?.amount ?? 0
   const spentInCategory = selectedItems
@@ -141,12 +143,11 @@ export function SelectionStep({
                     <span className="font-medium text-neutral-900 block truncate">{item.name}</span>
                     <span className="text-sm text-neutral-500">
                       {formatPrice(item.pricePerUnit)}/{item.unit}
-                      {item.tags.length > 0 && (
-                        <span className="ml-2">
-                          {item.tags.includes('best_value') && ' 🏆'}
-                          {item.tags.includes('budget_pick') && ' 💰'}
-                        </span>
-                      )}
+                      <span className="ml-2">
+                        {item.tags.includes('best_value') && ' 🏆'}
+                        {item.tags.includes('budget_pick') && ' 💰'}
+                        {(item.tags.includes('seasonal') || isItemSeasonal(item.name, currentMonth)) && ' 🌱 Seasonal'}
+                      </span>
                     </span>
                   </div>
                 </label>

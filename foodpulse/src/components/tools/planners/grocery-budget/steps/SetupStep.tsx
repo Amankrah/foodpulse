@@ -1,9 +1,14 @@
 'use client'
 
+import { useMemo } from 'react'
 import { NumberInput } from '@/components/tools/shared/NumberInput'
 import { SelectInput } from '@/components/tools/shared/SelectInput'
 import type { HouseholdConfig, SpecialNeeds, BudgetTier } from '../types'
 import { dietBudgetTemplates } from '../data/dietTemplates'
+
+const DEFAULT_CHILD_AGE = 8
+const MIN_CHILD_AGE = 0
+const MAX_CHILD_AGE = 18
 
 interface SetupStepProps {
   household: HouseholdConfig
@@ -55,6 +60,32 @@ export function SetupStep({
     onWeeklyBudgetChange(defaults[t])
   }
 
+  const handleChildrenChange = (n: number) => {
+    const count = Math.max(0, Math.min(10, Math.round(n)))
+    const prevAges = household.childAges
+    const newAges =
+      count >= prevAges.length
+        ? [...prevAges, ...Array(count - prevAges.length).fill(DEFAULT_CHILD_AGE)]
+        : prevAges.slice(0, count)
+    onHouseholdChange({ ...household, children: count, childAges: newAges })
+  }
+
+  const handleChildAgeChange = (index: number, age: number) => {
+    const clamped = Math.max(MIN_CHILD_AGE, Math.min(MAX_CHILD_AGE, Math.round(age)))
+    const newAges = [...household.childAges]
+    newAges[index] = clamped
+    onHouseholdChange({ ...household, childAges: newAges })
+  }
+
+  const childAgesPadded = useMemo(() => {
+    const ages = household.childAges
+    const count = household.children
+    if (count <= 0) return []
+    const padded = [...ages]
+    while (padded.length < count) padded.push(DEFAULT_CHILD_AGE)
+    return padded.slice(0, count)
+  }, [household.children, household.childAges])
+
   return (
     <div className="p-6 md:p-8 space-y-8">
       <div>
@@ -73,11 +104,30 @@ export function SetupStep({
         <NumberInput
           label="Children"
           value={household.children}
-          onChange={(n) => onHouseholdChange({ ...household, children: Math.max(0, Math.min(10, Math.round(n))) })}
+          onChange={handleChildrenChange}
           min={0}
           max={10}
         />
       </div>
+
+      {household.children > 0 && (
+        <div>
+          <h3 className="text-sm font-medium text-neutral-700 mb-3">Children&apos;s ages (years)</h3>
+          <p className="text-neutral-500 text-sm mb-3">Used to estimate portion sizes and suggested budget.</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {childAgesPadded.map((age, index) => (
+              <NumberInput
+                key={index}
+                label={`Child ${index + 1}`}
+                value={age}
+                onChange={(n) => handleChildAgeChange(index, n)}
+                min={MIN_CHILD_AGE}
+                max={MAX_CHILD_AGE}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       <SelectInput
         label="Activity level"

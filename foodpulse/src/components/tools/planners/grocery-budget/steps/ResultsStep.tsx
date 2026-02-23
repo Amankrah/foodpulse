@@ -1,9 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
-import type { PlannerResults, SelectedItem } from '../types'
+import { Lightbulb, RefreshCw, AlertTriangle, Leaf } from 'lucide-react'
+import type { PlannerResults, SelectedItem, Insight } from '../types'
 import { formatPrice } from '../utils/calculations'
-import { CATEGORY_LABELS } from '../data/dietTemplates'
 
 interface ResultsStepProps {
   results: PlannerResults
@@ -14,7 +14,16 @@ interface ResultsStepProps {
 
 export function ResultsStep({ results, weeklyBudget, householdAdults, onStartOver }: ResultsStepProps) {
   const listRef = useRef<HTMLDivElement>(null)
-  const { totalPlanned, remaining, costPerDay, categoryBreakdown, prioritizedList } = results
+  const {
+    totalPlanned,
+    remaining,
+    costPerDay,
+    categoryBreakdown,
+    prioritizedList,
+    insights = [],
+    swapSuggestions = [],
+    wasteWarnings = [],
+  } = results
 
   const handlePrint = () => {
     if (listRef.current) {
@@ -79,6 +88,30 @@ export function ResultsStep({ results, weeklyBudget, householdAdults, onStartOve
         <SummaryCard label="Cost/day" value={formatPrice(costPerDay)} sub={`per person (${householdAdults})`} />
       </div>
 
+      {/* Swap suggestions (when over budget) */}
+      {swapSuggestions.length > 0 && (
+        <div className="rounded-xl border-2 border-amber-200 bg-amber-50 p-4">
+          <h3 className="font-semibold text-amber-900 mb-2 flex items-center gap-2">
+            <RefreshCw className="w-5 h-5" />
+            Smart swaps to stay in budget
+          </h3>
+          <p className="text-sm text-amber-800 mb-4">
+            Your list is over budget. Consider these substitutions for similar nutrition at lower cost:
+          </p>
+          <ul className="space-y-3">
+            {swapSuggestions.slice(0, 5).map((s) => (
+              <li key={`${s.originalId}-${s.suggestedId}`} className="flex flex-wrap items-center gap-2 text-sm">
+                <span className="font-medium text-neutral-800">{s.originalName}</span>
+                <span className="text-neutral-500">→</span>
+                <span className="font-medium text-green-700">{s.suggestedName}</span>
+                <span className="text-amber-700 font-medium">Save {formatPrice(s.savings)}</span>
+                <span className="text-neutral-500 text-xs">({s.rationale})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Category breakdown */}
       <div>
         <h3 className="font-semibold text-neutral-900 mb-4">Budget by category</h3>
@@ -109,6 +142,40 @@ export function ResultsStep({ results, weeklyBudget, householdAdults, onStartOve
         <ListSection title="Priority 2 – Weekly fresh" items={prioritizedList.priority2} />
         <ListSection title="Priority 3 – Nice to have" items={prioritizedList.priority3} />
       </div>
+
+      {/* Waste warnings */}
+      {wasteWarnings.length > 0 && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4">
+          <h3 className="font-semibold text-neutral-900 mb-2 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-amber-600" />
+            Use soon (short shelf life)
+          </h3>
+          <ul className="space-y-2 text-sm">
+            {wasteWarnings.map((w) => (
+              <li key={w.itemId}>
+                <span className="font-medium text-neutral-800">{w.itemName}</span>
+                <span className="text-neutral-500"> — {w.shelfLifeDays} days</span>
+                <span className="text-neutral-600"> · {w.tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Insights & tips */}
+      {insights.length > 0 && (
+        <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
+          <h3 className="font-semibold text-neutral-900 mb-4 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5 text-amber-500" />
+            Insights & tips
+          </h3>
+          <div className="space-y-4">
+            {insights.map((insight, i) => (
+              <InsightCard key={i} insight={insight} />
+            ))}
+          </div>
+        </div>
+      )}
 
       <p className="text-xs text-neutral-500">
         Prices are estimates based on US national averages. Verify at your store.
@@ -166,6 +233,26 @@ function ListSection({ title, items }: { title: string; items: SelectedItem[] })
           </li>
         ))}
       </ul>
+    </div>
+  )
+}
+
+function InsightCard({ insight }: { insight: Insight }) {
+  const Icon = insight.type === 'seasonal' ? Leaf : Lightbulb
+  return (
+    <div className="rounded-lg border border-neutral-200 bg-white p-3">
+      <h4 className="font-medium text-neutral-900 flex items-center gap-2 mb-1">
+        <Icon className="w-4 h-4 text-green-600" />
+        {insight.title}
+      </h4>
+      <p className="text-sm text-neutral-600">{insight.message}</p>
+      {insight.items && insight.items.length > 0 && (
+        <ul className="mt-2 text-sm text-neutral-600 list-disc list-inside">
+          {insight.items.map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

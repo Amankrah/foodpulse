@@ -1,19 +1,21 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { ShoppingCart, Calculator, Scale, Sparkles } from 'lucide-react'
 import { ToolLayout } from '@/components/tools/ToolLayout'
 import { AnimatePresence, motion } from 'framer-motion'
-import type { PlannerStep, PlannerState, SelectedItem } from './types'
+import type { PlannerStep, PlannerState } from './types'
 import { dietBudgetTemplates } from './data/dietTemplates'
-import { allocationToCategoryBudgets } from './utils/calculations'
-import { computeResults } from './utils/calculations'
+import { groceryDatabase } from './data/groceryDatabase'
+import { allocationToCategoryBudgets, computeResults } from './utils/calculations'
 import { SetupStep } from './steps/SetupStep'
 import { AllocationStep } from './steps/AllocationStep'
 import { SelectionStep } from './steps/SelectionStep'
 import { ResultsStep } from './steps/ResultsStep'
 
 const STEPS: PlannerStep[] = ['setup', 'allocation', 'selection', 'results']
+const DIET_QUIZ_STORAGE_KEY = 'foodpulse_diet_quiz_result'
 
 function getInitialState(): PlannerState {
   const weeklyBudget = 125
@@ -43,7 +45,40 @@ function getInitialState(): PlannerState {
 }
 
 export function GroceryBudgetPlanner() {
-  const [state, setState] = useState<PlannerState>(getInitialState)
+  const searchParams = useSearchParams()
+  const [state, setState] = useState<PlannerState>(() => {
+    const base = getInitialState()
+    const dietFromUrl = searchParams.get('diet')
+    if (dietFromUrl && dietBudgetTemplates[dietFromUrl]) {
+      const template = dietBudgetTemplates[dietFromUrl]
+      return {
+        ...base,
+        dietaryApproach: dietFromUrl,
+        categoryBudgets: allocationToCategoryBudgets(template, base.weeklyBudget),
+        useRecommendedAllocation: true,
+      }
+    }
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(DIET_QUIZ_STORAGE_KEY)
+        if (stored) {
+          const { dietId } = JSON.parse(stored) as { dietId?: string }
+          if (dietId && dietBudgetTemplates[dietId]) {
+            const template = dietBudgetTemplates[dietId]
+            return {
+              ...base,
+              dietaryApproach: dietId,
+              categoryBudgets: allocationToCategoryBudgets(template, base.weeklyBudget),
+              useRecommendedAllocation: true,
+            }
+          }
+        }
+      } catch {
+        // ignore invalid stored data
+      }
+    }
+    return base
+  })
 
   const goTo = useCallback((step: PlannerStep) => {
     setState((prev) => ({ ...prev, currentStep: step }))
@@ -71,7 +106,8 @@ export function GroceryBudgetPlanner() {
       selected,
       state.categoryBudgets,
       state.weeklyBudget,
-      state.household.adults || 1
+      state.household.adults || 1,
+      groceryDatabase
     )
   }, [state.selectedItems, state.categoryBudgets, state.weeklyBudget, state.household.adults])
 

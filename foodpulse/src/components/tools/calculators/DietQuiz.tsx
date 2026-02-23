@@ -184,6 +184,17 @@ export function DietQuiz() {
     }
 
     setResults(quizResults)
+    try {
+      localStorage.setItem(
+        'foodpulse_diet_quiz_result',
+        JSON.stringify({
+          dietId: primaryMatch.dietId,
+          savedAt: Date.now(),
+        })
+      )
+    } catch {
+      // ignore localStorage errors
+    }
     setState((prev) => ({
       ...prev,
       currentSection: 'results',
