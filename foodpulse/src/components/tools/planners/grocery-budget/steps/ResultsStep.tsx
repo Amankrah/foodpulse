@@ -4,15 +4,17 @@ import { useRef } from 'react'
 import { Lightbulb, RefreshCw, AlertTriangle, Leaf } from 'lucide-react'
 import type { PlannerResults, SelectedItem, Insight } from '../types'
 import { formatPrice } from '../utils/calculations'
+import { BatchCookingROICard } from '../components/BatchCookingROICard'
 
 interface ResultsStepProps {
   results: PlannerResults
   weeklyBudget: number
   householdAdults: number
+  dietaryApproach?: string
   onStartOver: () => void
 }
 
-export function ResultsStep({ results, weeklyBudget, householdAdults, onStartOver }: ResultsStepProps) {
+export function ResultsStep({ results, weeklyBudget, householdAdults, dietaryApproach, onStartOver }: ResultsStepProps) {
   const listRef = useRef<HTMLDivElement>(null)
   const {
     totalPlanned,
@@ -161,6 +163,12 @@ export function ResultsStep({ results, weeklyBudget, householdAdults, onStartOve
           </ul>
         </div>
       )}
+
+      {/* Batch cooking ROI */}
+      <BatchCookingROICard
+        householdAdults={householdAdults}
+        dietaryApproach={dietaryApproach}
+      />
 
       {/* Insights & tips */}
       {insights.length > 0 && (

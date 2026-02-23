@@ -226,6 +226,7 @@ export function GroceryBudgetPlanner() {
                 results={results}
                 weeklyBudget={state.weeklyBudget}
                 householdAdults={state.household.adults || 1}
+                dietaryApproach={state.dietaryApproach}
                 onStartOver={() => setState(getInitialState())}
               />
             </motion.div>
