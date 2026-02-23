@@ -77,7 +77,6 @@ const tools = [
     description: 'Plan weekly grocery spending and save money on healthy foods.',
     icon: <ShoppingCart className="w-6 h-6" />,
     category: 'Planner',
-    comingSoon: true,
   },
   {
     title: 'Meal Cost Calculator',
@@ -105,10 +104,9 @@ const tools = [
   {
     title: 'What Diet Quiz',
     slug: 'diet-quiz',
-    description: 'Take our quiz to find the best diet approach for your lifestyle.',
-    icon: <HelpCircle className="w-6 h-6" />,
+    description: 'Discover your ideal dietary approach based on your unique lifestyle, values, and health needs.',
+    icon: <Sparkles className="w-6 h-6" />,
     category: 'Quiz',
-    comingSoon: true,
   },
   {
     title: 'Nutrition Label Reader',
