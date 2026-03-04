@@ -149,7 +149,7 @@ export function FooterMobile() {
           <p className="text-center text-sm text-green-200 mt-4">
             © {currentYear} {SITE_NAME}
           </p>
-          <p className="text-center text-xs text-green-300 mt-1">
+          <p className="text-center text-xs text-green-100 mt-1">
             Made with 🥗 for better food choices
           </p>
         </div>

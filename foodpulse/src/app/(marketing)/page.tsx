@@ -123,11 +123,11 @@ function QuickStatsBar({ counts }: { counts: { articles: number; guides: number;
           {stats.map((stat) => (
             <div key={stat.label} className="flex items-center gap-3">
               <div className="w-10 h-10 bg-green-800 rounded-lg flex items-center justify-center">
-                <stat.icon className="h-5 w-5 text-green-300" />
+                <stat.icon className="h-5 w-5 text-green-100" />
               </div>
               <div>
                 <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="text-green-300 text-sm">{stat.label}</div>
+                <div className="text-green-100 text-sm">{stat.label}</div>
               </div>
             </div>
           ))}
@@ -330,8 +330,8 @@ function ResourceShowcase() {
     },
     amber: {
       bg: "bg-amber-50",
-      icon: "bg-amber-100 text-amber-600",
-      link: "text-amber-600 hover:text-amber-700",
+      icon: "bg-amber-100 text-amber-700",
+      link: "text-amber-700 hover:text-amber-800",
     },
     green: {
       bg: "bg-green-50",

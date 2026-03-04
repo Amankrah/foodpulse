@@ -283,7 +283,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brown-600);
+  color: var(--brown-700);
 }
 
 @media (min-width: 768px) {
