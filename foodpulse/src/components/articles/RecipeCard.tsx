@@ -707,7 +707,7 @@ export function RecipeCard({
                   className="w-1 h-8 bg-[var(--green-600)] rounded"
                   aria-hidden="true"
                 ></span>
-                Chef&apos;s Notes
+                Rules
               </h3>
               <ul className="bg-white rounded-xl p-5 shadow-sm border border-[var(--green-100)] space-y-3">
                 {recipe.notes.map((note, index) => (

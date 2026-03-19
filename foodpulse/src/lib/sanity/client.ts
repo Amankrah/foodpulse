@@ -1,4 +1,5 @@
 import { client } from '@/sanity/lib/client'
+import { getToolCount } from '@/content/tools'
 import type {
   Article,
   ArticleListItem,
@@ -280,7 +281,7 @@ export async function getContentCounts(): Promise<{
   return {
     articles,
     guides,
-    tools: 7, // Static tool pages
+    tools: getToolCount(),
     glossaryTerms,
   }
 }

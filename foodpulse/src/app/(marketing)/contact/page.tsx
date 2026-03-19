@@ -8,7 +8,6 @@ import { Card } from "@/components/ui/Card";
 import { contact } from "@/lib/api";
 import { contactSchema } from "@/lib/schemas";
 import { Mail, MessageSquare, CheckCircle } from "lucide-react";
-import { CONTACT_EMAIL } from "@/lib/constants";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -187,26 +186,6 @@ export default function ContactPage() {
               </h2>
 
               <div className="space-y-6">
-                {/* Email */}
-                <Card padding="md">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-                      <Mail className="h-6 w-6 text-green-700" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-neutral-900 mb-1">
-                        Email Us
-                      </h3>
-                      <a
-                        href={`mailto:${CONTACT_EMAIL}`}
-                        className="text-green-700 hover:text-green-600"
-                      >
-                        {CONTACT_EMAIL}
-                      </a>
-                    </div>
-                  </div>
-                </Card>
-
                 {/* General Inquiries */}
                 <Card padding="md">
                   <div className="flex items-start gap-4">

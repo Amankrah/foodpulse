@@ -71,8 +71,8 @@ export function Hero() {
 
         {/* CTA */}
         <div className="animate-fade-in-up animation-delay-400">
-          <Button variant="accent" size="lg" href="/articles">
-            Explore All
+          <Button variant="accent" size="lg" href="/start-here">
+            Start Here
           </Button>
         </div>
       </div>

@@ -7,7 +7,8 @@ import {
   Calculator,
   Book,
   HelpCircle,
-  FileText
+  FileText,
+  Compass
 } from "lucide-react";
 
 import { Hero } from "@/components/sections/Hero";
@@ -56,6 +57,9 @@ export default async function HomePage() {
       {/* Quick Stats Bar */}
       <QuickStatsBar counts={counts} />
 
+      {/* Start Here Section */}
+      <StartHereSection />
+
       {/* Featured Content (Articles + Guides) */}
       <FeaturedContentSection
         articles={featuredArticles}
@@ -73,7 +77,7 @@ export default async function HomePage() {
         <Section background="white" padding="lg">
           <SectionHeader
             eyebrow="Latest Articles"
-            title="Fresh From the Blog"
+            title="Newest Insights"
             description="Stay updated with evidence-based insights on food and nutrition"
             centered
           />
@@ -134,6 +138,72 @@ function QuickStatsBar({ counts }: { counts: { articles: number; guides: number;
         </div>
       </div>
     </div>
+  );
+}
+
+// ============================================
+// START HERE SECTION
+// ============================================
+
+function StartHereSection() {
+  return (
+    <Section background="white" padding="lg">
+      <div className="max-w-5xl mx-auto">
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-8 md:p-12 border border-green-100">
+          <div className="grid lg:grid-cols-5 gap-8 items-center">
+            {/* Content */}
+            <div className="lg:col-span-3">
+              <div className="flex items-center gap-2 mb-4">
+                <Compass className="h-5 w-5 text-green-600" />
+                <span className="text-sm font-medium text-green-700">New here?</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-neutral-900 mb-4">
+                Start with clarity
+              </h2>
+              <p className="text-lg text-neutral-700 mb-6">
+                Food information is everywhere, and it&apos;s often conflicting. FoodPulse helps you understand food and nutrition clearly, so you can make confident decisions.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-3 text-neutral-700">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-700 text-sm font-medium">1</span>
+                  Learn how we approach food education
+                </li>
+                <li className="flex items-center gap-3 text-neutral-700">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-700 text-sm font-medium">2</span>
+                  Discover what makes FoodPulse different
+                </li>
+                <li className="flex items-center gap-3 text-neutral-700">
+                  <span className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-700 text-sm font-medium">3</span>
+                  Find the best starting points for you
+                </li>
+              </ul>
+              <Link
+                href="/start-here"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+              >
+                Start Here
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            {/* Visual */}
+            <div className="lg:col-span-2 hidden lg:flex items-center justify-center">
+              <div className="relative">
+                <div className="w-48 h-48 bg-gradient-to-br from-green-200 to-emerald-300 rounded-full flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl mb-2">🧭</div>
+                    <p className="text-sm font-medium text-green-800">Your guide to<br />food clarity</p>
+                  </div>
+                </div>
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -right-4 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">📚</div>
+                <div className="absolute -bottom-2 -left-6 w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-xl">💡</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
   );
 }
 

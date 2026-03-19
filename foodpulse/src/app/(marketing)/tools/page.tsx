@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
-import { Calculator, Beef, Droplet, Scale, Activity, ArrowRightLeft, ChefHat, Wheat, ShoppingCart, DollarSign, Coffee, Sparkles, FileText, HelpCircle } from 'lucide-react'
+import { Calculator, Beef, Droplet, Scale, Activity, ArrowRightLeft, ChefHat, Wheat, ShoppingCart, DollarSign, Coffee, Sparkles, FileText } from 'lucide-react'
 import { ToolCard } from '@/components/tools/ToolCard'
+import { tools as toolsData } from '@/content/tools'
 
 export const metadata: Metadata = {
   title: 'Free Nutrition Tools & Calculators | FoodPulse',
@@ -12,111 +13,29 @@ export const metadata: Metadata = {
   },
 }
 
-const tools = [
-  {
-    title: 'Protein Calculator',
-    slug: 'protein-calculator',
-    description: 'Calculate your daily protein needs based on weight, activity level, and goals.',
-    icon: <Beef className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'Macro Calculator',
-    slug: 'macro-calculator',
-    description: 'Get your personalized macronutrient breakdown for your fitness goals.',
-    icon: <Calculator className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'Calorie Calculator',
-    slug: 'calorie-calculator',
-    description: 'Find your Total Daily Energy Expenditure (TDEE) and daily calorie needs for your goals.',
-    icon: <Scale className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'Hydration Calculator',
-    slug: 'hydration-calculator',
-    description: 'Calculate your daily water intake needs based on activity and climate.',
-    icon: <Droplet className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'BMI Calculator',
-    slug: 'bmi-calculator',
-    description: 'Calculate your Body Mass Index with health context and limitations.',
-    icon: <Activity className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'Recipe Scaler',
-    slug: 'recipe-scaler',
-    description: 'Scale recipe ingredients up or down for any serving size.',
-    icon: <ChefHat className="w-6 h-6" />,
-    category: 'Converter',
-    comingSoon: true,
-  },
-  {
-    title: 'Unit Converter',
-    slug: 'unit-converter',
-    description: 'Convert between cooking measurements (cups, ml, oz, grams).',
-    icon: <ArrowRightLeft className="w-6 h-6" />,
-    category: 'Converter',
-    comingSoon: true,
-  },
-  {
-    title: 'Fiber Calculator',
-    slug: 'fiber-calculator',
-    description: 'Calculate your daily fiber needs and track intake.',
-    icon: <Wheat className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'Grocery Budget Planner',
-    slug: 'grocery-budget',
-    description: 'Plan weekly grocery spending and save money on healthy foods.',
-    icon: <ShoppingCart className="w-6 h-6" />,
-    category: 'Planner',
-  },
-  {
-    title: 'Meal Cost Calculator',
-    slug: 'meal-cost',
-    description: 'Calculate the cost per serving of your recipes.',
-    icon: <DollarSign className="w-6 h-6" />,
-    category: 'Calculator',
-    comingSoon: true,
-  },
-  {
-    title: 'Caffeine Calculator',
-    slug: 'caffeine-calculator',
-    description: 'Track your daily caffeine intake and stay within safe limits.',
-    icon: <Coffee className="w-6 h-6" />,
-    category: 'Calculator',
-  },
-  {
-    title: 'Sodium Calculator',
-    slug: 'sodium-calculator',
-    description: 'Monitor your sodium intake for better heart health.',
-    icon: <Droplet className="w-6 h-6" />,
-    category: 'Calculator',
-    comingSoon: true,
-  },
-  {
-    title: 'What Diet Quiz',
-    slug: 'diet-quiz',
-    description: 'Discover your ideal dietary approach based on your unique lifestyle, values, and health needs.',
-    icon: <Sparkles className="w-6 h-6" />,
-    category: 'Quiz',
-  },
-  {
-    title: 'Nutrition Label Reader',
-    slug: 'label-reader',
-    description: 'Upload or input nutrition labels for instant analysis.',
-    icon: <FileText className="w-6 h-6" />,
-    category: 'Analyzer',
-    comingSoon: true,
-  },
-]
+// Map slugs to icons (icons can't be stored in the shared file as they're JSX)
+const toolIcons: Record<string, React.ReactNode> = {
+  'protein-calculator': <Beef className="w-6 h-6" />,
+  'macro-calculator': <Calculator className="w-6 h-6" />,
+  'calorie-calculator': <Scale className="w-6 h-6" />,
+  'hydration-calculator': <Droplet className="w-6 h-6" />,
+  'bmi-calculator': <Activity className="w-6 h-6" />,
+  'recipe-scaler': <ChefHat className="w-6 h-6" />,
+  'unit-converter': <ArrowRightLeft className="w-6 h-6" />,
+  'fiber-calculator': <Wheat className="w-6 h-6" />,
+  'grocery-budget': <ShoppingCart className="w-6 h-6" />,
+  'meal-cost': <DollarSign className="w-6 h-6" />,
+  'caffeine-calculator': <Coffee className="w-6 h-6" />,
+  'sodium-calculator': <Droplet className="w-6 h-6" />,
+  'diet-quiz': <Sparkles className="w-6 h-6" />,
+  'label-reader': <FileText className="w-6 h-6" />,
+}
+
+// Add icons to tools from shared data
+const tools = toolsData.map(tool => ({
+  ...tool,
+  icon: toolIcons[tool.slug] || <Calculator className="w-6 h-6" />,
+}))
 
 export default function ToolsPage() {
   const availableTools = tools.filter(tool => !tool.comingSoon)

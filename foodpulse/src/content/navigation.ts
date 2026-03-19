@@ -22,7 +22,6 @@ export interface NavGroup {
 // Primary navigation (header)
 export const mainNavigation: NavGroup[] = [
   { label: "Home", href: "/" },
-  { label: "Shop", href: "/shop" },
   {
     label: "Articles",
     href: "/articles",
@@ -59,6 +58,7 @@ export const mainNavigation: NavGroup[] = [
   },
   { label: "About", href: "/about" },
   { label: "Coaching", href: "/coaching" },
+  { label: "Shop", href: "/shop" },
 ];
 
 // Footer navigation
@@ -112,7 +112,6 @@ export const legalNavigation: NavItem[] = [
 // Mobile navigation (hamburger menu)
 export const mobileNavigation = [
   { label: "Home", href: "/" },
-  { label: "Shop", href: "/shop" },
   {
     label: "Articles",
     children: [
@@ -136,6 +135,7 @@ export const mobileNavigation = [
   { label: "Coaching", href: "/coaching" },
   { label: "Contact", href: "/contact" },
   { label: "Newsletter", href: "/newsletter" },
+  { label: "Shop", href: "/shop" },
 ];
 
 // Breadcrumb helper

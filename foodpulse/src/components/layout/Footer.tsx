@@ -176,9 +176,9 @@ export function Footer() {
               ))}
             </div>
 
-            {/* Made with love */}
+            {/* Tagline */}
             <p className="text-sm text-green-100">
-              Made with 🥗 for better food choices
+              Know your food. Nourish your life.
             </p>
           </div>
         </Container>

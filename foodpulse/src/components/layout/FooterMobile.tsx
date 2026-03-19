@@ -150,7 +150,7 @@ export function FooterMobile() {
             © {currentYear} {SITE_NAME}
           </p>
           <p className="text-center text-xs text-green-100 mt-1">
-            Made with 🥗 for better food choices
+            Know your food. Nourish your life.
           </p>
         </div>
       </Container>
