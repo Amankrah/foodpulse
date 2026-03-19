@@ -102,6 +102,7 @@ export const faqItemType = defineType({
       type: 'string',
       options: {
         list: [
+          {title: 'About FoodPulse', value: 'about-foodpulse'},
           {title: 'Food and Wellbeing', value: 'food-and-wellbeing'},
           {title: 'Kitchen and Cooking', value: 'kitchen-and-cooking'},
           {title: 'Food Literacy', value: 'food-literacy'},
@@ -177,6 +178,7 @@ export const faqItemType = defineType({
     prepare({title, category, isPublished, isFeatured}) {
       const status = isPublished ? (isFeatured ? '⭐' : '✓') : '○'
       const categoryLabels: Record<string, string> = {
+        'about-foodpulse': '💚 FoodPulse',
         'food-and-wellbeing': '🥗 Wellbeing',
         'kitchen-and-cooking': '🍳 Kitchen',
         'food-literacy': '📚 Literacy',

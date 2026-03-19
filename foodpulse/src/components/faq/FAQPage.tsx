@@ -22,8 +22,11 @@ export function FAQPage({ categories, totalCount }: FAQPageProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({})
 
+  /** Hide category tabs/sections until at least one published FAQ exists (e.g. new About FoodPulse). */
+  const visibleCategories = categories.filter((c) => c.faqs && c.faqs.length > 0)
+
   // Flatten all FAQs for search
-  const allFaqs = categories.flatMap((cat) =>
+  const allFaqs = visibleCategories.flatMap((cat) =>
     cat.faqs.map((faq) => ({
       ...faq,
       category: cat.slug,
@@ -83,7 +86,10 @@ export function FAQPage({ categories, totalCount }: FAQPageProps) {
 
             {/* Quick Stats */}
             <div className="mt-6 text-sm text-neutral-600">
-              {totalCount} questions answered • {categories.length} categories
+              {totalCount} questions answered
+              {visibleCategories.length > 0
+                ? ` • ${visibleCategories.length} categories`
+                : ''}
             </div>
           </div>
         </div>
@@ -93,7 +99,7 @@ export function FAQPage({ categories, totalCount }: FAQPageProps) {
       <div className="sticky top-16 bg-white border-b border-neutral-200 z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-            {categories.map((category) => (
+            {visibleCategories.map((category) => (
               <button
                 key={category.slug}
                 onClick={() => handleCategoryClick(category.slug)}
@@ -114,7 +120,7 @@ export function FAQPage({ categories, totalCount }: FAQPageProps) {
       {/* FAQ Sections */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto space-y-12">
-          {categories.map((category) => (
+          {visibleCategories.map((category) => (
             <section
               key={category.slug}
               id={category.slug}

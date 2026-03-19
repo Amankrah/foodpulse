@@ -607,6 +607,21 @@ export const FAQ_PAGE_QUERY = `
 {
   "categories": [
     {
+      "slug": "about-foodpulse",
+      "title": "About FoodPulse",
+      "icon": "💚",
+      "description": "Who we are, how we work, and what you can expect from FoodPulse.",
+      "faqs": *[_type == "faqDocument" && category == "about-foodpulse" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    },
+    {
       "slug": "food-and-wellbeing",
       "title": "Food and Wellbeing",
       "icon": "🥗",

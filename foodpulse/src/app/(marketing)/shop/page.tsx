@@ -49,8 +49,8 @@ export default async function ShopPage() {
         <Container>
           {products.length === 0 ? (
             <div className="text-center py-16 text-neutral-600">
-              <p className="text-lg">No products available yet.</p>
-              <p className="mt-2">Check back soon for guides and resources.</p>
+              <p className="text-lg">Coming soon.</p>
+              <p className="mt-2">We&apos;re working on it!</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">

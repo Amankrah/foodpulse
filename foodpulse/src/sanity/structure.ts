@@ -189,6 +189,15 @@ export const structure: StructureResolver = (S) =>
                     .title('Categories')
                     .items([
                       S.listItem()
+                        .title('💚 About FoodPulse')
+                        .child(
+                          S.documentList()
+                            .title('About FoodPulse')
+                            .filter('_type == "faqDocument" && category == "about-foodpulse"')
+                            .defaultOrdering([{field: 'order', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
                         .title('🥗 Food and Wellbeing')
                         .child(
                           S.documentList()

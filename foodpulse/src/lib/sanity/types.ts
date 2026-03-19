@@ -325,7 +325,12 @@ export interface FAQDocument {
   slug: string
   shortAnswer: string
   fullAnswer?: PortableTextBlock[]
-  category: 'food-and-wellbeing' | 'kitchen-and-cooking' | 'food-literacy' | 'food-systems'
+  category:
+    | 'about-foodpulse'
+    | 'food-and-wellbeing'
+    | 'kitchen-and-cooking'
+    | 'food-literacy'
+    | 'food-systems'
   relatedArticle?: {
     title: string
     slug: string
