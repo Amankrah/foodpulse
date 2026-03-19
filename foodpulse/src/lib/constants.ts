@@ -63,45 +63,37 @@ export const BREAKPOINTS = {
 
 // Content pillars/categories
 export const CONTENT_CATEGORIES = {
-  foodWellbeing: {
-    slug: "food-wellbeing",
-    name: "Food & Wellbeing",
+  foodAndWellbeing: {
+    slug: "food-and-wellbeing",
+    name: "Food and Wellbeing",
     description:
       "Nutrition science, dietary patterns, and health impacts. Learn how what you eat affects how you feel.",
     icon: "🥗",
     color: "green",
   },
-  smartChoices: {
-    slug: "smart-food-choices",
-    name: "Smart Food Choices",
+  kitchenAndCooking: {
+    slug: "kitchen-and-cooking",
+    name: "Kitchen and Cooking",
     description:
-      "Consumer decision-making, label reading, and food quality. Navigate the grocery store with confidence.",
-    icon: "🛒",
+      "Meal prep, recipes, cooking techniques, and kitchen skills. Master the art of cooking.",
+    icon: "🍳",
+    color: "orange",
+  },
+  foodLiteracy: {
+    slug: "food-literacy",
+    name: "Food Literacy",
+    description:
+      "Understanding food labels, making informed choices, and consumer education.",
+    icon: "📚",
     color: "blue",
   },
   foodSystems: {
-    slug: "food-system-insights",
-    name: "Food System Insights",
+    slug: "food-systems",
+    name: "Food Systems",
     description:
       "Production, distribution, sustainability, and policy. See the bigger picture of where food comes from.",
     icon: "🌾",
     color: "amber",
-  },
-  practicalTips: {
-    slug: "practical-food-tips",
-    name: "Practical Food Tips",
-    description:
-      "Actionable guidance for daily life. Meal prep, storage, and eating well on any schedule or budget.",
-    icon: "🍳",
-    color: "orange",
-  },
-  recipes: {
-    slug: "recipes",
-    name: "Recipes",
-    description:
-      "Nutritious, delicious, accessible recipes. Taste and health working together.",
-    icon: "📖",
-    color: "red",
   },
 } as const;
 

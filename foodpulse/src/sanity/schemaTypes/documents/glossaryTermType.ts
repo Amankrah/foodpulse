@@ -166,12 +166,10 @@ export const glossaryTermType = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Nutrition Science', value: 'nutrition-science'},
-          {title: 'Food Science', value: 'food-science'},
+          {title: 'Food and Wellbeing', value: 'food-and-wellbeing'},
+          {title: 'Kitchen and Cooking', value: 'kitchen-and-cooking'},
+          {title: 'Food Literacy', value: 'food-literacy'},
           {title: 'Food Systems', value: 'food-systems'},
-          {title: 'Health & Wellness', value: 'health-wellness'},
-          {title: 'Consumer & Practical', value: 'consumer-practical'},
-          {title: 'Cooking & Kitchen', value: 'cooking-kitchen'},
         ],
       },
       validation: (rule) => rule.required(),
@@ -282,12 +280,10 @@ export const glossaryTermType = defineType({
     },
     prepare({title, subtitle, definition}) {
       const categoryLabels: Record<string, string> = {
-        'nutrition-science': '🧬 Nutrition',
-        'food-science': '🔬 Food Science',
-        'food-systems': '🌾 Food Systems',
-        'health-wellness': '💚 Health',
-        'consumer-practical': '🛒 Consumer',
-        'cooking-kitchen': '🍳 Cooking',
+        'food-and-wellbeing': '🥗 Wellbeing',
+        'kitchen-and-cooking': '🍳 Kitchen',
+        'food-literacy': '📚 Literacy',
+        'food-systems': '🌾 Systems',
       }
       return {
         title,

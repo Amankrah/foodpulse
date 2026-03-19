@@ -6,12 +6,10 @@ interface GlossaryTermCardProps {
 }
 
 const categoryLabels: Record<string, string> = {
-  "nutrition-science": "🧬 Nutrition",
-  "food-science": "🔬 Food Science",
-  "food-systems": "🌾 Food Systems",
-  "health-wellness": "💚 Health",
-  "consumer-practical": "🛒 Consumer",
-  "cooking-kitchen": "🍳 Cooking",
+  "food-and-wellbeing": "🥗 Wellbeing",
+  "kitchen-and-cooking": "🍳 Kitchen",
+  "food-literacy": "📚 Literacy",
+  "food-systems": "🌾 Systems",
 };
 
 export function GlossaryTermCard({ term }: GlossaryTermCardProps) {

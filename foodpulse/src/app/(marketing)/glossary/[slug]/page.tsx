@@ -15,12 +15,10 @@ interface TermPageProps {
 }
 
 const categoryLabels: Record<string, string> = {
-  "nutrition-science": "🧬 Nutrition Science",
-  "food-science": "🔬 Food Science",
+  "food-and-wellbeing": "🥗 Food and Wellbeing",
+  "kitchen-and-cooking": "🍳 Kitchen and Cooking",
+  "food-literacy": "📚 Food Literacy",
   "food-systems": "🌾 Food Systems",
-  "health-wellness": "💚 Health & Wellness",
-  "consumer-practical": "🛒 Consumer & Practical",
-  "cooking-kitchen": "🍳 Cooking & Kitchen",
 };
 
 export async function generateStaticParams() {

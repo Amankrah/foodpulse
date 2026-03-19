@@ -18,9 +18,9 @@ export interface Category {
 }
 
 export const categories: Record<string, Category> = {
-  foodWellbeing: {
-    slug: "food-wellbeing",
-    name: "Food & Wellbeing",
+  foodAndWellbeing: {
+    slug: "food-and-wellbeing",
+    name: "Food and Wellbeing",
     description:
       "Nutrition science, dietary patterns, and health impacts.",
     longDescription:
@@ -28,7 +28,7 @@ export const categories: Record<string, Category> = {
     icon: "🥗",
     color: "green",
     seo: {
-      title: "Food & Wellbeing | Nutrition Science & Health | FoodPulse",
+      title: "Food and Wellbeing | Nutrition Science & Health | FoodPulse",
       description:
         "Explore nutrition science, dietary patterns, and how food affects your health. Evidence-based articles on gut health, disease prevention, and wellbeing.",
       keywords: [
@@ -42,41 +42,65 @@ export const categories: Record<string, Category> = {
       ],
     },
   },
-  smartChoices: {
-    slug: "smart-food-choices",
-    name: "Smart Food Choices",
+  kitchenAndCooking: {
+    slug: "kitchen-and-cooking",
+    name: "Kitchen and Cooking",
     description:
-      "Consumer decision-making, label reading, and food quality.",
+      "Delicious, nutritious recipes backed by food science. Healthy meals that don't compromise on flavor, with clear nutrition information.",
     longDescription:
-      "Learn to make informed food choices at the grocery store and beyond. Understand food labels, quality markers, and what really matters when choosing what to eat. No marketing hype, just practical guidance.",
-    icon: "🛒",
+      "Delicious, nutritious recipes backed by food science. Explore healthy meals that don't compromise on flavor, with clear nutrition information, practical cooking techniques, and meal prep guidance.",
+    icon: "🍳",
+    color: "orange",
+    seo: {
+      title: "Kitchen and Cooking | Recipes & Cooking Skills | FoodPulse",
+      description:
+        "Get practical cooking advice, recipes, meal prep tips, and kitchen techniques. From beginner basics to advanced culinary skills.",
+      keywords: [
+        "cooking tips",
+        "meal prep",
+        "recipes",
+        "kitchen skills",
+        "cooking techniques",
+        "healthy cooking",
+        "kitchen organization",
+      ],
+    },
+  },
+  foodLiteracy: {
+    slug: "food-literacy",
+    name: "Food Literacy",
+    description:
+      "Understanding food labels, making informed choices, and consumer education.",
+    longDescription:
+      "Build your food literacy with guides on reading labels, understanding nutrition claims, and making informed food choices. Cut through marketing hype and learn what really matters when choosing what to eat.",
+    icon: "📚",
     color: "blue",
     seo: {
-      title: "Smart Food Choices | Label Reading & Shopping Guides | FoodPulse",
+      title: "Food Literacy | Label Reading & Consumer Education | FoodPulse",
       description:
-        "Make informed food decisions with our guides on reading nutrition labels, understanding food quality, and smart grocery shopping.",
+        "Build your food literacy with guides on reading nutrition labels, understanding food claims, and making informed food choices.",
       keywords: [
         "food labels",
         "nutrition labels",
-        "food quality",
-        "grocery shopping",
+        "food literacy",
+        "consumer education",
         "food choices",
-        "consumer guide",
         "reading labels",
+        "nutrition claims",
       ],
     },
   },
   foodSystems: {
-    slug: "food-system-insights",
-    name: "Food System Insights",
+    slug: "food-systems",
+    name: "Food Systems",
     description:
-      "Production, distribution, sustainability, and policy.",
+      "Understand how food systems work, from farm to fork. Explore sustainable agriculture, supply chains, food policy, and the environmental impact of what we eat.",
     longDescription:
-      "Understanding food systems helps you see the bigger picture. Learn about how food is produced, distributed, and regulated—and why it matters for your health, your community, and the planet.",
+      "Understand how food systems work, from farm to fork. Learn about sustainable agriculture, supply chains, food policy, and the environmental impact of what we eat. See the bigger picture of how food is produced, distributed, and regulated.",
     icon: "🌾",
     color: "amber",
     seo: {
-      title: "Food System Insights | Sustainability & Supply Chains | FoodPulse",
+      title: "Food Systems | Sustainability & Supply Chains | FoodPulse",
       description:
         "Explore food systems, sustainable agriculture, supply chains, and food policy. Understand where your food comes from and why it matters.",
       keywords: [
@@ -87,54 +111,6 @@ export const categories: Record<string, Category> = {
         "food policy",
         "food production",
         "sustainable food",
-      ],
-    },
-  },
-  practicalTips: {
-    slug: "practical-food-tips",
-    name: "Practical Food Tips",
-    description:
-      "Meal prep, storage, and eating well on any schedule or budget.",
-    longDescription:
-      "Real-world food advice for real life. From meal prep strategies to food storage tips, learn practical ways to eat better without overhauling your entire routine or budget.",
-    icon: "🍳",
-    color: "orange",
-    seo: {
-      title: "Practical Food Tips | Meal Prep & Kitchen Guides | FoodPulse",
-      description:
-        "Get practical food advice for meal prep, food storage, eating on a budget, and making healthy eating work with your lifestyle.",
-      keywords: [
-        "meal prep",
-        "food storage",
-        "eating on a budget",
-        "practical food tips",
-        "kitchen tips",
-        "healthy eating tips",
-        "seasonal eating",
-      ],
-    },
-  },
-  recipes: {
-    slug: "recipes",
-    name: "Recipes",
-    description:
-      "Nutritious, delicious, and accessible recipes.",
-    longDescription:
-      "Delicious recipes that are good for you too. Every recipe includes nutrition information and is designed to be both satisfying and nourishing. No guilt, no gimmicks—just good food.",
-    icon: "📖",
-    color: "red",
-    seo: {
-      title: "Healthy Recipes | Nutritious & Delicious Meals | FoodPulse",
-      description:
-        "Discover nutritious and delicious recipes backed by nutrition science. From quick meals to special diets, find recipes that nourish and satisfy.",
-      keywords: [
-        "healthy recipes",
-        "nutritious recipes",
-        "easy recipes",
-        "meal ideas",
-        "cooking tips",
-        "nutrition recipes",
-        "healthy cooking",
       ],
     },
   },

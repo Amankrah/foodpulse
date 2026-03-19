@@ -607,26 +607,11 @@ export const FAQ_PAGE_QUERY = `
 {
   "categories": [
     {
-      "slug": "about-foodpulse",
-      "title": "About FoodPulse",
-      "icon": "🏠",
-      "description": "Learn about our mission, team, and how we create content.",
-      "faqs": *[_type == "faqDocument" && category == "about-foodpulse" && isPublished == true] | order(order asc) {
-        _id,
-        question,
-        "slug": slug.current,
-        shortAnswer,
-        fullAnswer,
-        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
-        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
-      }
-    },
-    {
-      "slug": "food-nutrition",
-      "title": "Food & Nutrition Basics",
+      "slug": "food-and-wellbeing",
+      "title": "Food and Wellbeing",
       "icon": "🥗",
-      "description": "Common questions about nutrients, diet, and healthy eating.",
-      "faqs": *[_type == "faqDocument" && category == "food-nutrition" && isPublished == true] | order(order asc) {
+      "description": "Questions about nutrition, diet, and healthy eating.",
+      "faqs": *[_type == "faqDocument" && category == "food-and-wellbeing" && isPublished == true] | order(order asc) {
         _id,
         question,
         "slug": slug.current,
@@ -637,11 +622,26 @@ export const FAQ_PAGE_QUERY = `
       }
     },
     {
-      "slug": "food-labels",
-      "title": "Understanding Food Labels",
-      "icon": "🏷️",
+      "slug": "kitchen-and-cooking",
+      "title": "Kitchen and Cooking",
+      "icon": "🍳",
+      "description": "Questions about cooking techniques, meal prep, and recipes.",
+      "faqs": *[_type == "faqDocument" && category == "kitchen-and-cooking" && isPublished == true] | order(order asc) {
+        _id,
+        question,
+        "slug": slug.current,
+        shortAnswer,
+        fullAnswer,
+        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
+        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
+      }
+    },
+    {
+      "slug": "food-literacy",
+      "title": "Food Literacy",
+      "icon": "📚",
       "description": "Decode nutrition labels, certifications, and marketing claims.",
-      "faqs": *[_type == "faqDocument" && category == "food-labels" && isPublished == true] | order(order asc) {
+      "faqs": *[_type == "faqDocument" && category == "food-literacy" && isPublished == true] | order(order asc) {
         _id,
         question,
         "slug": slug.current,
@@ -653,25 +653,10 @@ export const FAQ_PAGE_QUERY = `
     },
     {
       "slug": "food-systems",
-      "title": "Food Systems & Sustainability",
+      "title": "Food Systems",
       "icon": "🌾",
       "description": "Understand where food comes from and its environmental impact.",
       "faqs": *[_type == "faqDocument" && category == "food-systems" && isPublished == true] | order(order asc) {
-        _id,
-        question,
-        "slug": slug.current,
-        shortAnswer,
-        fullAnswer,
-        "relatedArticle": relatedArticle->{title, "slug": slug.current, "category": category->slug.current},
-        "relatedGlossaryTerm": relatedGlossaryTerm->{term, "slug": slug.current}
-      }
-    },
-    {
-      "slug": "using-foodpulse",
-      "title": "Using FoodPulse",
-      "icon": "💻",
-      "description": "Get the most out of FoodPulse content and features.",
-      "faqs": *[_type == "faqDocument" && category == "using-foodpulse" && isPublished == true] | order(order asc) {
         _id,
         question,
         "slug": slug.current,

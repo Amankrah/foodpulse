@@ -56,19 +56,17 @@ interface CategoryBadgeProps {
 
 export function CategoryBadge({ category, className }: CategoryBadgeProps) {
   const categoryColors: Record<string, string> = {
-    "food-wellbeing": "bg-green-50 text-green-700",
-    "smart-food-choices": "bg-blue-50 text-blue-700",
-    "food-system-insights": "bg-amber-50 text-amber-700",
-    "practical-food-tips": "bg-orange-50 text-orange-700",
-    recipes: "bg-red-50 text-red-700",
+    "food-and-wellbeing": "bg-green-50 text-green-700",
+    "kitchen-and-cooking": "bg-orange-50 text-orange-700",
+    "food-literacy": "bg-blue-50 text-blue-700",
+    "food-systems": "bg-amber-50 text-amber-700",
   };
 
   const categoryLabels: Record<string, string> = {
-    "food-wellbeing": "Food & Wellbeing",
-    "smart-food-choices": "Smart Choices",
-    "food-system-insights": "Food Systems",
-    "practical-food-tips": "Practical Tips",
-    recipes: "Recipes",
+    "food-and-wellbeing": "Food and Wellbeing",
+    "kitchen-and-cooking": "Kitchen and Cooking",
+    "food-literacy": "Food Literacy",
+    "food-systems": "Food Systems",
   };
 
   return (

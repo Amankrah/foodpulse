@@ -10,25 +10,21 @@ This directory will contain article content files. Articles can be stored as:
 
 ```
 articles/
-├── food-wellbeing/
+├── food-and-wellbeing/
 │   ├── gut-health-beginners-guide.mdx
 │   ├── anti-inflammatory-foods.mdx
 │   └── ...
-├── smart-food-choices/
+├── kitchen-and-cooking/
+│   ├── meal-prep-beginners.mdx
+│   ├── mediterranean-quinoa-bowl.mdx
+│   └── ...
+├── food-literacy/
 │   ├── reading-nutrition-labels.mdx
 │   ├── organic-vs-conventional.mdx
 │   └── ...
-├── food-system-insights/
-│   ├── what-is-a-food-system.mdx
-│   ├── sustainable-agriculture.mdx
-│   └── ...
-├── practical-food-tips/
-│   ├── meal-prep-beginners.mdx
-│   ├── seasonal-eating-guide.mdx
-│   └── ...
-└── recipes/
-    ├── mediterranean-quinoa-bowl.mdx
-    ├── overnight-oats-variations.mdx
+└── food-systems/
+    ├── what-is-a-food-system.mdx
+    ├── sustainable-agriculture.mdx
     └── ...
 ```
 
@@ -41,7 +37,7 @@ Each article should include front matter with metadata:
 title: "Your Article Title"
 slug: "article-url-slug"
 excerpt: "Brief description of the article (150-160 characters)"
-category: "food-wellbeing"
+category: "food-and-wellbeing"
 tags: ["gut health", "nutrition", "digestion"]
 publishedAt: "2025-01-15"
 updatedAt: "2025-01-16"

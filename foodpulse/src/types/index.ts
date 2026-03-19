@@ -32,11 +32,10 @@ export interface ArticleSEO {
 }
 
 export type CategorySlug =
-  | "food-wellbeing"
-  | "smart-food-choices"
-  | "food-system-insights"
-  | "practical-food-tips"
-  | "recipes";
+  | "food-and-wellbeing"
+  | "kitchen-and-cooking"
+  | "food-literacy"
+  | "food-systems";
 
 export interface Article {
   id?: string;
@@ -108,7 +107,7 @@ export interface RecipeNutrition {
 }
 
 export interface Recipe extends Omit<Article, "category"> {
-  category: "recipes";
+  category: "kitchen-and-cooking";
   recipe: {
     prepTime: number; // minutes
     cookTime: number; // minutes

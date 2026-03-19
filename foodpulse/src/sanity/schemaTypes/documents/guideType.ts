@@ -371,12 +371,10 @@ export const guideType = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Nutrition Basics', value: 'nutrition'},
-          {title: 'Meal Planning', value: 'meal-planning'},
-          {title: 'Food Labels', value: 'food-labels'},
-          {title: 'Healthy Eating', value: 'healthy-eating'},
+          {title: 'Food and Wellbeing', value: 'food-and-wellbeing'},
+          {title: 'Kitchen and Cooking', value: 'kitchen-and-cooking'},
+          {title: 'Food Literacy', value: 'food-literacy'},
           {title: 'Food Systems', value: 'food-systems'},
-          {title: 'Tools & Calculators', value: 'tools'},
         ],
       },
       validation: (rule) => rule.required(),

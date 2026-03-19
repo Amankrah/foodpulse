@@ -325,7 +325,7 @@ export interface FAQDocument {
   slug: string
   shortAnswer: string
   fullAnswer?: PortableTextBlock[]
-  category: 'about-foodpulse' | 'food-nutrition' | 'food-labels' | 'food-systems' | 'using-foodpulse'
+  category: 'food-and-wellbeing' | 'kitchen-and-cooking' | 'food-literacy' | 'food-systems'
   relatedArticle?: {
     title: string
     slug: string
@@ -380,7 +380,7 @@ export interface GuideListItem {
   guideType: 'quick' | 'comprehensive' | 'premium' | 'tool'
   accessType: 'free' | 'email-gated' | 'paid'
   price?: number
-  category: 'nutrition' | 'meal-planning' | 'food-labels' | 'healthy-eating' | 'food-systems' | 'tools'
+  category: 'food-and-wellbeing' | 'kitchen-and-cooking' | 'food-literacy' | 'food-systems'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   readingTime?: number
   tags?: string[]
@@ -404,7 +404,7 @@ export interface Guide {
   price?: number
   purchaseLink?: string
   previewContent?: string
-  category: 'nutrition' | 'meal-planning' | 'food-labels' | 'healthy-eating' | 'food-systems' | 'tools'
+  category: 'food-and-wellbeing' | 'kitchen-and-cooking' | 'food-literacy' | 'food-systems'
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   readingTime?: number
   author?: Author

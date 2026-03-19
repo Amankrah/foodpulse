@@ -102,11 +102,10 @@ export const faqItemType = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'About FoodPulse', value: 'about-foodpulse'},
-          {title: 'Food & Nutrition Basics', value: 'food-nutrition'},
-          {title: 'Understanding Food Labels', value: 'food-labels'},
-          {title: 'Food Systems & Sustainability', value: 'food-systems'},
-          {title: 'Using FoodPulse', value: 'using-foodpulse'},
+          {title: 'Food and Wellbeing', value: 'food-and-wellbeing'},
+          {title: 'Kitchen and Cooking', value: 'kitchen-and-cooking'},
+          {title: 'Food Literacy', value: 'food-literacy'},
+          {title: 'Food Systems', value: 'food-systems'},
         ],
         layout: 'dropdown',
       },
@@ -178,11 +177,10 @@ export const faqItemType = defineType({
     prepare({title, category, isPublished, isFeatured}) {
       const status = isPublished ? (isFeatured ? '⭐' : '✓') : '○'
       const categoryLabels: Record<string, string> = {
-        'about-foodpulse': '🏠 About',
-        'food-nutrition': '🥗 Nutrition',
-        'food-labels': '🏷️ Labels',
+        'food-and-wellbeing': '🥗 Wellbeing',
+        'kitchen-and-cooking': '🍳 Kitchen',
+        'food-literacy': '📚 Literacy',
         'food-systems': '🌾 Systems',
-        'using-foodpulse': '💻 Using',
       }
       return {
         title: `${status} ${title}`,

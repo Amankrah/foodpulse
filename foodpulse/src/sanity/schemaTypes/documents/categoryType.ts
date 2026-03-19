@@ -74,7 +74,7 @@ export const categoryType = defineType({
           name: 'metaTitle',
           title: 'Meta Title',
           type: 'string',
-          description: 'SEO title for category page (e.g., "Food & Wellbeing Articles | FoodPulse")',
+          description: 'SEO title for category page (e.g., "Food and Wellbeing Articles | FoodPulse")',
           validation: (rule) => rule.max(60),
         }),
         defineField({

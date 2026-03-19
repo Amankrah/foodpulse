@@ -10,12 +10,10 @@ interface GuideHeroProps {
 }
 
 const categoryLabels: Record<string, string> = {
-  nutrition: "Nutrition Basics",
-  "meal-planning": "Meal Planning",
-  "food-labels": "Food Labels",
-  "healthy-eating": "Healthy Eating",
+  "food-and-wellbeing": "Food and Wellbeing",
+  "kitchen-and-cooking": "Kitchen and Cooking",
+  "food-literacy": "Food Literacy",
   "food-systems": "Food Systems",
-  tools: "Tools & Calculators",
 };
 
 const difficultyColors = {

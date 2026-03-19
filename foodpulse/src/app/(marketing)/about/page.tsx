@@ -19,34 +19,28 @@ import { SITE_URL, SOCIAL_LINKS, CONTACT_EMAIL, FOUNDER } from "@/lib/constants"
 // Content Pillars Data
 const contentPillars = [
   {
-    title: "Food & Wellbeing",
+    title: "Food and Wellbeing",
     description: "Nutrition science, gut health, disease prevention",
-    href: "/articles/food-wellbeing",
+    href: "/articles/food-and-wellbeing",
     icon: "🥗",
   },
   {
-    title: "Smart Food Choices",
-    description: "Labels, quality, shopping guides",
-    href: "/articles/smart-food-choices",
-    icon: "🛒",
-  },
-  {
-    title: "Food System Insights",
-    description: "Sustainability, supply chains, policy",
-    href: "/articles/food-system-insights",
-    icon: "🌾",
-  },
-  {
-    title: "Practical Tips",
-    description: "Meal prep, storage, seasonal eating",
-    href: "/articles/practical-food-tips",
+    title: "Kitchen and Cooking",
+    description: "Meal prep, recipes, cooking techniques",
+    href: "/articles/kitchen-and-cooking",
     icon: "🍳",
   },
   {
-    title: "Recipes",
-    description: "Healthy, delicious, easy meals",
-    href: "/articles/recipes",
-    icon: "📖",
+    title: "Food Literacy",
+    description: "Labels, quality, informed food choices",
+    href: "/articles/food-literacy",
+    icon: "📚",
+  },
+  {
+    title: "Food Systems",
+    description: "Sustainability, supply chains, policy",
+    href: "/articles/food-systems",
+    icon: "🌾",
   },
 ];
 
@@ -109,7 +103,7 @@ const faqs = [
   },
   {
     question: "What topics does FoodPulse cover?",
-    answer: "FoodPulse covers five main areas: Food & Wellbeing (nutrition and health), Smart Food Choices (labels, shopping, food quality), Food System Insights (supply chains, sustainability), Practical Food Tips (meal prep, storage), and Recipes.",
+    answer: "FoodPulse covers four main areas: Food and Wellbeing (nutrition and health), Kitchen and Cooking (recipes, meal prep, cooking techniques), Food Literacy (labels, informed choices, consumer education), and Food Systems (supply chains, sustainability, policy).",
   },
   {
     question: "How can I contact FoodPulse?",

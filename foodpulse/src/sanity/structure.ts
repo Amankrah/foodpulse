@@ -108,20 +108,29 @@ export const structure: StructureResolver = (S) =>
                     .title('Categories')
                     .items([
                       S.listItem()
-                        .title('🧬 Nutrition Science')
+                        .title('🥗 Food and Wellbeing')
                         .child(
                           S.documentList()
-                            .title('Nutrition Science')
-                            .filter('_type == "glossaryTerm" && category == "nutrition-science"')
+                            .title('Food and Wellbeing')
+                            .filter('_type == "glossaryTerm" && category == "food-and-wellbeing"')
                             .defaultOrdering([{field: 'term', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
                       S.listItem()
-                        .title('🔬 Food Science')
+                        .title('🍳 Kitchen and Cooking')
                         .child(
                           S.documentList()
-                            .title('Food Science')
-                            .filter('_type == "glossaryTerm" && category == "food-science"')
+                            .title('Kitchen and Cooking')
+                            .filter('_type == "glossaryTerm" && category == "kitchen-and-cooking"')
+                            .defaultOrdering([{field: 'term', direction: 'asc'}])
+                            .apiVersion(apiVersion),
+                        ),
+                      S.listItem()
+                        .title('📚 Food Literacy')
+                        .child(
+                          S.documentList()
+                            .title('Food Literacy')
+                            .filter('_type == "glossaryTerm" && category == "food-literacy"')
                             .defaultOrdering([{field: 'term', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
@@ -131,33 +140,6 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Food Systems')
                             .filter('_type == "glossaryTerm" && category == "food-systems"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}])
-                            .apiVersion(apiVersion),
-                        ),
-                      S.listItem()
-                        .title('💚 Health & Wellness')
-                        .child(
-                          S.documentList()
-                            .title('Health & Wellness')
-                            .filter('_type == "glossaryTerm" && category == "health-wellness"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}])
-                            .apiVersion(apiVersion),
-                        ),
-                      S.listItem()
-                        .title('🛒 Consumer & Practical')
-                        .child(
-                          S.documentList()
-                            .title('Consumer & Practical')
-                            .filter('_type == "glossaryTerm" && category == "consumer-practical"')
-                            .defaultOrdering([{field: 'term', direction: 'asc'}])
-                            .apiVersion(apiVersion),
-                        ),
-                      S.listItem()
-                        .title('🍳 Cooking & Kitchen')
-                        .child(
-                          S.documentList()
-                            .title('Cooking & Kitchen')
-                            .filter('_type == "glossaryTerm" && category == "cooking-kitchen"')
                             .defaultOrdering([{field: 'term', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
@@ -207,29 +189,29 @@ export const structure: StructureResolver = (S) =>
                     .title('Categories')
                     .items([
                       S.listItem()
-                        .title('🏠 About FoodPulse')
+                        .title('🥗 Food and Wellbeing')
                         .child(
                           S.documentList()
-                            .title('About FoodPulse')
-                            .filter('_type == "faqDocument" && category == "about-foodpulse"')
+                            .title('Food and Wellbeing')
+                            .filter('_type == "faqDocument" && category == "food-and-wellbeing"')
                             .defaultOrdering([{field: 'order', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
                       S.listItem()
-                        .title('🥗 Food & Nutrition')
+                        .title('🍳 Kitchen and Cooking')
                         .child(
                           S.documentList()
-                            .title('Food & Nutrition')
-                            .filter('_type == "faqDocument" && category == "food-nutrition"')
+                            .title('Kitchen and Cooking')
+                            .filter('_type == "faqDocument" && category == "kitchen-and-cooking"')
                             .defaultOrdering([{field: 'order', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
                       S.listItem()
-                        .title('🏷️ Food Labels')
+                        .title('📚 Food Literacy')
                         .child(
                           S.documentList()
-                            .title('Food Labels')
-                            .filter('_type == "faqDocument" && category == "food-labels"')
+                            .title('Food Literacy')
+                            .filter('_type == "faqDocument" && category == "food-literacy"')
                             .defaultOrdering([{field: 'order', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
@@ -239,15 +221,6 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Food Systems')
                             .filter('_type == "faqDocument" && category == "food-systems"')
-                            .defaultOrdering([{field: 'order', direction: 'asc'}])
-                            .apiVersion(apiVersion),
-                        ),
-                      S.listItem()
-                        .title('💻 Using FoodPulse')
-                        .child(
-                          S.documentList()
-                            .title('Using FoodPulse')
-                            .filter('_type == "faqDocument" && category == "using-foodpulse"')
                             .defaultOrdering([{field: 'order', direction: 'asc'}])
                             .apiVersion(apiVersion),
                         ),
@@ -347,35 +320,27 @@ export const structure: StructureResolver = (S) =>
                     .title('Categories')
                     .items([
                       S.listItem()
-                        .title('🥗 Nutrition')
+                        .title('🥗 Food and Wellbeing')
                         .child(
                           S.documentList()
-                            .title('Nutrition Guides')
-                            .filter('_type == "guide" && category == "nutrition"')
+                            .title('Food and Wellbeing Guides')
+                            .filter('_type == "guide" && category == "food-and-wellbeing"')
                             .apiVersion(apiVersion),
                         ),
                       S.listItem()
-                        .title('📅 Meal Planning')
+                        .title('🍳 Kitchen and Cooking')
                         .child(
                           S.documentList()
-                            .title('Meal Planning Guides')
-                            .filter('_type == "guide" && category == "meal-planning"')
+                            .title('Kitchen and Cooking Guides')
+                            .filter('_type == "guide" && category == "kitchen-and-cooking"')
                             .apiVersion(apiVersion),
                         ),
                       S.listItem()
-                        .title('🏷️ Food Labels')
+                        .title('📚 Food Literacy')
                         .child(
                           S.documentList()
-                            .title('Food Label Guides')
-                            .filter('_type == "guide" && category == "food-labels"')
-                            .apiVersion(apiVersion),
-                        ),
-                      S.listItem()
-                        .title('🍎 Healthy Eating')
-                        .child(
-                          S.documentList()
-                            .title('Healthy Eating Guides')
-                            .filter('_type == "guide" && category == "healthy-eating"')
+                            .title('Food Literacy Guides')
+                            .filter('_type == "guide" && category == "food-literacy"')
                             .apiVersion(apiVersion),
                         ),
                       S.listItem()
@@ -384,14 +349,6 @@ export const structure: StructureResolver = (S) =>
                           S.documentList()
                             .title('Food Systems Guides')
                             .filter('_type == "guide" && category == "food-systems"')
-                            .apiVersion(apiVersion),
-                        ),
-                      S.listItem()
-                        .title('🔧 Tools')
-                        .child(
-                          S.documentList()
-                            .title('Tools & Calculators')
-                            .filter('_type == "guide" && category == "tools"')
                             .apiVersion(apiVersion),
                         ),
                     ]),
