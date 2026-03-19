@@ -19,52 +19,54 @@ export function PurchaseCta({
   return (
     <div
       className={cn(
-        "bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-6",
+        "rounded-2xl border border-[var(--color-gold)]/40 bg-gradient-to-br from-[var(--color-mint)] to-white p-6 shadow-sm",
         className
       )}
     >
       <div className="flex items-center gap-2 mb-3">
-        <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold border border-amber-200">
-          Premium Guide
+        <span className="px-3 py-1 rounded-full text-sm font-bold border bg-[color-mix(in_srgb,var(--color-gold)_22%,white)] text-[var(--color-primary)] border-[var(--color-gold)]/45">
+          Premium guide
         </span>
       </div>
 
-      <h3 className="text-xl font-bold text-neutral-900 mb-4">{title}</h3>
+      <h3 className="text-xl font-display font-bold text-[var(--color-primary)] mb-4">
+        {title}
+      </h3>
 
       {features && features.length > 0 && (
         <ul className="mb-6 space-y-2">
           {features.map((feature, index) => (
             <li
               key={index}
-              className="flex items-start gap-2 text-neutral-700"
+              className="flex items-start gap-2 text-[var(--color-support)] leading-relaxed"
             >
-              <Check className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <Check className="w-5 h-5 text-[var(--color-teal)] flex-shrink-0 mt-0.5" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
       )}
 
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="text-3xl font-bold text-neutral-900">
+          <div className="text-3xl font-display font-extrabold text-[var(--color-primary)]">
             ${price.toFixed(2)}
           </div>
-          <p className="text-sm text-neutral-600">One-time payment</p>
+          <p className="text-sm text-[var(--color-support)]">One-time payment</p>
         </div>
 
         <a
           href={purchaseLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium transition-colors whitespace-nowrap"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all whitespace-nowrap bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95 shadow-md"
         >
-          Get This Guide
+          Get this guide
           <ArrowRight className="w-4 h-4" />
         </a>
       </div>
 
-      <p className="text-xs text-neutral-600 mt-4 text-center">
+      <p className="text-xs text-[var(--color-support)] mt-4 text-center leading-relaxed">
         Instant access after purchase. No subscription required.
       </p>
     </div>

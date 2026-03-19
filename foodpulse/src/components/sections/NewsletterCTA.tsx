@@ -23,21 +23,25 @@ export function NewsletterCTA() {
   } = useNewsletterForm();
 
   return (
-    <Section background="white" padding="lg">
-      <div className="bg-green-700 rounded-2xl p-8 lg:p-12 text-center">
-        <div className="max-w-lg mx-auto">
+    <Section
+      background="white"
+      padding="lg"
+      className="border-t border-[var(--color-sage)]/15"
+    >
+      <div className="rounded-2xl border border-[var(--color-teal)]/30 bg-[var(--color-primary)] p-8 text-center shadow-lg lg:p-12">
+        <div className="mx-auto max-w-lg">
           {!useFallbackForm ? (
             <>
               <ConvertKitEmbed
-                className="[&_.formkit-form]:!bg-white [&_.formkit-header]:!text-green-800 [&_.formkit-subheader]:!text-neutral-600 [&_.formkit-guarantee]:!text-neutral-500"
+                className="[&_.formkit-form]:!rounded-xl [&_.formkit-form]:!border [&_.formkit-form]:!border-[var(--color-teal)]/25 [&_.formkit-form]:!bg-white [&_.formkit-header]:!text-[var(--color-primary)] [&_.formkit-subheader]:!text-neutral-600 [&_.formkit-guarantee]:!text-neutral-500"
                 hidePoweredBy
               />
-              <p className="text-sm text-green-200 mt-3">
+              <p className="mt-3 text-sm text-[var(--color-mint)]/90">
                 Form not loading?{" "}
                 <button
                   type="button"
                   onClick={() => setUseFallbackForm(true)}
-                  className="underline hover:text-white transition-colors font-medium"
+                  className="font-medium text-[var(--color-gold)] underline decoration-[var(--color-gold)]/50 underline-offset-2 transition-colors hover:text-white"
                 >
                   Use our signup form
                 </button>
@@ -47,10 +51,10 @@ export function NewsletterCTA() {
             <>
               {!isSuccess ? (
                 <>
-                  <h2 className="text-xl font-display font-bold text-white mb-2">
+                  <h2 className="mb-2 font-display text-xl font-bold text-white">
                     Food Decisions Simplified
                   </h2>
-                  <p className="text-green-100 text-sm mb-6">
+                  <p className="mb-6 text-sm text-white/90">
                     Monthly updates with honest conversations and practical
                     insights for your everyday food decisions.
                   </p>
@@ -80,41 +84,42 @@ export function NewsletterCTA() {
                     />
                     <Button
                       type="submit"
-                      variant="accent"
+                      variant="primary"
                       size="lg"
+                      fullWidth
                       disabled={isLoading}
                       loading={isLoading}
                     >
                       Join Today
                     </Button>
                   </form>
-                  <p className="text-xs text-green-200 mt-3">
+                  <p className="mt-3 text-xs text-[var(--color-mint)]/85">
                     No worries, you can unsubscribe at any time.
                   </p>
                 </>
               ) : (
-                <div className="bg-white rounded-lg p-6 text-neutral-900">
-                  <p className="font-semibold mb-2">You&apos;re subscribed!</p>
-                  <p className="text-sm text-neutral-600 mb-4">
+                <div className="rounded-lg bg-white p-6 text-neutral-900">
+                  <p className="mb-2 font-semibold">You&apos;re subscribed!</p>
+                  <p className="mb-4 text-sm text-neutral-600">
                     Check your inbox (and spam) for a confirmation email.
                   </p>
                   <button
                     type="button"
                     onClick={reset}
-                    className="text-green-700 hover:text-green-600 text-sm font-medium"
+                    className="text-sm font-medium text-[var(--color-teal)] hover:text-[var(--color-primary)]"
                   >
                     Subscribe another email
                   </button>
                 </div>
               )}
-              <p className="text-sm text-green-200 mt-3">
+              <p className="mt-3 text-sm text-[var(--color-mint)]/90">
                 <button
                   type="button"
                   onClick={() => {
                     setUseFallbackForm(false);
                     reset();
                   }}
-                  className="underline hover:text-white transition-colors"
+                  className="text-[var(--color-gold)] underline decoration-[var(--color-gold)]/50 underline-offset-2 transition-colors hover:text-white"
                 >
                   Back to main form
                 </button>
@@ -122,11 +127,11 @@ export function NewsletterCTA() {
             </>
           )}
         </div>
-        <p className="text-sm text-green-100 mt-4">
+        <p className="mt-4 text-sm text-white/85">
           Unsubscribe anytime.{" "}
           <a
-            href="/legal/privacy-policy"
-            className="underline hover:text-white transition-colors"
+            href="/privacy"
+            className="font-medium text-[var(--color-gold)] underline decoration-[var(--color-gold)]/50 underline-offset-2 transition-colors hover:text-white"
           >
             Read our privacy policy
           </a>

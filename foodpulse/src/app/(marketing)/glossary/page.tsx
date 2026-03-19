@@ -32,43 +32,64 @@ export default async function GlossaryPage() {
     <>
       <GlossaryJsonLd terms={terms} />
 
-      {/* Hero Section */}
-      <Section background="green" padding="lg">
+      {/* Hero — scientific register (layout: data-brand-mode="scientific") */}
+      <Section
+        background="green"
+        padding="lg"
+        className="border-b border-[var(--color-sage)]/25"
+      >
         <div className="max-w-4xl mx-auto text-center">
-          <nav className="text-sm text-neutral-600 mb-4">
-            <Link href="/" className="hover:text-green-700">
+          <nav
+            className="text-sm text-[var(--color-support)] mb-4"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              href="/"
+              className="hover:text-[var(--color-trust-blue)] underline-offset-2 hover:underline"
+            >
               Home
             </Link>
-            <span className="mx-2">&gt;</span>
-            <Link href="/resources" className="hover:text-green-700">
+            <span className="mx-2 text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
+            <Link
+              href="/resources"
+              className="hover:text-[var(--color-trust-blue)] underline-offset-2 hover:underline"
+            >
               Resources
             </Link>
-            <span className="mx-2">&gt;</span>
-            <span>Glossary</span>
+            <span className="mx-2 text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
+            <span className="font-medium text-[var(--color-primary)]">Glossary</span>
           </nav>
 
           <SectionHeader
-            title="Food & Nutrition Glossary"
-            description={`Clear definitions for ${totalCount}+ food and nutrition terms. Your A-Z reference guide.`}
+            eyebrow="Food reference"
+            title="Food & nutrition glossary"
+            description={`Clear definitions for ${totalCount}+ terms—your A–Z guide for labels, nutrition, and food systems.`}
             centered
           />
         </div>
       </Section>
 
-      {/* Glossary Content */}
-      <Section background="white" padding="lg">
+      {/* Hub */}
+      <Section
+        background="white"
+        padding="lg"
+        className="bg-[color-mix(in_srgb,var(--color-trust-blue)_3.5%,var(--neutral-50))]"
+      >
         <div className="max-w-7xl mx-auto">
           {terms.length > 0 ? (
-            <GlossaryHub
-              groupedTerms={grouped}
-            />
+            <GlossaryHub groupedTerms={grouped} />
           ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-neutral-600 mb-6">
-                No glossary terms available yet. Check back soon!
+            <div className="text-center py-12 max-w-lg mx-auto">
+              <p className="text-[length:var(--size-subheading)] font-display font-semibold text-[var(--color-primary)] mb-3">
+                No terms yet
               </p>
-              <p className="text-neutral-500">
-                We&apos;re building a comprehensive food and nutrition glossary.
+              <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
+                We&apos;re building a comprehensive food and nutrition glossary—check
+                back soon.
               </p>
             </div>
           )}

@@ -14,7 +14,7 @@ import {
   Globe,
   Linkedin
 } from "lucide-react";
-import { SITE_URL, SOCIAL_LINKS, CONTACT_EMAIL, FOUNDER } from "@/lib/constants";
+import { SITE_URL, SOCIAL_LINKS, FOUNDER } from "@/lib/constants";
 
 // Content Pillars Data
 const contentPillars = [
@@ -107,7 +107,8 @@ const faqs = [
   },
   {
     question: "How can I contact FoodPulse?",
-    answer: `Email us at ${CONTACT_EMAIL} or connect on Kit, LinkedIn, or YouTube. You can also subscribe to our newsletter for monthly updates.`,
+    answer:
+      "Use our contact form to send a message. You can also connect on Kit, LinkedIn, or YouTube, or subscribe to our newsletter for monthly updates.",
   },
 ];
 
@@ -152,13 +153,13 @@ export default function AboutPage() {
       {/* Hero Section */}
       <Section background="green" padding="lg">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-green-700 mb-6">
+          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-display font-extrabold text-[var(--color-primary)] tracking-tight mb-6">
             About FoodPulse
           </h1>
-          <p className="text-xl lg:text-2xl text-green-800 mb-6">
-            Your Trusted Source for Evidence-Based Food Education
+          <p className="text-xl lg:text-2xl font-light text-[var(--color-support)] mb-6 leading-relaxed">
+            Your trusted source for evidence-based food education
           </p>
-          <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
+          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] max-w-2xl mx-auto">
             FoodPulse is where food science meets everyday life. We translate complex
             nutrition research into practical, actionable knowledge—helping you make
             smarter food choices without the hype, fads, or fear-mongering.
@@ -175,7 +176,7 @@ export default function AboutPage() {
             centered
           />
 
-          <div className="space-y-6 text-lg text-neutral-700 text-center max-w-3xl mx-auto">
+          <div className="space-y-6 text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] text-center max-w-3xl mx-auto">
             <p>
               We believe everyone deserves access to reliable, science-based food
               information—regardless of background, education, or budget.
@@ -185,7 +186,7 @@ export default function AboutPage() {
               behind paywalls, or oversimplified into clickbait headlines. FoodPulse
               bridges this gap.
             </p>
-            <p className="font-semibold text-green-700 text-xl">
+            <p className="font-semibold text-[var(--color-primary)] text-[length:var(--size-subheading)]">
               Our goal is simple: Help you understand food better so you can make
               informed decisions that support your health, your values, and your life.
             </p>
@@ -203,7 +204,7 @@ export default function AboutPage() {
           />
 
           {/* AI-citable definition paragraph */}
-          <p className="text-lg text-neutral-700 text-center max-w-3xl mx-auto">
+          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] text-center max-w-3xl mx-auto">
             FoodPulse is a free, evidence-based food education platform covering
             nutrition science, food systems, healthy eating, and practical food tips.
             Founded by Food Systems Research Engineer Etornam C. Tsyawo, we provide
@@ -214,22 +215,26 @@ export default function AboutPage() {
 
         {/* Content Pillars */}
         <div className="max-w-6xl mx-auto">
-          <h3 className="text-2xl font-semibold text-neutral-800 text-center mb-8">
-            What We Cover
+          <h3 className="text-2xl font-display font-semibold text-[var(--color-primary)] text-center mb-8">
+            What we cover
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contentPillars.map((pillar) => (
               <Link
                 key={pillar.title}
                 href={pillar.href}
-                className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all text-center"
+                className="group rounded-2xl border border-[var(--color-teal)]/20 bg-[var(--color-mint)] p-6 shadow-sm hover:shadow-md hover:border-[var(--color-teal)]/35 transition-all text-center"
               >
-                <div className="text-4xl mb-4">{pillar.icon}</div>
-                <h4 className="font-semibold text-neutral-800 mb-2 group-hover:text-green-700 transition-colors">
+                <div className="text-4xl mb-4" aria-hidden>
+                  {pillar.icon}
+                </div>
+                <h4 className="font-display font-semibold text-[var(--color-primary)] mb-2 group-hover:text-[var(--color-teal)] transition-colors">
                   {pillar.title}
                 </h4>
-                <p className="text-sm text-neutral-600">{pillar.description}</p>
+                <p className="text-sm leading-relaxed text-[var(--color-support)]">
+                  {pillar.description}
+                </p>
               </Link>
             ))}
           </div>
@@ -262,11 +267,11 @@ export default function AboutPage() {
 
             {/* Bio */}
             <div className="lg:col-span-3 space-y-6">
-              <h3 className="text-2xl font-semibold text-neutral-800">
-                Meet the Founder: Etornam C. Tsyawo
+              <h3 className="text-2xl font-display font-semibold text-[var(--color-primary)]">
+                Meet the founder: Etornam C. Tsyawo
               </h3>
 
-              <p className="text-lg text-neutral-700">
+              <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
                 Etornam C. Tsyawo is a Food Systems Research Engineer and Doctoral
                 Researcher at SASEL Lab, McGill University. With over a decade of
                 experience spanning food entrepreneurship, product development, and
@@ -276,14 +281,14 @@ export default function AboutPage() {
 
               {/* Credentials */}
               <div>
-                <h4 className="font-semibold text-neutral-800 mb-4">
-                  Credentials & Experience
+                <h4 className="font-semibold text-[var(--color-primary)] mb-4">
+                  Credentials & experience
                 </h4>
                 <ul className="space-y-3">
                   {credentials.map((credential, index) => (
                     <li
                       key={index}
-                      className="flex items-start gap-3 text-neutral-700 border-l-4 border-green-600 pl-4"
+                      className="flex items-start gap-3 text-[var(--color-support)] border-l-4 border-[var(--color-teal)] pl-4 leading-relaxed"
                     >
                       {credential}
                     </li>
@@ -293,7 +298,7 @@ export default function AboutPage() {
 
               {/* Social Links */}
               <div>
-                <h4 className="font-semibold text-neutral-800 mb-3">
+                <h4 className="font-semibold text-[var(--color-primary)] mb-3">
                   Connect with Etornam
                 </h4>
                 <div className="flex flex-wrap gap-4">
@@ -301,27 +306,27 @@ export default function AboutPage() {
                     href={FOUNDER.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-neutral-700 hover:text-green-700 transition-colors"
+                    className="flex items-center gap-2 text-[var(--color-support)] hover:text-[var(--color-teal)] transition-colors"
                   >
-                    <Globe className="h-5 w-5" />
+                    <Globe className="h-5 w-5 shrink-0" />
                     <span>Website</span>
                   </a>
                   <a
                     href={FOUNDER.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-neutral-700 hover:text-green-700 transition-colors"
+                    className="flex items-center gap-2 text-[var(--color-support)] hover:text-[var(--color-teal)] transition-colors"
                   >
-                    <Linkedin className="h-5 w-5" />
+                    <Linkedin className="h-5 w-5 shrink-0" />
                     <span>LinkedIn</span>
                   </a>
                   <a
                     href={FOUNDER.buyMeACoffee}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-neutral-700 hover:text-green-700 transition-colors"
+                    className="flex items-center gap-2 text-[var(--color-support)] hover:text-[var(--color-teal)] transition-colors"
                   >
-                    <Coffee className="h-5 w-5" />
+                    <Coffee className="h-5 w-5 shrink-0" />
                     <span>Buy Me a Coffee</span>
                   </a>
                 </div>
@@ -330,13 +335,13 @@ export default function AboutPage() {
           </div>
 
           {/* Founder Quote */}
-          <div className="mt-12 p-8 bg-green-50 rounded-xl max-w-3xl mx-auto">
-            <p className="text-lg italic text-neutral-800 text-center">
+          <div className="mt-12 p-8 rounded-2xl border border-[var(--color-gold)]/35 bg-[var(--color-mint)] max-w-3xl mx-auto">
+            <p className="brand-quote !border-l-0 pl-0 text-center text-[length:var(--size-quote)] max-w-none">
               &ldquo;I started FoodPulse because I believe food knowledge shouldn&apos;t be locked behind
               academic journals or drowned in clickbait. My goal is to give you the information
               you need to make your own food choices—not to tell you what to eat.&rdquo;
             </p>
-            <p className="text-center mt-4 font-semibold text-neutral-700">
+            <p className="text-center mt-4 font-semibold text-[var(--color-support)]">
               — Etornam C. Tsyawo
             </p>
           </div>
@@ -353,14 +358,14 @@ export default function AboutPage() {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-12">
           {editorialStandards.map((standard) => (
-            <Card key={standard.title} padding="lg" className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <standard.icon className="h-8 w-8 text-green-700" />
+            <Card key={standard.title} padding="lg" className="text-center border border-white/20 bg-white/95">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 bg-white/90 text-[var(--color-teal)] ring-2 ring-[var(--color-teal)]/15">
+                <standard.icon className="h-8 w-8" aria-hidden />
               </div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-4">
+              <h3 className="text-xl font-display font-semibold text-[var(--color-primary)] mb-4">
                 {standard.title}
               </h3>
-              <p className="text-neutral-600 leading-relaxed">
+              <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
                 {standard.description}
               </p>
             </Card>
@@ -369,16 +374,17 @@ export default function AboutPage() {
 
         {/* Additional Editorial Info */}
         <div className="max-w-3xl mx-auto mt-12 text-center">
-          <p className="text-neutral-700 mb-4">
-            <strong>Sources & Citations:</strong> We cite sources inline and include reference
-            lists for in-depth articles. Primary sources (original research) are preferred over
-            secondary reporting.
+          <p className="text-[var(--color-support)] mb-4 leading-relaxed">
+            <strong className="text-[var(--color-primary)]">Sources & citations:</strong> We cite
+            sources inline and include reference lists for in-depth articles. Primary sources
+            (original research) are preferred over secondary reporting.
           </p>
-          <p className="text-neutral-600">
-            If you find an error, please contact us at{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-green-700 hover:text-green-600 underline">
-              {CONTACT_EMAIL}
-            </a>
+          <p className="text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
+            If you find an error, please{" "}
+            <Link href="/contact" className="font-semibold text-[var(--color-teal)] hover:text-[var(--color-primary)] underline underline-offset-2">
+              reach out via our contact form
+            </Link>
+            .
           </p>
         </div>
       </Section>
@@ -393,11 +399,13 @@ export default function AboutPage() {
 
         <div className="max-w-3xl mx-auto space-y-8 mt-12">
           {values.map((value, index) => (
-            <div key={index} className="border-l-4 border-green-600 pl-6">
-              <h3 className="text-xl font-semibold text-neutral-800 mb-2">
+            <div key={index} className="border-l-4 border-[var(--color-teal)] pl-6">
+              <h3 className="text-xl font-display font-semibold text-[var(--color-primary)] mb-2">
                 {index + 1}. {value.title}
               </h3>
-              <p className="text-neutral-600">{value.description}</p>
+              <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
+                {value.description}
+              </p>
             </div>
           ))}
         </div>
@@ -419,29 +427,29 @@ export default function AboutPage() {
       {/* Newsletter CTA Section */}
       <Section background="white" padding="lg">
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4 text-green-700">
-            Stay Updated
+          <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4 text-[var(--color-primary)]">
+            Stay updated
           </h2>
-          <p className="text-xl text-neutral-700 mb-8">
+          <p className="text-xl font-light text-[var(--color-support)] mb-8 leading-relaxed">
             Get our latest articles and food insights delivered monthly. No spam, ever.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <Button variant="accent" size="lg" href="/newsletter">
-              Subscribe to Newsletter
+            <Button variant="primary" size="lg" href="/newsletter">
+              Subscribe to newsletter
             </Button>
             <Button variant="outline" size="lg" href="/contact">
-              Contact Us
+              Contact us
             </Button>
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center gap-6 pt-8 border-t border-neutral-200">
+          <div className="flex items-center justify-center gap-6 pt-8 border-t border-[var(--color-support)]/15">
             <a
               href={SOCIAL_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-green-700 transition-colors"
+              className="text-[var(--color-support)] hover:text-[var(--color-teal)] transition-colors"
               aria-label="LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
@@ -450,7 +458,7 @@ export default function AboutPage() {
               href={SOCIAL_LINKS.kit}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-green-700 transition-colors"
+              className="text-[var(--color-support)] hover:text-[var(--color-teal)] transition-colors"
               aria-label="FoodPulse on Kit"
             >
               <ExternalLink className="h-6 w-6" />
@@ -459,7 +467,7 @@ export default function AboutPage() {
               href={SOCIAL_LINKS.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-green-700 transition-colors"
+              className="text-[var(--color-support)] hover:text-[var(--color-teal)] transition-colors"
               aria-label="YouTube"
             >
               <Youtube className="h-6 w-6" />

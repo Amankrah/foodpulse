@@ -23,15 +23,15 @@ export function FooterMobile() {
   };
 
   return (
-    <footer className="bg-green-800 text-white lg:hidden">
+    <footer className="bg-[var(--color-primary)] text-white lg:hidden">
       <Container className="py-6">
-        {/* Logo + tagline */}
-        <div className="flex items-start gap-3 pb-6 border-b border-green-700">
+        {/* Logo + intro */}
+        <div className="flex items-start gap-3 border-b border-[var(--color-teal)]/25 pb-6">
           <Logo variant="white" size="lg" showText={false} />
           <div className="min-w-0">
-            <h2 className="text-xl font-display font-bold text-white">FoodPulse</h2>
-            <p className="text-sm text-green-100 mt-0.5">
-              Evidence-based nutrition, practical tips, food systems.
+            <h2 className="font-display text-xl font-bold text-white">FoodPulse</h2>
+            <p className="mt-0.5 text-sm text-[var(--color-mint)]/88">
+              Evidence-based nutrition, practical tips, and food systems.
             </p>
           </div>
         </div>
@@ -43,11 +43,14 @@ export function FooterMobile() {
             const section = footerNavigation[key];
             const isOpen = openSection === key;
             return (
-              <div key={key} className="border-b border-green-700/80 last:border-b-0">
+              <div
+                key={key}
+                className="border-b border-[var(--color-teal)]/20 last:border-b-0"
+              >
                 <button
                   type="button"
                   onClick={() => toggle(key)}
-                  className="flex w-full items-center justify-between gap-3 py-4 text-left min-h-[48px] touch-manipulation"
+                  className="flex min-h-[48px] w-full touch-manipulation items-center justify-between gap-3 py-4 text-left"
                   {...(isOpen ? { "aria-expanded": "true" } : { "aria-expanded": "false" })}
                   aria-controls={`footer-section-${key}`}
                   id={`footer-heading-${key}`}
@@ -57,7 +60,7 @@ export function FooterMobile() {
                   </span>
                   <ChevronDown
                     className={cn(
-                      "h-5 w-5 text-green-200 shrink-0 transition-transform duration-200",
+                      "h-5 w-5 shrink-0 text-[var(--color-mint)]/75 transition-transform duration-200",
                       isOpen && "rotate-180"
                     )}
                     aria-hidden
@@ -80,14 +83,14 @@ export function FooterMobile() {
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block py-3 pl-1 text-green-100 hover:text-white transition-colors min-h-[44px] flex items-center touch-manipulation"
+                            className="flex min-h-[44px] touch-manipulation items-center py-3 pl-1 text-[var(--color-mint)]/88 transition-colors hover:text-[var(--color-gold)]"
                           >
                             {link.label}
                           </a>
                         ) : (
                           <Link
                             href={link.href}
-                            className="block py-3 pl-1 text-green-100 hover:text-white transition-colors min-h-[44px] flex items-center touch-manipulation"
+                            className="flex min-h-[44px] touch-manipulation items-center py-3 pl-1 text-[var(--color-mint)]/88 transition-colors hover:text-[var(--color-gold)]"
                           >
                             {link.label}
                           </Link>
@@ -102,12 +105,12 @@ export function FooterMobile() {
         </nav>
 
         {/* Social — always visible, large tap targets */}
-        <div className="py-6 flex items-center justify-center gap-6">
+        <div className="flex items-center justify-center gap-6 py-6">
           <a
             href={SOCIAL_LINKS.kit}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 text-green-100 hover:text-white transition-colors rounded-full min-w-[48px] min-h-[48px] flex items-center justify-center touch-manipulation"
+            className="flex min-h-[48px] min-w-[48px] touch-manipulation items-center justify-center rounded-full p-3 text-[var(--color-mint)]/88 transition-colors hover:text-[var(--color-gold)]"
             aria-label="FoodPulse on Kit"
           >
             <ExternalLink className="h-6 w-6" />
@@ -116,7 +119,7 @@ export function FooterMobile() {
             href={SOCIAL_LINKS.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 text-green-100 hover:text-white transition-colors rounded-full min-w-[48px] min-h-[48px] flex items-center justify-center touch-manipulation"
+            className="flex min-h-[48px] min-w-[48px] touch-manipulation items-center justify-center rounded-full p-3 text-[var(--color-mint)]/88 transition-colors hover:text-[var(--color-gold)]"
             aria-label="LinkedIn"
           >
             <Linkedin className="h-6 w-6" />
@@ -125,7 +128,7 @@ export function FooterMobile() {
             href={SOCIAL_LINKS.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 text-green-100 hover:text-white transition-colors rounded-full min-w-[48px] min-h-[48px] flex items-center justify-center touch-manipulation"
+            className="flex min-h-[48px] min-w-[48px] touch-manipulation items-center justify-center rounded-full p-3 text-[var(--color-mint)]/88 transition-colors hover:text-[var(--color-gold)]"
             aria-label="YouTube"
           >
             <Youtube className="h-6 w-6" />
@@ -133,24 +136,24 @@ export function FooterMobile() {
         </div>
 
         {/* Legal links — stacked for easy tapping */}
-        <div className="pt-4 pb-2 border-t border-green-700">
+        <div className="border-t border-[var(--color-teal)]/25 pb-2 pt-4">
           <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2">
             {legalNavigation.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-green-100 hover:text-white transition-colors py-2 min-h-[44px] flex items-center touch-manipulation"
+                  className="flex min-h-[44px] touch-manipulation items-center py-2 text-sm text-[var(--color-mint)]/88 transition-colors hover:text-[var(--color-gold)]"
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
-          <p className="text-center text-sm text-green-200 mt-4">
+          <p className="mt-4 text-center text-sm text-[var(--color-mint)]/80">
             © {currentYear} {SITE_NAME}
           </p>
-          <p className="text-center text-xs text-green-100 mt-1">
-            Know your food. Nourish your life.
+          <p className="mt-2 text-center text-xs font-medium text-[var(--color-gold)]/95">
+            Nourish well. Live well.
           </p>
         </div>
       </Container>

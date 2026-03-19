@@ -44,9 +44,9 @@ export function GuideSidebar({
     <aside className={cn("space-y-6", className)}>
       {/* Table of Contents */}
       {guide.chapters && guide.chapters.length > 0 && (
-        <div className="bg-white border border-neutral-200 rounded-xl p-6 sticky top-6">
-          <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-wide mb-4">
-            Table of Contents
+        <div className="rounded-2xl border border-[var(--color-sage)]/30 bg-white/95 p-6 shadow-sm sticky top-6">
+          <h3 className="eyebrow mb-4 !normal-case !tracking-wide text-[0.65rem] sm:text-[var(--size-label)]">
+            Table of contents
           </h3>
           <nav>
             <ul className="space-y-2">
@@ -61,8 +61,8 @@ export function GuideSidebar({
                       className={cn(
                         "block py-2 px-3 text-sm rounded-lg transition-colors",
                         isActive
-                          ? "bg-green-50 text-green-700 font-medium"
-                          : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50"
+                          ? "bg-[var(--color-mint)] text-[var(--color-primary)] font-semibold border border-[var(--color-teal)]/15"
+                          : "text-[var(--color-support)] hover:text-[var(--color-teal)] hover:bg-[var(--color-mint)]/50"
                       )}
                     >
                       {chapter.title}
@@ -75,18 +75,17 @@ export function GuideSidebar({
         </div>
       )}
 
-      {/* Related Guides */}
       {relatedGuides && relatedGuides.length > 0 && (
-        <div className="bg-white border border-neutral-200 rounded-xl p-6">
-          <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-wide mb-4">
-            Related Guides
+        <div className="rounded-2xl border border-[var(--color-sage)]/30 bg-white/95 p-6 shadow-sm">
+          <h3 className="eyebrow mb-4 !normal-case !tracking-wide text-[0.65rem] sm:text-[var(--size-label)]">
+            Related guides
           </h3>
           <ul className="space-y-3">
             {relatedGuides.map((relatedGuide) => (
               <li key={relatedGuide._id}>
                 <Link
                   href={`/guides/${relatedGuide.slug}`}
-                  className="block text-sm text-green-700 hover:text-green-800 hover:underline"
+                  className="block text-sm font-medium text-[var(--color-teal)] hover:text-[var(--color-primary)] hover:underline underline-offset-2"
                 >
                   {relatedGuide.title}
                 </Link>

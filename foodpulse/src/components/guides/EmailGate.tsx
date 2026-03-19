@@ -76,27 +76,27 @@ export function EmailGate({
     return (
       <div
         className={cn(
-          "bg-green-50 border border-green-200 rounded-xl p-6 text-center",
+          "rounded-2xl border border-[var(--color-teal)]/25 bg-[var(--color-mint)] p-6 text-center",
           className
         )}
       >
-        <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-green-800 mb-2">
+        <CheckCircle className="w-12 h-12 text-[var(--color-teal)] mx-auto mb-4" />
+        <h3 className="text-lg font-display font-semibold text-[var(--color-primary)] mb-2">
           You&apos;re all set!
         </h3>
-        <p className="text-green-700 mb-4">
+        <p className="text-[var(--color-support)] mb-4 leading-relaxed">
           Your download should start automatically. If not, click below.
         </p>
         <a
           href={downloadUrl}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95"
           download
         >
           <Download className="w-4 h-4" />
-          Download Again
+          Download again
         </a>
-        <p className="text-sm text-green-600 mt-4">
-          Check your inbox (and spam folder) for a confirmation email—click the link to confirm. Then you&apos;ll get weekly guides.
+        <p className="text-sm text-[var(--color-support)] mt-4 leading-relaxed">
+          Check your inbox (and spam folder) for a confirmation email—click the link to confirm. Then you&apos;ll get our monthly updates.
         </p>
       </div>
     );
@@ -105,19 +105,19 @@ export function EmailGate({
   return (
     <div
       className={cn(
-        "bg-neutral-50 border border-neutral-200 rounded-xl p-6",
+        "rounded-2xl border border-[var(--color-sage)]/30 bg-[color-mix(in_srgb,var(--color-mint)_55%,white)] p-6 shadow-sm",
         className
       )}
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-          <Mail className="w-6 h-6 text-green-700" />
+        <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center bg-white text-[var(--color-teal)] ring-2 ring-[var(--color-teal)]/15">
+          <Mail className="w-6 h-6" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-neutral-900">
-            Get This Guide
+          <h3 className="text-lg font-display font-semibold text-[var(--color-primary)]">
+            Get this guide
           </h3>
-          <p className="text-sm text-neutral-600">
+          <p className="text-sm text-[var(--color-support)]">
             Enter your email to download the PDF
           </p>
         </div>
@@ -137,12 +137,12 @@ export function EmailGate({
             required
             disabled={isSubmitting}
             className={cn(
-              "w-full px-4 py-3 border rounded-lg",
-              "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent",
+              "w-full px-4 py-3 border-2 rounded-xl",
+              "focus:outline-none focus:ring-2 focus:ring-[var(--color-teal)]/25 focus:border-[var(--color-teal)]",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               error
                 ? "border-red-300 bg-red-50"
-                : "border-neutral-300 bg-white"
+                : "border-[var(--color-sage)]/35 bg-white"
             )}
           />
           {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
@@ -152,8 +152,8 @@ export function EmailGate({
           type="submit"
           disabled={isSubmitting}
           className={cn(
-            "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-all",
-            "bg-green-600 text-white hover:bg-green-700",
+            "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all",
+            "bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95",
             "disabled:opacity-50 disabled:cursor-not-allowed"
           )}
         >
@@ -189,9 +189,9 @@ export function EmailGate({
           )}
         </button>
 
-        <p className="text-xs text-neutral-500 text-center">
-          We&apos;ll also send you our weekly newsletter with food tips and guides.
-          Unsubscribe anytime.
+        <p className="text-xs text-[var(--color-support)] text-center leading-relaxed">
+          We&apos;ll also send you our monthly newsletter with food insights. Unsubscribe
+          anytime.
         </p>
       </form>
     </div>

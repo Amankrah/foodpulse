@@ -20,41 +20,42 @@ interface ButtonProps {
 }
 
 const buttonVariants: Record<ButtonVariant, string> = {
+  /* Honey Gold CTA + Deep Green text (brand guide) */
   primary: `
-    bg-green-700 text-white
-    hover:bg-green-600
-    focus:ring-2 focus:ring-green-500 focus:ring-offset-2
-    shadow-[var(--shadow-green)] hover:shadow-[var(--shadow-green-lg)]
+    bg-[var(--color-gold)] text-[var(--color-primary)]
+    hover:brightness-95
+    focus:ring-2 focus:ring-[var(--color-primary)]/35 focus:ring-offset-2
+    shadow-md hover:shadow-lg
     transition-all duration-200
-    disabled:bg-neutral-400 disabled:cursor-not-allowed
+    disabled:bg-neutral-400 disabled:text-neutral-600 disabled:cursor-not-allowed
   `,
   secondary: `
-    bg-brown-500 text-neutral-900
-    hover:bg-brown-400
-    focus:ring-2 focus:ring-brown-400 focus:ring-offset-2
-    shadow-[var(--shadow-brown)]
+    bg-[var(--color-mint)] text-[var(--color-support)]
+    border border-[var(--color-support)]/25
+    hover:bg-green-100
+    focus:ring-2 focus:ring-[var(--color-teal)] focus:ring-offset-2
     transition-all duration-200
-    disabled:bg-neutral-400 disabled:cursor-not-allowed
+    disabled:bg-neutral-200 disabled:text-neutral-400 disabled:cursor-not-allowed
   `,
   outline: `
-    bg-transparent text-green-700
-    border-2 border-green-700
-    hover:bg-green-50
-    focus:ring-2 focus:ring-green-500 focus:ring-offset-2
+    bg-transparent text-[var(--color-primary)]
+    border-2 border-[var(--color-primary)]
+    hover:bg-[var(--color-mint)]
+    focus:ring-2 focus:ring-[var(--color-teal)] focus:ring-offset-2
     transition-all duration-200
     disabled:border-neutral-400 disabled:text-neutral-400 disabled:cursor-not-allowed
   `,
   ghost: `
-    bg-transparent text-green-700
-    hover:bg-green-50
-    focus:ring-2 focus:ring-green-500 focus:ring-offset-2
+    bg-transparent text-[var(--color-teal)]
+    hover:bg-[var(--color-mint)]
+    focus:ring-2 focus:ring-[var(--color-teal)] focus:ring-offset-2
     transition-all duration-200
     disabled:text-neutral-400 disabled:cursor-not-allowed
   `,
   accent: `
-    bg-white text-green-700
-    hover:bg-green-50
-    focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-700
+    bg-white text-[var(--color-primary)]
+    hover:bg-[var(--color-mint)]
+    focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[var(--color-primary)]
     shadow-md hover:shadow-lg
     transition-all duration-200
     disabled:bg-neutral-200 disabled:text-neutral-400 disabled:cursor-not-allowed

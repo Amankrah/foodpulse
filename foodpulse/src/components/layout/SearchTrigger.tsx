@@ -15,11 +15,11 @@ export function SearchTrigger() {
   const router = useRouter();
 
   const quickLinks = [
-    { label: 'Articles', href: '/articles', icon: FileText, color: 'text-blue-600' },
-    { label: 'Guides', href: '/guides', icon: BookOpen, color: 'text-purple-600' },
-    { label: 'Glossary', href: '/glossary', icon: Book, color: 'text-amber-600' },
-    { label: 'Tools', href: '/guides#tools', icon: Calculator, color: 'text-green-600' },
-    { label: 'FAQ', href: '/faq', icon: HelpCircle, color: 'text-emerald-600' },
+    { label: "Articles", href: "/articles", icon: FileText, color: "text-[var(--color-teal)]" },
+    { label: "Guides", href: "/guides", icon: BookOpen, color: "text-[var(--color-primary)]" },
+    { label: "Glossary", href: "/glossary", icon: Book, color: "text-[var(--color-support)]" },
+    { label: "Tools", href: "/tools", icon: Calculator, color: "text-[var(--color-sage)]" },
+    { label: "FAQ", href: "/faq", icon: HelpCircle, color: "text-[var(--color-trust-blue)]" },
   ];
 
   // Close on escape key
@@ -73,7 +73,7 @@ export function SearchTrigger() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="p-2 text-neutral-600 hover:text-green-600 transition-colors rounded-lg hover:bg-green-50"
+        className="rounded-lg p-2 text-neutral-600 transition-colors hover:bg-[var(--color-mint)]/60 hover:text-[var(--color-teal)]"
         aria-label="Search"
       >
         <Search className="h-5 w-5" />
@@ -91,8 +91,8 @@ export function SearchTrigger() {
           {/* Search Box */}
           <div className="relative w-full max-w-2xl glass-dropdown rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
             <form onSubmit={handleSubmit}>
-              <div className="flex items-center px-6 py-4 border-b border-neutral-200">
-                <Search className="h-5 w-5 text-green-600 flex-shrink-0" />
+              <div className="flex items-center border-b border-[var(--color-sage)]/25 px-6 py-4">
+                <Search className="h-5 w-5 flex-shrink-0 text-[var(--color-teal)]" />
                 <input
                   type="text"
                   placeholder="Search articles, guides, glossary, tools..."
@@ -114,7 +114,7 @@ export function SearchTrigger() {
 
             {/* Suggestions */}
             {suggestions.length > 0 && (
-              <div className="border-b border-neutral-200 bg-white">
+              <div className="border-b border-[var(--color-sage)]/20 bg-white">
                 <div className="px-6 py-3">
                   <div className="flex items-center gap-2 text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">
                     <TrendingUp className="h-3.5 w-3.5" />
@@ -138,16 +138,16 @@ export function SearchTrigger() {
             )}
 
             {/* Quick Links */}
-            <div className="px-6 py-4 bg-gradient-to-br from-green-50/50 to-brown-50/50">
-              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">
-                Browse by Category
+            <div className="bg-gradient-to-br from-[var(--color-mint)]/50 to-[color-mix(in_srgb,var(--color-mint)_65%,white)] px-6 py-4">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-support)]">
+                Browse by category
               </p>
               <div className="grid grid-cols-5 gap-2">
                 {quickLinks.map(({ label, href, icon: Icon, color }) => (
                   <a
                     key={label}
                     href={href}
-                    className="flex flex-col items-center gap-2 p-3 bg-white rounded-xl hover:shadow-md transition-all duration-200 group border border-neutral-100"
+                    className="group flex flex-col items-center gap-2 rounded-xl border border-[var(--color-teal)]/12 bg-white p-3 transition-all duration-200 hover:border-[var(--color-teal)]/25 hover:shadow-md"
                     onClick={() => setIsOpen(false)}
                   >
                     <div className={`${color} group-hover:scale-110 transition-transform`}>
@@ -163,9 +163,9 @@ export function SearchTrigger() {
 
             {/* Popular Searches */}
             {!query && (
-              <div className="px-6 py-4 bg-white border-t border-neutral-200">
-                <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">
-                  Popular Searches
+              <div className="border-t border-[var(--color-sage)]/20 bg-white px-6 py-4">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-support)]">
+                  Popular searches
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {popularSearches.map((term) => (
@@ -173,7 +173,7 @@ export function SearchTrigger() {
                       key={term}
                       type="button"
                       onClick={() => handleSuggestionClick(term)}
-                      className="px-3 py-1.5 bg-neutral-50 hover:bg-green-50 rounded-full text-sm text-neutral-700 hover:text-green-700 border border-neutral-200 hover:border-green-300 transition-colors"
+                      className="rounded-full border border-[var(--color-sage)]/25 bg-neutral-50 px-3 py-1.5 text-sm text-neutral-700 transition-colors hover:border-[var(--color-teal)]/30 hover:bg-[var(--color-mint)]/70 hover:text-[var(--color-primary)]"
                     >
                       {term}
                     </button>
@@ -183,8 +183,8 @@ export function SearchTrigger() {
             )}
 
             {/* Keyboard Shortcut Hint */}
-            <div className="px-6 py-3 bg-neutral-50 border-t border-neutral-200">
-              <p className="text-xs text-neutral-500 flex items-center justify-center gap-2">
+            <div className="border-t border-[var(--color-sage)]/20 bg-[color-mix(in_srgb,var(--color-mint)_32%,#f5f5f5)] px-6 py-3">
+              <p className="flex items-center justify-center gap-2 text-xs text-[var(--color-support)]">
                 Press
                 <kbd className="px-2 py-0.5 bg-white border border-neutral-300 rounded text-neutral-700 font-mono text-xs">
                   ESC

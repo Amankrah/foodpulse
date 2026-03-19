@@ -16,10 +16,12 @@ const categoryLabels: Record<string, string> = {
   "food-systems": "Food Systems",
 };
 
+/** Editorial brand — teal / support / gold (no generic blue/purple) */
 const difficultyColors = {
-  beginner: "bg-green-100 text-green-700 border-green-200",
-  intermediate: "bg-blue-100 text-blue-700 border-blue-200",
-  advanced: "bg-purple-100 text-purple-700 border-purple-200",
+  beginner: "bg-[var(--color-mint)] text-[var(--color-teal)] border-[var(--color-teal)]/25",
+  intermediate:
+    "bg-[color-mix(in_srgb,var(--color-mint)_80%,var(--color-sage)_20%)] text-[var(--color-support)] border-[var(--color-support)]/25",
+  advanced: "bg-[color-mix(in_srgb,var(--color-mint)_65%,var(--color-primary)_35%)] text-[var(--color-primary)] border-[var(--color-primary)]/20",
 };
 
 const accessLabels = {
@@ -29,9 +31,10 @@ const accessLabels = {
 };
 
 const accessColors = {
-  free: "bg-green-100 text-green-700 border-green-200",
-  "email-gated": "bg-blue-100 text-blue-700 border-blue-200",
-  paid: "bg-amber-100 text-amber-700 border-amber-200",
+  free: "bg-[var(--color-mint)] text-[var(--color-teal)] border-[var(--color-teal)]/25",
+  "email-gated":
+    "bg-[color-mix(in_srgb,var(--color-mint)_88%,var(--color-sage)_12%)] text-[var(--color-support)] border-[var(--color-support)]/25",
+  paid: "bg-[color-mix(in_srgb,var(--color-gold)_22%,white)] text-[var(--color-primary)] border-[var(--color-gold)]/50",
 };
 
 const DEFAULT_ASPECT_RATIO = 16 / 9; // Fallback when dimensions missing
@@ -51,11 +54,16 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
     : null;
 
   return (
-    <div className={cn("bg-gradient-to-b from-green-50 to-white", className)}>
+    <div
+      className={cn(
+        "bg-gradient-to-b from-[var(--color-mint)] via-white to-white border-b border-[var(--color-sage)]/20",
+        className
+      )}
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Badges */}
         <div className="flex flex-wrap items-center gap-2 mb-6">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-white/90 text-[var(--color-primary)] border border-[var(--color-teal)]/20 shadow-sm">
             {categoryLabels[guide.category] || guide.category}
           </span>
           {guide.difficulty && (
@@ -80,17 +88,17 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-4">
+        <h1 className="text-4xl lg:text-5xl font-display font-extrabold text-[var(--color-primary)] tracking-tight mb-4">
           {guide.title}
         </h1>
 
-        {/* Subtitle */}
         {guide.subtitle && (
-          <p className="text-xl text-neutral-600 mb-6">{guide.subtitle}</p>
+          <p className="text-xl font-light text-[var(--color-support)] leading-relaxed mb-6">
+            {guide.subtitle}
+          </p>
         )}
 
-        {/* Meta Info */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-600 mb-8 pb-8 border-b border-neutral-200">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-support)] mb-8 pb-8 border-b border-[var(--color-sage)]/25">
           {guide.readingTime && (
             <div className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
@@ -99,7 +107,7 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
           )}
           {guide.author && (
             <>
-              <span className="text-neutral-300">•</span>
+              <span className="text-[var(--color-sage)]">•</span>
               <div className="flex items-center gap-1.5">
                 <User className="w-4 h-4" />
                 <span>{guide.author.name}</span>
@@ -108,7 +116,7 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
           )}
           {guide.publishedAt && (
             <>
-              <span className="text-neutral-300">•</span>
+              <span className="text-[var(--color-sage)]">•</span>
               <div className="flex items-center gap-1.5">
                 <Calendar className="w-4 h-4" />
                 <span>
@@ -124,15 +132,15 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
 
         {/* What You'll Learn */}
         {guide.whatYoullLearn && guide.whatYoullLearn.length > 0 && (
-          <div className="bg-white rounded-xl border border-neutral-200 p-6 mb-8">
-            <h2 className="text-lg font-semibold text-neutral-900 mb-4">
-              What You&apos;ll Learn
+          <div className="rounded-2xl border border-[var(--color-teal)]/20 bg-white/95 p-6 mb-8 shadow-sm">
+            <h2 className="text-lg font-display font-semibold text-[var(--color-primary)] mb-4">
+              What you&apos;ll learn
             </h2>
             <ul className="grid md:grid-cols-2 gap-3">
               {guide.whatYoullLearn.map((item, index) => (
                 <li key={index} className="flex items-start gap-2">
                   <svg
-                    className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
+                    className="w-5 h-5 text-[var(--color-teal)] flex-shrink-0 mt-0.5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -142,7 +150,7 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="text-neutral-700">{item}</span>
+                  <span className="text-[var(--color-support)] leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
@@ -154,7 +162,7 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
           {guide.downloadUrl && guide.accessType === "free" && (
             <a
               href="#download"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95 shadow-md"
             >
               <Download className="w-5 h-5" />
               Download PDF
@@ -163,10 +171,10 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
           {guide.accessType === "email-gated" && (
             <a
               href="#download"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95 shadow-md"
             >
               <Download className="w-5 h-5" />
-              Get Guide
+              Get guide
             </a>
           )}
           {guide.accessType === "paid" && guide.purchaseLink && (
@@ -174,16 +182,16 @@ export function GuideHero({ guide, className }: GuideHeroProps) {
               href={guide.purchaseLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95 shadow-md"
             >
-              Get Guide - ${guide.price}
+              Get guide — ${guide.price}
             </a>
           )}
           <a
             href="#content"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border-2 border-[var(--color-primary)] text-[var(--color-primary)] bg-white hover:bg-[var(--color-mint)] transition-colors"
           >
-            Jump to Guide
+            Jump to guide
             <ArrowDown className="w-5 h-5" />
           </a>
         </div>

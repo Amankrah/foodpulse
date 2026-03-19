@@ -80,10 +80,11 @@ export function Header({ transparent = false }: HeaderProps) {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={cn(
-                "lg:hidden p-2 transition-colors",
+                "rounded-lg p-2 transition-colors",
+                "lg:hidden",
                 isTransparent
-                  ? "text-white hover:text-green-100"
-                  : "text-neutral-700 hover:text-green-700"
+                  ? "text-white hover:bg-white/10 hover:text-[var(--color-mint)]"
+                  : "text-neutral-700 hover:bg-[var(--color-mint)]/50 hover:text-[var(--color-primary)]"
               )}
               aria-label="Toggle menu"
             >
@@ -121,8 +122,8 @@ function NavItem({ item, isTransparent }: NavItemProps) {
         className={cn(
           "text-base font-medium transition-colors",
           isTransparent
-            ? "text-white hover:text-green-100"
-            : "text-neutral-700 hover:text-green-700"
+            ? "text-white hover:text-[var(--color-mint)]"
+            : "text-neutral-700 hover:text-[var(--color-teal)]"
         )}
       >
         {item.label}
@@ -137,11 +138,12 @@ function NavItem({ item, isTransparent }: NavItemProps) {
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
+        type="button"
         className={cn(
           "flex items-center gap-1 text-base font-medium transition-colors",
           isTransparent
-            ? "text-white hover:text-green-100"
-            : "text-neutral-700 hover:text-green-700"
+            ? "text-white hover:text-[var(--color-mint)]"
+            : "text-neutral-700 hover:text-[var(--color-teal)]"
         )}
       >
         {item.label}
@@ -167,19 +169,19 @@ function NavItem({ item, isTransparent }: NavItemProps) {
         <div className="absolute top-full left-0 pt-2 w-72">
           {/* Invisible bridge area to prevent dropdown from closing when moving cursor */}
           <div className="absolute top-0 left-0 right-0 h-2" />
-          <div className="glass-dropdown rounded-xl shadow-xl border border-white/20">
+          <div className="glass-dropdown rounded-xl shadow-xl">
             <div className="p-2">
               {item.children.map((child) => (
                 <Link
                   key={child.href}
                   href={child.href}
-                  className="block rounded-lg px-4 py-3 hover:bg-white/10 hover:backdrop-blur-md transition-all duration-200"
+                  className="block rounded-lg border border-transparent px-4 py-3 transition-all duration-200 hover:border-[var(--color-teal)]/15 hover:bg-[var(--color-mint)]/90"
                 >
-                  <div className="font-semibold text-neutral-900">
+                  <div className="font-semibold text-[var(--color-primary)]">
                     {child.label}
                   </div>
                   {child.description && (
-                    <div className="text-sm text-neutral-700 mt-0.5">
+                    <div className="mt-0.5 text-sm text-[var(--color-support)]">
                       {child.description}
                     </div>
                   )}

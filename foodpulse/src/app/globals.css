@@ -1,53 +1,67 @@
 @import "tailwindcss";
 
 /* ============================================
-   FoodPulse Design System - Global Styles
-   Based on foodpulse-development-guide.md
+   FoodPulse Design System — Brand Guide v1.0
+   Colors, type, modes: Brand visual guide (2026)
    ============================================ */
 
 :root {
-  /* ========== Color Variables ========== */
+  /* ----- Official brand tokens ----- */
+  --color-primary: #003317; /* Deep Green — anchor */
+  --color-teal: #2b7a6b; /* Teal Green — interactive */
+  --color-support: #245f55; /* Support Green — body on light, borders */
+  --color-trust-blue: #2a5f8f; /* Scientific mode — evidence, data */
+  --color-sage: #7a9e8e; /* Cool Sage — scientific secondary surfaces */
+  --color-gold: #f2b705; /* Honey Gold — CTAs (text on gold: Deep Green) */
+  --color-orange: #e57a2b; /* Burnt Orange — editorial / photography only */
+  --color-mint: #e1ffed; /* Mint White — soft panels */
+  --color-charcoal: #24302a; /* Primary text on light */
 
-  /* Deep Green - Trust, Nature, Authority (Primary Brand Color) */
-  --green-900: #001a0d;
-  --green-800: #002614;
+  /* ========== Green scale (aligned to brand) ========== */
+  --green-900: #001f12;
+  --green-800: #002919;
   --green-700: #003317;
-  --green-600: #004d23;
-  --green-500: #006630;
-  --green-400: #00803d;
-  --green-300: #00994a;
-  --green-200: #33cc73;
-  --green-100: #99e6b3;
-  --green-50: #e1ffed;
+  --green-600: #2b7a6b; /* brand teal — links, interactive */
+  --green-500: #348f7e;
+  --green-400: #4db89a;
+  --green-300: #7a9e8e; /* sage bridge */
+  --green-200: #b8d4c8;
+  --green-100: #d8ebe0;
+  --green-50: #e1ffed; /* mint */
 
-  /* Earth Brown - Warmth, Organic, Grounding */
-  --brown-700: #8b6914;
-  --brown-600: #a67c1a;
-  --brown-500: #dda96b;
-  --brown-400: #e6be8a;
-  --brown-300: #f0d4a9;
-  --brown-200: #f5e2c4;
-  --brown-100: #faf1e0;
-  --brown-50: #fdf8f0;
+  /* ========== Legacy "brown" slots → editorial gold warmth (compat) ========== */
+  --brown-700: #003317;
+  --brown-600: #c99604;
+  --brown-500: #f2b705;
+  --brown-400: #f5c63d;
+  --brown-300: #f8d56e;
+  --brown-200: #fce9a8;
+  --brown-100: #fef6d9;
+  --brown-50: #fffbeb;
 
-  /* Accent - Fresh Green (Energy, Growth, Call-to-Action) */
-  --accent-600: #059669;
-  --accent-500: #10b981;
-  --accent-400: #34d399;
-  --accent-100: #d1fae5;
+  /* Accent / success (supporting greens) */
+  --accent-600: #245f55;
+  --accent-500: #2b7a6b;
+  --accent-400: #348f7e;
+  --accent-100: #e1ffed;
 
-  /* Warm Neutrals */
-  --neutral-900: #1c1917;
-  --neutral-800: #292524;
-  --neutral-700: #44403c;
-  --neutral-600: #57534e;
-  --neutral-500: #78716c;
-  --neutral-400: #a8a29e;
-  --neutral-300: #d6d3d1;
-  --neutral-200: #e7e5e4;
-  --neutral-100: #f5f5f4;
-  --neutral-50: #fafaf9;
+  /* Neutrals — charcoal-forward for body copy */
+  --neutral-900: #24302a;
+  --neutral-800: #2f3d36;
+  --neutral-700: #3d4f47;
+  --neutral-600: #556b62;
+  --neutral-500: #6f857a;
+  --neutral-400: #9db0a6;
+  --neutral-300: #c5d1ca;
+  --neutral-200: #e2e8e4;
+  --neutral-100: #f1f4f2;
+  --neutral-50: #fafcfb;
   --white: #ffffff;
+
+  /* Mode hooks (layouts set data-brand-mode="scientific" where needed) */
+  --brand-link: var(--color-teal);
+  --brand-accent-ui: var(--color-teal);
+  --brand-surface-tint: var(--color-mint);
 
   /* Semantic Colors */
   --success-600: #059669;
@@ -150,16 +164,49 @@
     var(--brown-50) 100%
   );
 
+  /* Typography — Montserrat (Next injects --font-montserrat on html) */
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand guide type scale */
+  --size-title: 3rem; /* 48px */
+  --size-subtitle: 1.375rem; /* 22px */
+  --size-heading: 1.875rem; /* 30px */
+  --size-subheading: 1.375rem; /* 22px */
+  --size-label: 0.6875rem; /* 11px */
+  --size-body: 1.0625rem; /* 17px */
+  --size-quote: 1.125rem; /* 18px */
+  --size-caption: 0.75rem; /* 12px */
+
   /* ========== Theme Colors for Tailwind ========== */
   --background: var(--neutral-50);
-  --foreground: var(--neutral-900);
+  --foreground: var(--color-charcoal);
+}
+
+/* Scientific mode: Trust Blue + Cool Sage accents (per brand guide §03) */
+[data-brand-mode="scientific"] {
+  --brand-link: var(--color-trust-blue);
+  --brand-accent-ui: var(--color-trust-blue);
+  --brand-surface-tint: color-mix(in srgb, var(--color-trust-blue) 6%, white);
 }
 
 @theme inline {
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Map CSS variables to Tailwind theme */
+  --color-brand-primary: var(--color-primary);
+  --color-brand-teal: var(--color-teal);
+  --color-brand-support: var(--color-support);
+  --color-brand-trust: var(--color-trust-blue);
+  --color-brand-sage: var(--color-sage);
+  --color-brand-gold: var(--color-gold);
+  --color-brand-orange: var(--color-orange);
+  --color-brand-mint: var(--color-mint);
+  --color-brand-charcoal: var(--color-charcoal);
+
   --color-green-50: var(--green-50);
   --color-green-100: var(--green-100);
   --color-green-200: var(--green-200);
@@ -196,100 +243,96 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--text-base);
-  line-height: 1.75;
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  line-height: 1.8;
   overflow-x: hidden;
 }
 
 /* ========== Typography Utilities ========== */
 
+/* TITLE scale — 48px / ExtraBold 800 / -0.03em / lh 1.05 */
 .hero-headline {
-  font-family: var(--font-display, Georgia, serif);
-  font-size: var(--text-6xl);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, var(--size-title));
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--white);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-@media (min-width: 768px) {
-  .hero-headline {
-    font-size: var(--text-7xl);
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-headline {
-    font-size: var(--text-8xl);
-  }
-}
-
+/* HEADING — 30px / Bold 700 / -0.02em / lh 1.15 */
 .section-headline {
-  font-family: var(--font-display, Georgia, serif);
-  font-size: var(--text-3xl);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, var(--size-heading));
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--green-700);
 }
 
-@media (min-width: 768px) {
-  .section-headline {
-    font-size: var(--text-4xl);
-  }
-}
-
+/* Article H1 / large titles */
 .article-title {
-  font-family: var(--font-display, Georgia, serif);
-  font-size: var(--text-2xl);
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--neutral-800);
-}
-
-@media (min-width: 768px) {
-  .article-title {
-    font-size: var(--text-3xl);
-  }
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.5vw, var(--size-heading));
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--neutral-900);
 }
 
 .body-text {
-  font-family: var(--font-sans, sans-serif);
-  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--neutral-700);
 }
 
+/* SUBTITLE — 22px / Light 300 / lh 1.4 */
 .lead-text {
-  font-family: var(--font-sans, sans-serif);
-  font-size: var(--text-lg);
-  font-weight: 400;
-  line-height: 1.7;
+  font-family: var(--font-sans);
+  font-size: var(--size-subtitle);
+  font-weight: 300;
+  line-height: 1.4;
   color: var(--neutral-600);
 }
 
-@media (min-width: 768px) {
-  .lead-text {
-    font-size: var(--text-xl);
-  }
-}
-
+/* SECTION LABEL — 11px / SemiBold 600 / +0.12em / caps */
 .eyebrow {
-  font-family: var(--font-sans, sans-serif);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-family: var(--font-sans);
+  font-size: var(--size-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--brown-700);
+  color: var(--green-700);
 }
 
-@media (min-width: 768px) {
-  .eyebrow {
-    font-size: var(--text-base);
-  }
+[data-brand-mode="scientific"] .eyebrow {
+  color: var(--color-trust-blue);
+}
+
+/* Pull quote — 18px / Light italic / lh 1.65 */
+.brand-quote {
+  font-family: var(--font-sans);
+  font-size: var(--size-quote);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  border-left: 4px solid var(--color-gold);
+  padding-left: 1rem;
+  color: var(--neutral-800);
+}
+
+/* Caption — 12px / Medium 500 / +0.02em */
+.brand-caption {
+  font-family: var(--font-sans);
+  font-size: var(--size-caption);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--neutral-600);
 }
 
 /* ========== Scroll Utilities ========== */
@@ -314,31 +357,31 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--green-600);
+  background: var(--color-teal);
 }
 
 /* ========== Focus Styles ========== */
 
 :focus-visible {
-  outline: 2px solid var(--green-500);
+  outline: 2px solid var(--color-teal);
   outline-offset: 2px;
 }
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--green-500);
+  outline: 2px solid var(--color-teal);
   outline-offset: 2px;
 }
 
 /* ========== Selection Styles ========== */
 
 ::selection {
-  background-color: var(--green-200);
+  background-color: var(--green-100);
   color: var(--green-900);
 }
 
 ::-moz-selection {
-  background-color: var(--green-200);
+  background-color: var(--green-100);
   color: var(--green-900);
 }
 
@@ -456,21 +499,141 @@ a:focus-visible {
   animation-fill-mode: forwards;
 }
 
+/* ========== Hero Section Animations ========== */
+
+/* Floating blob animation */
+@keyframes hero-blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, 10px) scale(1.02);
+  }
+}
+
+@keyframes hero-blob-reverse {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-30px, 20px) scale(0.95);
+  }
+  50% {
+    transform: translate(20px, -30px) scale(1.05);
+  }
+  75% {
+    transform: translate(-10px, -20px) scale(0.98);
+  }
+}
+
+.animate-hero-blob {
+  animation: hero-blob 20s ease-in-out infinite;
+}
+
+.animate-hero-blob-reverse {
+  animation: hero-blob-reverse 25s ease-in-out infinite;
+}
+
+/* Floating icons animation */
+@keyframes hero-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-hero-float {
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+/* Slow spin for decorative elements */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+
+/* Pulse animation for knowledge cards */
+@keyframes hero-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.animate-hero-pulse {
+  animation: hero-pulse 4s ease-in-out infinite;
+}
+
+/* Slow bounce animation */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+/* Line drawing animation */
+@keyframes draw-line {
+  from {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-line {
+  animation: draw-line 1.5s ease-out forwards;
+  animation-delay: 0.5s;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+
 /* ========== Liquid Glass Design ========== */
 
 /* Glass Header - Modern glassmorphism effect */
 .glass-header {
-  background: rgba(255, 255, 255, 0.85);
+  background: color-mix(in srgb, white 88%, var(--color-mint));
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-teal) 16%, transparent);
 }
 
 /* Glass Dropdown - Enhanced glassmorphism for dropdown menus */
 .glass-dropdown {
-  background: rgba(255, 255, 255, 0.95);
+  background: color-mix(in srgb, white 94%, var(--color-mint));
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in srgb, var(--color-teal) 14%, transparent);
   box-shadow:
     0 8px 32px rgba(0, 51, 23, 0.12),
     0 2px 8px rgba(0, 51, 23, 0.08);
@@ -484,7 +647,8 @@ a:focus-visible {
 
 /* Optional: Add subtle shimmer effect on hover */
 .glass-dropdown:hover {
-  background: rgba(255, 255, 255, 0.98);
+  background: color-mix(in srgb, white 97%, var(--color-mint));
+  border-color: color-mix(in srgb, var(--color-teal) 22%, transparent);
   box-shadow:
     0 12px 40px rgba(0, 51, 23, 0.15),
     0 4px 12px rgba(0, 51, 23, 0.1);

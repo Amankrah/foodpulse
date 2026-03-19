@@ -56,9 +56,9 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
           data-version="5"
           data-options={DATA_OPTIONS}
           style={{
-            backgroundColor: "rgb(249, 250, 251)",
-            borderRadius: 4,
-            border: "1px solid #e3e3e3",
+            backgroundColor: "#ffffff",
+            borderRadius: 12,
+            border: "1px solid rgba(43, 122, 107, 0.2)",
             maxWidth: 700,
             position: "relative",
             overflow: "hidden",
@@ -82,8 +82,9 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
               className="formkit-subheader"
               data-element="subheader"
               style={{
-                color: "rgb(65, 65, 65)",
-                fontSize: 15,
+                color: "#245f55",
+                fontSize: 17,
+                lineHeight: 1.6,
                 margin: "18px 0",
                 textAlign: "center",
               }}
@@ -119,8 +120,8 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
                   style={{
                     width: "100%",
                     padding: 12,
-                    border: "1px solid #e3e3e3",
-                    borderRadius: 4,
+                    border: "1px solid rgba(36, 95, 85, 0.25)",
+                    borderRadius: 8,
                     fontSize: 15,
                   }}
                 />
@@ -136,8 +137,8 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
                   style={{
                     width: "100%",
                     padding: 12,
-                    border: "1px solid #e3e3e3",
-                    borderRadius: 4,
+                    border: "1px solid rgba(36, 95, 85, 0.25)",
+                    borderRadius: 8,
                     fontSize: 15,
                   }}
                 />
@@ -148,13 +149,13 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
                   data-element="submit"
                   className="formkit-submit"
                   style={{
-                    color: "#fff",
-                    backgroundColor: "rgb(0, 51, 23)",
+                    color: "#003317",
+                    backgroundColor: "#f2b705",
                     border: 0,
-                    borderRadius: 7,
+                    borderRadius: 8,
                     fontWeight: 700,
                     padding: "12px 24px",
-                    fontSize: 15,
+                    fontSize: 16,
                     cursor: "pointer",
                     width: "100%",
                   }}

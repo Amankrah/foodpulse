@@ -87,7 +87,7 @@ const steps = [
   },
 ];
 
-// Essential starting points
+/** Editorial — mint surfaces, brand borders & icons; CTAs = Honey Gold (Button primary) */
 const startingPoints = [
   {
     title: "How to think about food and nutrition",
@@ -96,7 +96,8 @@ const startingPoints = [
     cta: "Read the article",
     href: "/articles",
     icon: BookOpen,
-    color: "green",
+    surface: "bg-[var(--color-mint)] border-[var(--color-teal)]/20",
+    iconWrap: "bg-white/90 text-[var(--color-teal)] ring-1 ring-[var(--color-teal)]/15",
   },
   {
     title: "Try a FoodPulse tool",
@@ -105,7 +106,8 @@ const startingPoints = [
     cta: "Use a tool",
     href: "/tools",
     icon: Calculator,
-    color: "blue",
+    surface: "bg-[var(--color-mint)] border-[var(--color-support)]/25",
+    iconWrap: "bg-white/90 text-[var(--color-support)] ring-1 ring-[var(--color-support)]/20",
   },
   {
     title: "When a term feels confusing",
@@ -114,7 +116,9 @@ const startingPoints = [
     cta: "Visit the glossary",
     href: "/glossary",
     icon: Book,
-    color: "amber",
+    surface:
+      "bg-[color-mix(in_srgb,var(--color-mint)_88%,var(--color-sage)_12%)] border-[var(--color-sage)]/25",
+    iconWrap: "bg-white/90 text-[var(--color-sage)] ring-1 ring-[var(--color-sage)]/25",
   },
   {
     title: "Stay connected",
@@ -123,32 +127,10 @@ const startingPoints = [
     cta: "Join for free",
     href: "/newsletter",
     icon: Mail,
-    color: "purple",
+    surface: "bg-[var(--color-mint)] border-[var(--color-primary)]/15",
+    iconWrap: "bg-white/90 text-[var(--color-primary)] ring-1 ring-[var(--color-primary)]/12",
   },
 ];
-
-const colorClasses = {
-  green: {
-    bg: "bg-green-50",
-    icon: "bg-green-100 text-green-600",
-    button: "bg-green-600 hover:bg-green-700 text-white",
-  },
-  blue: {
-    bg: "bg-blue-50",
-    icon: "bg-blue-100 text-blue-600",
-    button: "bg-blue-600 hover:bg-blue-700 text-white",
-  },
-  amber: {
-    bg: "bg-amber-50",
-    icon: "bg-amber-100 text-amber-700",
-    button: "bg-amber-600 hover:bg-amber-700 text-white",
-  },
-  purple: {
-    bg: "bg-purple-50",
-    icon: "bg-purple-100 text-purple-600",
-    button: "bg-purple-600 hover:bg-purple-700 text-white",
-  },
-};
 
 export default function StartHerePage() {
   return (
@@ -304,32 +286,34 @@ export default function StartHerePage() {
         />
 
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mt-12">
-          {startingPoints.map((point) => {
-            const colors = colorClasses[point.color as keyof typeof colorClasses];
-            return (
+          {startingPoints.map((point) => (
+            <div
+              key={point.title}
+              className={`rounded-2xl border p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow ${point.surface}`}
+            >
               <div
-                key={point.title}
-                className={`${colors.bg} rounded-2xl p-6 flex flex-col`}
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${point.iconWrap}`}
               >
-                <div className={`w-12 h-12 ${colors.icon} rounded-xl flex items-center justify-center mb-4`}>
-                  <point.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-bold text-neutral-900 mb-2">
-                  {point.title}
-                </h3>
-                <p className="text-neutral-600 mb-6 flex-1">
-                  {point.description}
-                </p>
-                <Link
-                  href={point.href}
-                  className={`inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-medium transition-colors ${colors.button}`}
-                >
-                  {point.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                <point.icon className="h-6 w-6" aria-hidden />
               </div>
-            );
-          })}
+              <h3 className="text-[length:var(--size-subheading)] font-display font-semibold text-[var(--color-primary)] tracking-tight leading-snug mb-2">
+                {point.title}
+              </h3>
+              <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] mb-6 flex-1">
+                {point.description}
+              </p>
+              <Button
+                variant="primary"
+                href={point.href}
+                fullWidth
+                size="md"
+                icon={<ArrowRight className="h-4 w-4" />}
+                iconPosition="right"
+              >
+                {point.cta}
+              </Button>
+            </div>
+          ))}
         </div>
       </Section>
 

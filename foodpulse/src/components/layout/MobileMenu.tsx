@@ -37,11 +37,11 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
       {/* Menu Panel */}
       <div
         className={cn(
-          "fixed top-16 right-0 bottom-0 w-full max-w-sm bg-white shadow-xl transition-transform duration-300 lg:hidden z-50 overflow-y-auto",
+          "fixed top-16 right-0 bottom-0 z-50 w-full max-w-sm overflow-y-auto border-l border-[var(--color-teal)]/20 bg-[color-mix(in_srgb,white_96%,var(--color-mint))] shadow-xl transition-transform duration-300 lg:hidden",
           open ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <nav className="p-6 space-y-2">
+        <nav className="space-y-2 p-6">
           {mobileNavigation.map((item) => (
             <MobileNavItem
               key={item.label}
@@ -53,7 +53,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
           ))}
 
           {/* Newsletter CTA */}
-          <div className="pt-6 mt-6 border-t border-neutral-200">
+          <div className="mt-6 border-t border-[var(--color-sage)]/25 pt-6">
             <Button variant="primary" size="md" href="/newsletter" fullWidth>
               Subscribe to Newsletter
             </Button>
@@ -82,7 +82,7 @@ function MobileNavItem({
       <Link
         href={item.href!}
         onClick={onClose}
-        className="block rounded-md px-4 py-3 text-base font-medium text-neutral-900 hover:bg-green-50 transition-colors"
+        className="block rounded-lg border border-transparent px-4 py-3 text-base font-medium text-[var(--color-primary)] transition-colors hover:border-[var(--color-teal)]/15 hover:bg-[var(--color-mint)]/80"
       >
         {item.label}
       </Link>
@@ -93,12 +93,13 @@ function MobileNavItem({
     <div>
       <button
         onClick={onToggle}
-        className="flex w-full items-center justify-between rounded-md px-4 py-3 text-base font-medium text-neutral-900 hover:bg-green-50 transition-colors"
+        type="button"
+        className="flex w-full items-center justify-between rounded-lg border border-transparent px-4 py-3 text-base font-medium text-[var(--color-primary)] transition-colors hover:border-[var(--color-teal)]/15 hover:bg-[var(--color-mint)]/80"
       >
         {item.label}
         <ChevronDown
           className={cn(
-            "h-5 w-5 transition-transform",
+            "h-5 w-5 text-[var(--color-teal)] transition-transform",
             expanded && "rotate-180"
           )}
         />
@@ -111,7 +112,7 @@ function MobileNavItem({
               key={child.href}
               href={child.href}
               onClick={onClose}
-              className="block rounded-md px-4 py-2 text-sm text-neutral-700 hover:bg-green-50 hover:text-green-700 transition-colors"
+              className="block rounded-lg border border-transparent px-4 py-2 text-sm text-[var(--color-support)] transition-colors hover:border-[var(--color-teal)]/12 hover:bg-[var(--color-mint)]/70 hover:text-[var(--color-primary)]"
             >
               {child.label}
             </Link>

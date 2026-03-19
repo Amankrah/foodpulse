@@ -51,56 +51,60 @@ const calloutIcons = {
   example: FileText,
 };
 
+/** Editorial callouts — mint/sage/teal/gold (brand guide) */
 const calloutStyles = {
-  info: "bg-blue-50 border-blue-200 text-blue-900",
-  tip: "bg-green-50 border-green-200 text-green-900",
-  warning: "bg-amber-50 border-amber-200 text-amber-900",
-  example: "bg-purple-50 border-purple-200 text-purple-900",
+  info: "bg-[var(--color-mint)] border-[var(--color-teal)]/30 text-[var(--color-charcoal)]",
+  tip: "bg-[var(--color-mint)] border-[var(--color-sage)]/35 text-[var(--color-charcoal)]",
+  warning:
+    "bg-[color-mix(in_srgb,var(--color-mint)_88%,var(--color-gold)_12%)] border-[var(--color-gold)]/35 text-[var(--color-charcoal)]",
+  example: "bg-white border-[var(--color-support)]/25 text-[var(--color-charcoal)]",
 };
 
 const calloutIconColors = {
-  info: "text-blue-600",
-  tip: "text-green-600",
-  warning: "text-amber-600",
-  example: "text-purple-600",
+  info: "text-[var(--color-teal)]",
+  tip: "text-[var(--color-teal)]",
+  warning: "text-[var(--color-primary)]",
+  example: "text-[var(--color-support)]",
 };
 
 const components = {
   block: {
     normal: ({ children }: PortableTextComponentProps) => (
-      <p className="mb-6 text-neutral-700 leading-relaxed">{children}</p>
+      <p className="mb-6 text-[var(--color-support)] leading-relaxed text-[length:var(--size-body)]">
+        {children}
+      </p>
     ),
     h3: ({ children }: PortableTextComponentProps) => (
-      <h3 className="text-2xl font-bold text-neutral-900 mt-8 mb-4">
+      <h3 className="text-2xl font-display font-bold text-[var(--color-primary)] mt-8 mb-4 tracking-tight">
         {children}
       </h3>
     ),
     h4: ({ children }: PortableTextComponentProps) => (
-      <h4 className="text-xl font-semibold text-neutral-900 mt-6 mb-3">
+      <h4 className="text-xl font-display font-semibold text-[var(--color-primary)] mt-6 mb-3">
         {children}
       </h4>
     ),
     blockquote: ({ children }: PortableTextComponentProps) => (
-      <blockquote className="border-l-4 border-green-600 pl-4 py-2 my-6 italic text-neutral-700">
+      <blockquote className="border-l-4 border-[var(--color-gold)] pl-4 py-2 my-6 italic text-[var(--color-support)] text-[length:var(--size-quote)] leading-relaxed">
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }: PortableTextComponentProps) => (
-      <ul className="list-disc list-inside space-y-2 mb-6 text-neutral-700">
+      <ul className="list-disc list-inside space-y-2 mb-6 text-[var(--color-support)] leading-relaxed">
         {children}
       </ul>
     ),
     number: ({ children }: PortableTextComponentProps) => (
-      <ol className="list-decimal list-inside space-y-2 mb-6 text-neutral-700">
+      <ol className="list-decimal list-inside space-y-2 mb-6 text-[var(--color-support)] leading-relaxed">
         {children}
       </ol>
     ),
   },
   marks: {
     strong: ({ children }: PortableTextComponentProps) => (
-      <strong className="font-semibold text-neutral-900">{children}</strong>
+      <strong className="font-semibold text-[var(--color-primary)]">{children}</strong>
     ),
     em: ({ children }: PortableTextComponentProps) => <em className="italic">{children}</em>,
     code: ({ children }: PortableTextComponentProps) => (
@@ -111,7 +115,7 @@ const components = {
     link: ({ children, value }: PortableTextComponentProps<PortableTextLink>) => (
       <a
         href={value?.href}
-        className="text-green-700 hover:text-green-800 underline"
+        className="text-[var(--color-teal)] hover:text-[var(--color-primary)] underline underline-offset-2 font-medium"
         target={value?.href?.startsWith("http") ? "_blank" : undefined}
         rel={value?.href?.startsWith("http") ? "noopener noreferrer" : undefined}
       >
@@ -136,7 +140,7 @@ const components = {
             />
           </div>
           {value?.caption && (
-            <figcaption className="text-sm text-neutral-600 text-center mt-2">
+            <figcaption className="text-sm text-[var(--color-support)] text-center mt-2">
               {value.caption}
             </figcaption>
           )}
@@ -170,13 +174,13 @@ const components = {
       );
     },
     inlineCta: ({ value }: PortableTextComponentProps<PortableTextInlineCta>) => (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6 my-8 text-center">
-        <p className="text-neutral-700 mb-4">{value?.text}</p>
+      <div className="rounded-2xl border border-[var(--color-teal)]/20 bg-[var(--color-mint)] p-6 my-8 text-center">
+        <p className="text-[var(--color-support)] mb-4 leading-relaxed">{value?.text}</p>
         <a
           href={value?.link}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95 shadow-sm"
         >
-          {value?.buttonText || "Learn More"}
+          {value?.buttonText || "Learn more"}
         </a>
       </div>
     ),
@@ -198,10 +202,10 @@ export function GuideContent({ guide, className }: GuideContentProps) {
         <div className="space-y-12">
           {guide.chapters.map((chapter, index) => (
             <div key={index} id={chapter.slug || `chapter-${index}`}>
-              <h2 className="text-3xl font-bold text-neutral-900 mb-6">
+              <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-6">
                 {chapter.title}
               </h2>
-              <div className="prose prose-neutral max-w-none">
+              <div className="prose prose-neutral max-w-none prose-a:text-[var(--color-teal)]">
                 <PortableText value={chapter.content} components={components} />
               </div>
             </div>
@@ -211,15 +215,15 @@ export function GuideContent({ guide, className }: GuideContentProps) {
 
       {/* Key Takeaways */}
       {guide.keyTakeaways && guide.keyTakeaways.length > 0 && (
-        <div className="mt-12 bg-green-50 border border-green-200 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-neutral-900 mb-6">
-            Key Takeaways
+        <div className="mt-12 rounded-2xl border border-[var(--color-teal)]/20 bg-[var(--color-mint)] p-8">
+          <h2 className="text-2xl font-display font-bold text-[var(--color-primary)] mb-6">
+            Key takeaways
           </h2>
           <ul className="space-y-3">
             {guide.keyTakeaways.map((takeaway, index) => (
               <li key={index} className="flex items-start gap-3">
                 <svg
-                  className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5"
+                  className="w-6 h-6 text-[var(--color-teal)] flex-shrink-0 mt-0.5"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -229,7 +233,9 @@ export function GuideContent({ guide, className }: GuideContentProps) {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-neutral-700 text-lg">{takeaway}</span>
+                <span className="text-[var(--color-support)] text-lg leading-relaxed">
+                  {takeaway}
+                </span>
               </li>
             ))}
           </ul>

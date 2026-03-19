@@ -59,7 +59,7 @@ export function GlossaryHub({
                 id={`letter-${letter.toLowerCase()}`}
                 className="scroll-mt-24 mb-12"
               >
-                <h2 className="text-2xl font-bold text-green-700 pb-2 border-b-2 border-green-200 mb-6">
+                <h2 className="text-2xl font-display font-bold text-[var(--color-trust-blue)] pb-2 border-b-2 border-[var(--color-sage)]/40 mb-6">
                   {letter}
                 </h2>
 
@@ -71,10 +71,12 @@ export function GlossaryHub({
               </div>
             ))
         ) : (
-          <div className="text-center py-12">
-            <p className="text-xl text-neutral-600 mb-2">No terms found</p>
-            <p className="text-neutral-500">
-              Try adjusting your search query
+          <div className="text-center py-12 max-w-md mx-auto">
+            <p className="text-[length:var(--size-subheading)] font-display font-semibold text-[var(--color-primary)] mb-2">
+              No terms found
+            </p>
+            <p className="text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
+              Try a different search or browse A–Z above.
             </p>
           </div>
         )}

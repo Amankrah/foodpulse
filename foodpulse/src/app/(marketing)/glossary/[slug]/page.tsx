@@ -59,56 +59,67 @@ export default async function TermPage({ params }: TermPageProps) {
     <>
       <TermJsonLd term={term} />
 
-      <Section background="white" padding="lg">
+      <Section
+        background="white"
+        padding="lg"
+        className="bg-[color-mix(in_srgb,var(--color-trust-blue)_2.5%,white)]"
+      >
         <div className="max-w-7xl mx-auto">
-          {/* Breadcrumb */}
-          <nav className="text-sm text-neutral-600 mb-6">
-            <Link href="/" className="hover:text-green-700">
+          <nav
+            className="text-sm text-[var(--color-support)] mb-6"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              href="/"
+              className="hover:text-[var(--color-trust-blue)] underline-offset-2 hover:underline"
+            >
               Home
             </Link>
-            <span className="mx-2">&gt;</span>
-            <Link href="/glossary" className="hover:text-green-700">
+            <span className="mx-2 text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
+            <Link
+              href="/glossary"
+              className="hover:text-[var(--color-trust-blue)] underline-offset-2 hover:underline"
+            >
               Glossary
             </Link>
-            <span className="mx-2">&gt;</span>
-            <span>{term.term}</span>
+            <span className="mx-2 text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
+            <span className="font-medium text-[var(--color-primary)]">{term.term}</span>
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
             <div className="lg:col-span-2">
-              {/* Category Badge */}
               <div className="mb-4">
-                <span className="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-green-50 text-green-700">
+                <span className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-[color-mix(in_srgb,var(--color-trust-blue)_10%,white)] text-[var(--color-trust-blue)] border border-[var(--color-trust-blue)]/20">
                   {categoryLabels[term.category] || term.category}
                 </span>
               </div>
 
-              {/* Term & Pronunciation */}
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-neutral-900 mb-2">
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-2">
                 {term.term}
               </h1>
 
               {term.pronunciation && (
-                <p className="text-lg text-neutral-500 italic mb-6">
+                <p className="text-lg text-[var(--color-support)] italic mb-6">
                   {term.pronunciation}
                 </p>
               )}
 
-              <hr className="my-6 border-neutral-200" />
+              <hr className="my-6 border-[var(--color-sage)]/30" />
 
-              {/* Short Definition (Highlighted) */}
-              <div className="bg-green-50 border-l-4 border-green-500 rounded-r-lg p-6 my-8">
-                <p className="text-lg lg:text-xl leading-relaxed text-neutral-800">
+              <div className="bg-[color-mix(in_srgb,var(--color-mint)_85%,var(--color-sage)_15%)] border-l-4 border-[var(--color-trust-blue)] rounded-r-xl p-6 my-8">
+                <p className="text-lg lg:text-xl leading-relaxed text-[var(--color-charcoal)]">
                   {term.shortDefinition}
                 </p>
               </div>
 
-              {/* Full Definition */}
               {term.fullDefinition && (
-                <div className="prose prose-lg max-w-none mb-8">
-                  <h2 className="text-xl lg:text-2xl font-semibold text-green-700 mb-4">
-                    Full Explanation
+                <div className="prose prose-lg max-w-none mb-8 prose-headings:font-display prose-headings:text-[var(--color-primary)] prose-p:text-[var(--color-support)] prose-li:text-[var(--color-support)]">
+                  <h2 className="text-xl lg:text-2xl font-display font-semibold text-[var(--color-trust-blue)] mb-4 not-prose">
+                    Full explanation
                   </h2>
                   <PortableText
                     value={term.fullDefinition}
@@ -117,42 +128,44 @@ export default async function TermPage({ params }: TermPageProps) {
                 </div>
               )}
 
-              {/* Why It Matters */}
               {term.whyItMatters && (
                 <div className="mb-8">
-                  <h2 className="text-xl lg:text-2xl font-semibold text-green-700 mb-4">
-                    Why It Matters
+                  <h2 className="text-xl lg:text-2xl font-display font-semibold text-[var(--color-trust-blue)] mb-4">
+                    Why it matters
                   </h2>
-                  <p className="text-neutral-700 leading-relaxed">
+                  <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
                     {term.whyItMatters}
                   </p>
                 </div>
               )}
 
-              {/* Example */}
               {term.example && (
                 <div className="mb-8">
-                  <h2 className="text-xl lg:text-2xl font-semibold text-green-700 mb-4">
+                  <h2 className="text-xl lg:text-2xl font-display font-semibold text-[var(--color-trust-blue)] mb-4">
                     Example
                   </h2>
-                  <p className="text-neutral-700 leading-relaxed">
+                  <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
                     {term.example}
                   </p>
                 </div>
               )}
 
-              {/* Common Misconceptions */}
               {term.commonMisconceptions &&
                 term.commonMisconceptions.length > 0 && (
                   <div className="mb-8">
-                    <h2 className="text-xl lg:text-2xl font-semibold text-green-700 mb-4">
-                      Common Misconceptions
+                    <h2 className="text-xl lg:text-2xl font-display font-semibold text-[var(--color-trust-blue)] mb-4">
+                      Common misconceptions
                     </h2>
                     <ul className="space-y-3">
                       {term.commonMisconceptions.map((misconception, index) => (
                         <li key={index} className="flex items-start gap-3">
-                          <span className="text-red-500 mt-1">✗</span>
-                          <p className="text-neutral-700 leading-relaxed">
+                          <span
+                            className="mt-1 font-semibold text-[var(--color-sage)]"
+                            aria-hidden
+                          >
+                            ×
+                          </span>
+                          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
                             {misconception}
                           </p>
                         </li>
@@ -161,31 +174,28 @@ export default async function TermPage({ params }: TermPageProps) {
                   </div>
                 )}
 
-              {/* Back to Glossary */}
-              <div className="mt-12 pt-8 border-t border-neutral-200">
+              <div className="mt-12 pt-8 border-t border-[var(--color-sage)]/25">
                 <Link
                   href="/glossary"
-                  className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-medium"
+                  className="inline-flex items-center gap-2 font-semibold text-[var(--color-trust-blue)] hover:text-[var(--color-primary)] underline-offset-2 hover:underline"
                 >
-                  ← Back to Glossary
+                  ← Back to glossary
                 </Link>
               </div>
             </div>
 
-            {/* Sidebar */}
-            <div className="lg:sticky lg:top-24 h-fit">
-              {/* Related Terms */}
+            <div className="lg:sticky lg:top-24 h-fit space-y-6">
               {term.relatedTerms && term.relatedTerms.length > 0 && (
-                <div className="mb-8">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-3">
-                    Related Terms
+                <div className="rounded-2xl border border-[var(--color-sage)]/30 bg-white/95 p-5 shadow-sm">
+                  <h3 className="eyebrow mb-3 !normal-case !tracking-wide text-[0.65rem] sm:text-[var(--size-label)]">
+                    Related terms
                   </h3>
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     {term.relatedTerms.map((relatedTerm) => (
                       <Link
                         key={relatedTerm.slug}
                         href={`/glossary/${relatedTerm.slug}`}
-                        className="block py-2 text-neutral-700 hover:text-green-700 border-b border-neutral-100 transition-colors"
+                        className="block py-2 text-[var(--color-support)] hover:text-[var(--color-trust-blue)] border-b border-[var(--color-sage)]/15 transition-colors text-[length:var(--size-body)] last:border-0"
                       >
                         {relatedTerm.term}
                       </Link>
@@ -194,11 +204,10 @@ export default async function TermPage({ params }: TermPageProps) {
                 </div>
               )}
 
-              {/* Related Articles */}
               {term.relatedArticles && term.relatedArticles.length > 0 && (
-                <div className="mb-8">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-3">
-                    Related Articles
+                <div className="rounded-2xl border border-[var(--color-sage)]/30 bg-white/95 p-5 shadow-sm">
+                  <h3 className="eyebrow mb-3 !normal-case !tracking-wide text-[0.65rem] sm:text-[var(--size-label)]">
+                    Related articles
                   </h3>
                   <div className="space-y-3">
                     {term.relatedArticles.map((article) => (
@@ -207,10 +216,10 @@ export default async function TermPage({ params }: TermPageProps) {
                         href={`/articles/${article.category.slug}/${article.slug}`}
                         className="block group"
                       >
-                        <h4 className="font-medium text-neutral-800 group-hover:text-green-700 transition-colors mb-1">
+                        <h4 className="font-semibold text-[var(--color-primary)] group-hover:text-[var(--color-trust-blue)] transition-colors mb-1">
                           {article.title}
                         </h4>
-                        <p className="text-sm text-neutral-600 line-clamp-2">
+                        <p className="text-sm leading-relaxed text-[var(--color-support)] line-clamp-2">
                           {article.excerpt}
                         </p>
                       </Link>
@@ -219,10 +228,9 @@ export default async function TermPage({ params }: TermPageProps) {
                 </div>
               )}
 
-              {/* Sources */}
               {term.sources && term.sources.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-3">
+                <div className="rounded-2xl border border-[var(--color-sage)]/30 bg-white/95 p-5 shadow-sm">
+                  <h3 className="eyebrow mb-3 !normal-case !tracking-wide text-[0.65rem] sm:text-[var(--size-label)]">
                     Sources
                   </h3>
                   <div className="space-y-2">
@@ -232,7 +240,7 @@ export default async function TermPage({ params }: TermPageProps) {
                         href={source.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block text-sm text-green-600 hover:text-green-700 hover:underline"
+                        className="block text-sm font-medium text-[var(--color-trust-blue)] hover:text-[var(--color-primary)] hover:underline underline-offset-2"
                       >
                         {source.organization || source.title}
                       </a>

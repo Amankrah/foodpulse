@@ -32,10 +32,10 @@ export function AlphabetNavigation({
             key={letter}
             onClick={() => isAvailable && handleLetterClick(letter)}
             disabled={!isAvailable}
-            className={`w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-md font-medium transition-colors ${
+            className={`w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
               isAvailable
-                ? "bg-white hover:bg-green-50 text-neutral-700 hover:text-green-700 border border-neutral-200"
-                : "bg-neutral-50 text-neutral-300 cursor-not-allowed"
+                ? "bg-white text-[var(--color-support)] border border-[var(--color-sage)]/35 hover:border-[var(--color-trust-blue)]/40 hover:bg-[color-mix(in_srgb,var(--color-trust-blue)_6%,white)] hover:text-[var(--color-trust-blue)]"
+                : "bg-[var(--neutral-100)] text-[var(--color-sage)]/45 cursor-not-allowed border border-transparent"
             }`}
             aria-label={`Jump to letter ${letter}`}
             title={

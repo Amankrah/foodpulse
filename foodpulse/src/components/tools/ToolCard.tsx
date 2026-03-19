@@ -10,30 +10,33 @@ interface ToolCardProps {
   category?: string
 }
 
+/** Scientific register — Trust Blue + sage surfaces (brand guide §03); parent sets data-brand-mode="scientific" */
 export function ToolCard({ title, description, slug, icon, category }: ToolCardProps) {
   return (
     <Link
       href={`/tools/${slug}`}
-      className="group block p-6 bg-white rounded-xl border border-neutral-200 hover:border-green-500 hover:shadow-lg transition-all duration-300"
+      className="group block p-6 rounded-2xl border border-[var(--color-sage)]/30 bg-white shadow-sm hover:border-[var(--color-trust-blue)]/35 hover:shadow-md transition-all duration-300"
     >
       <div className="flex items-start gap-4">
-        <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 flex-shrink-0 group-hover:bg-green-600 group-hover:text-white transition-colors">
+        <div
+          className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors bg-[color-mix(in_srgb,var(--color-trust-blue)_10%,white)] text-[var(--color-trust-blue)] group-hover:bg-[var(--color-trust-blue)] group-hover:text-white"
+        >
           {icon}
         </div>
         <div className="flex-1 min-w-0">
           {category && (
-            <span className="eyebrow !text-green-600 mb-1 block">
+            <span className="eyebrow mb-1 block">
               {category}
             </span>
           )}
-          <h3 className="text-lg font-semibold text-neutral-800 mb-2 group-hover:text-green-700 transition-colors">
+          <h3 className="text-[length:var(--size-subheading)] font-display font-semibold text-[var(--color-primary)] tracking-tight leading-snug mb-2 group-hover:text-[var(--color-trust-blue)] transition-colors">
             {title}
           </h3>
-          <p className="body-text !text-sm mb-3 line-clamp-2">
+          <p className="text-sm leading-relaxed text-[var(--color-support)] mb-3 line-clamp-2">
             {description}
           </p>
-          <span className="inline-flex items-center gap-1 text-sm font-medium text-green-600 group-hover:gap-2 transition-all">
-            Use Tool <ArrowRight className="w-4 h-4" />
+          <span className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-trust-blue)] group-hover:gap-2 group-hover:text-[var(--color-primary)] transition-all">
+            Use tool <ArrowRight className="w-4 h-4 shrink-0" aria-hidden />
           </span>
         </div>
       </div>

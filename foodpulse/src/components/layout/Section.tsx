@@ -16,7 +16,7 @@ const backgroundClasses = {
   green: "bg-green-50",
   brown: "bg-brown-50",
   neutral: "bg-neutral-50",
-  gradient: "bg-gradient-to-br from-green-50 to-brown-50",
+  gradient: "bg-gradient-to-br from-green-50 to-[var(--color-mint)]",
 };
 
 const paddingClasses = {

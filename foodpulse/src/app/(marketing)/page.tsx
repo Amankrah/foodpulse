@@ -335,13 +335,18 @@ function FeaturedContentSection({ articles, guides }: FeaturedContentProps) {
 // ============================================
 
 function ResourceShowcase() {
-  const resources = [
+  /** Editorial homepage — mint surfaces, deep green headings, teal links (brand guide §01–03) */
+  const linkClass =
+    "block text-sm text-[var(--color-teal)] hover:text-[var(--color-primary)] underline-offset-2 hover:underline font-medium";
+
+  const resourceContent = [
     {
       title: "Nutrition Tools",
       description: "Calculate your protein, macros, calories, and more with our interactive calculators.",
       icon: Calculator,
       href: "/tools",
-      color: "blue",
+      surface: "bg-[var(--color-mint)] border-[var(--color-teal)]/20",
+      iconWrap: "bg-white/90 text-[var(--color-teal)] ring-1 ring-[var(--color-teal)]/15",
       featured: [
         { name: "Protein Calculator", href: "/tools/protein-calculator" },
         { name: "Macro Calculator", href: "/tools/macro-calculator" },
@@ -353,7 +358,8 @@ function ResourceShowcase() {
       description: "Comprehensive, downloadable guides on nutrition, meal planning, and reading food labels.",
       icon: BookOpen,
       href: "/guides",
-      color: "purple",
+      surface: "bg-[var(--color-mint)] border-[var(--color-support)]/25",
+      iconWrap: "bg-white/90 text-[var(--color-support)] ring-1 ring-[var(--color-support)]/20",
       featured: [
         { name: "Browse All Guides", href: "/guides" },
         { name: "Guides & more in Shop", href: "/shop" },
@@ -366,7 +372,9 @@ function ResourceShowcase() {
       description: "150+ nutrition and food terms explained in simple, easy-to-understand language.",
       icon: Book,
       href: "/glossary",
-      color: "amber",
+      surface:
+        "bg-[color-mix(in_srgb,var(--color-mint)_88%,var(--color-sage)_12%)] border-[var(--color-sage)]/25",
+      iconWrap: "bg-white/90 text-[var(--color-sage)] ring-1 ring-[var(--color-sage)]/25",
       featured: [
         { name: "Browse Glossary", href: "/glossary" },
         { name: "Search Terms", href: "/search?type=glossary" },
@@ -378,7 +386,8 @@ function ResourceShowcase() {
       description: "Quick answers to common questions about food, nutrition, and healthy eating.",
       icon: HelpCircle,
       href: "/faq",
-      color: "green",
+      surface: "bg-[var(--color-mint)] border-[var(--color-primary)]/15",
+      iconWrap: "bg-white/90 text-[var(--color-primary)] ring-1 ring-[var(--color-primary)]/12",
       featured: [
         { name: "View All FAQs", href: "/faq" },
         { name: "Ask a Question", href: "/contact" },
@@ -386,29 +395,6 @@ function ResourceShowcase() {
       ],
     },
   ];
-
-  const colorClasses = {
-    blue: {
-      bg: "bg-blue-50",
-      icon: "bg-blue-100 text-blue-600",
-      link: "text-blue-600 hover:text-blue-700",
-    },
-    purple: {
-      bg: "bg-purple-50",
-      icon: "bg-purple-100 text-purple-600",
-      link: "text-purple-600 hover:text-purple-700",
-    },
-    amber: {
-      bg: "bg-amber-50",
-      icon: "bg-amber-100 text-amber-700",
-      link: "text-amber-700 hover:text-amber-800",
-    },
-    green: {
-      bg: "bg-green-50",
-      icon: "bg-green-100 text-green-600",
-      link: "text-green-600 hover:text-green-700",
-    },
-  };
 
   return (
     <Section background="white" padding="lg">
@@ -420,55 +406,49 @@ function ResourceShowcase() {
       />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {resources.map((resource) => {
-          const colors = colorClasses[resource.color as keyof typeof colorClasses];
-          return (
+        {resourceContent.map((resource) => (
+          <div
+            key={resource.title}
+            className={`rounded-2xl border p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow ${resource.surface}`}
+          >
             <div
-              key={resource.title}
-              className={`${colors.bg} rounded-2xl p-6 flex flex-col`}
+              className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${resource.iconWrap}`}
             >
-              {/* Icon */}
-              <div className={`w-12 h-12 ${colors.icon} rounded-xl flex items-center justify-center mb-4`}>
-                <resource.icon className="h-6 w-6" />
-              </div>
-
-              {/* Title & Description */}
-              <h3 className="text-lg font-bold text-neutral-900 mb-2">
-                {resource.title}
-              </h3>
-              <p className="text-sm text-neutral-600 mb-4">
-                {resource.description}
-              </p>
-
-              {/* Featured Links */}
-              <div className="space-y-2 mb-4 flex-1">
-                {resource.featured.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`block text-sm ${colors.link} hover:underline`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-
-              {/* CTA */}
-              <Link
-                href={resource.href}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-neutral-900 hover:underline"
-              >
-                View All
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <resource.icon className="h-6 w-6" aria-hidden />
             </div>
-          );
-        })}
+
+            <h3 className="text-[length:var(--size-subheading)] font-display font-semibold text-[var(--color-primary)] tracking-tight leading-snug mb-2">
+              {resource.title}
+            </h3>
+            <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] mb-4">
+              {resource.description}
+            </p>
+
+            <div className="space-y-2 mb-4 flex-1">
+              {resource.featured.map((item) => (
+                <Link key={item.name} href={item.href} className={linkClass}>
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+
+            <Link
+              href={resource.href}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-teal)] mt-auto underline-offset-2 hover:underline"
+            >
+              View All
+              <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
+            </Link>
+          </div>
+        ))}
       </div>
 
-      <p className="text-center text-sm text-neutral-500 mt-8">
+      <p className="text-center text-sm text-[var(--color-support)] mt-8 max-w-xl mx-auto leading-relaxed">
         Premium guides and digital resources in our{" "}
-        <Link href="/shop" className="text-green-600 hover:text-green-700 font-medium">
+        <Link
+          href="/shop"
+          className="font-semibold text-[var(--color-teal)] hover:text-[var(--color-primary)] underline-offset-2 hover:underline"
+        >
           shop
         </Link>
         .

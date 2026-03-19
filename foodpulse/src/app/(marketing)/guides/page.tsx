@@ -33,72 +33,85 @@ export default async function GuidesPage() {
   return (
     <>
       {/* Hero Section */}
-      <Section background="green" padding="lg">
+      <Section
+        background="green"
+        padding="lg"
+        className="border-b border-[var(--color-teal)]/15"
+      >
         <Container>
           <div className="max-w-3xl mx-auto text-center">
-            {/* Breadcrumb */}
-            <nav className="flex items-center justify-center gap-2 text-sm text-neutral-600 mb-6">
-              <Link href="/" className="hover:text-green-700 transition-colors">
+            <nav
+              className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-[var(--color-support)] mb-6"
+              aria-label="Breadcrumb"
+            >
+              <Link
+                href="/"
+                className="hover:text-[var(--color-teal)] underline-offset-2 hover:underline transition-colors"
+              >
                 Home
               </Link>
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span className="text-neutral-900">Guides</span>
+              <span className="text-[var(--color-sage)]" aria-hidden>
+                /
+              </span>
+              <span className="font-medium text-[var(--color-primary)]">Guides</span>
             </nav>
 
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-4">
-              Guides & Resources
+            <p className="eyebrow mb-3">Editorial</p>
+            <h1 className="text-4xl lg:text-5xl font-display font-extrabold text-[var(--color-primary)] tracking-tight mb-4">
+              Guides & resources
             </h1>
 
-            <p className="text-xl text-neutral-600 mb-6">
-              Practical guides to help you make better food decisions. Download,
-              learn, and take action.
+            <p className="text-xl font-light text-[var(--color-support)] leading-relaxed mb-6">
+              Practical, evidence-based guides—download, learn, and take action at your pace.
             </p>
 
-            <div className="flex items-center justify-center gap-4 text-sm text-neutral-600">
-              <span className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-[var(--color-support)]">
+              <span className="flex items-center gap-1.5 font-semibold text-[var(--color-primary)]">
                 <svg
-                  className="w-5 h-5 text-green-600"
+                  className="w-5 h-5 text-[var(--color-teal)]"
                   fill="currentColor"
                   viewBox="0 0 20 20"
+                  aria-hidden
                 >
                   <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                 </svg>
                 {totalCount} guides
               </span>
-              <span className="text-neutral-300">•</span>
-              <span>Guides & Premium</span>
-              <span className="text-neutral-300">•</span>
+              <span className="text-[var(--color-sage)]">•</span>
+              <span>Free, email & premium</span>
+              <span className="text-[var(--color-sage)]">•</span>
               <span>Downloadable PDFs</span>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Featured Guide */}
       {featured && (
-        <Section background="white" padding="lg">
+        <Section
+          background="white"
+          padding="lg"
+          className="border-t border-[var(--color-sage)]/15 bg-[color-mix(in_srgb,var(--color-mint)_35%,white)]"
+        >
           <Container>
+            <p className="eyebrow mb-4 text-center">Featured</p>
             <GuideFeatured guide={featured} />
           </Container>
         </Section>
       )}
 
-      {/* Guides (no gate) */}
       {freeGuides.length > 0 && (
-        <Section background="neutral" padding="lg">
+        <Section
+          background="neutral"
+          padding="lg"
+          className="border-t border-[var(--color-sage)]/10"
+        >
           <Container>
             <div className="mb-8">
-              <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
+              <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-2">
                 Guides
               </h2>
-              <p className="text-neutral-600">
-                No email required. Download and start learning right away.
+              <p className="text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
+                No email required—download and start learning right away.
               </p>
             </div>
 
@@ -113,14 +126,18 @@ export default async function GuidesPage() {
 
       {/* Email-Gated Guides */}
       {emailGatedGuides.length > 0 && (
-        <Section background="white" padding="lg">
+        <Section
+          background="white"
+          padding="lg"
+          className="border-t border-[var(--color-sage)]/15"
+        >
           <Container>
             <div className="mb-8">
-              <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
+              <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-2">
                 Downloads
               </h2>
-              <p className="text-neutral-600">
-                Enter your email to download these guides and get weekly tips.
+              <p className="text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
+                Enter your email to download these guides and get monthly updates.
               </p>
             </div>
 
@@ -135,15 +152,18 @@ export default async function GuidesPage() {
 
       {/* Premium Guides */}
       {premiumGuides.length > 0 && (
-        <Section background="neutral" padding="lg">
+        <Section
+          background="neutral"
+          padding="lg"
+          className="border-t border-[var(--color-sage)]/10 bg-[color-mix(in_srgb,var(--color-mint)_12%,var(--neutral-50))]"
+        >
           <Container>
             <div className="mb-8">
-              <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
-                Premium Guides
+              <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-2">
+                Premium guides
               </h2>
-              <p className="text-neutral-600">
-                In-depth resources with templates, worksheets, and advanced
-                strategies.
+              <p className="text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
+                In-depth resources with templates, worksheets, and advanced strategies.
               </p>
             </div>
 
@@ -158,14 +178,22 @@ export default async function GuidesPage() {
 
       {/* Interactive Tools */}
       {tools.length > 0 && (
-        <Section background="white" padding="lg">
+        <Section
+          background="white"
+          padding="lg"
+          className="border-t border-[var(--color-sage)]/15"
+        >
           <Container>
             <div className="mb-8">
-              <h2 className="text-3xl font-display font-bold text-neutral-900 mb-2">
-                Interactive Tools
+              <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-2">
+                Interactive tools
               </h2>
-              <p className="text-neutral-600">
-                Calculators and tools to help you make better food decisions.
+              <p className="text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
+                Calculators and planners that pair with our guides—see also the{" "}
+                <Link href="/tools" className="font-semibold text-[var(--color-teal)] hover:text-[var(--color-primary)] underline-offset-2 hover:underline">
+                  tools hub
+                </Link>
+                .
               </p>
             </div>
 
@@ -179,11 +207,18 @@ export default async function GuidesPage() {
       )}
 
       {/* Shop mention */}
-      <Section background="neutral" padding="sm">
+      <Section
+        background="neutral"
+        padding="sm"
+        className="border-t border-[var(--color-sage)]/10"
+      >
         <Container>
-          <p className="text-center text-neutral-600">
+          <p className="text-center text-[length:var(--size-body)] text-[var(--color-support)] leading-relaxed">
             More guides and digital resources in our{" "}
-            <Link href="/shop" className="text-green-700 hover:text-green-600 font-medium">
+            <Link
+              href="/shop"
+              className="font-semibold text-[var(--color-teal)] hover:text-[var(--color-primary)] underline-offset-2 hover:underline"
+            >
               shop
             </Link>
             .

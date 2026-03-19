@@ -70,33 +70,33 @@ export default async function GuidePage({ params }: GuidePageProps) {
   return (
     <>
       {/* Breadcrumb */}
-      <Section background="white" padding="none">
+      <Section background="white" padding="none" className="border-b border-[var(--color-sage)]/20">
         <Container>
-          <nav className="flex items-center gap-2 text-sm text-neutral-600 py-4">
-            <Link href="/" className="hover:text-green-700 transition-colors">
+          <nav
+            className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[var(--color-support)] py-4"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              href="/"
+              className="hover:text-[var(--color-teal)] underline-offset-2 hover:underline shrink-0"
+            >
               Home
             </Link>
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <span className="text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
             <Link
               href="/guides"
-              className="hover:text-green-700 transition-colors"
+              className="hover:text-[var(--color-teal)] underline-offset-2 hover:underline shrink-0"
             >
               Guides
             </Link>
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span className="text-neutral-900 truncate">{guide.title}</span>
+            <span className="text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
+            <span className="font-medium text-[var(--color-primary)] truncate min-w-0">
+              {guide.title}
+            </span>
           </nav>
         </Container>
       </Section>
@@ -114,7 +114,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
               {/* Download/Email Gate Section */}
               {(showEmailGate || showDownloadButton || showPurchaseCta) && (
-                <div className="mt-12 pt-12 border-t border-neutral-200">
+                <div className="mt-12 pt-12 border-t border-[var(--color-sage)]/25">
                   {showEmailGate && guide.downloadUrl && (
                     <EmailGate
                       guideTitle={guide.title}
@@ -124,11 +124,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
                   )}
 
                   {showDownloadButton && guide.downloadUrl && (
-                    <div id="download" className="max-w-md mx-auto bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-                      <h3 className="text-2xl font-bold text-neutral-900 mb-3">
-                        Download This Guide
+                    <div
+                      id="download"
+                      className="max-w-md mx-auto rounded-2xl border border-[var(--color-teal)]/25 bg-[var(--color-mint)] p-8 text-center"
+                    >
+                      <h3 className="text-2xl font-display font-bold text-[var(--color-primary)] mb-3">
+                        Download this guide
                       </h3>
-                      <p className="text-neutral-600 mb-6">
+                      <p className="text-[var(--color-support)] mb-6 leading-relaxed">
                         Get the full guide as a PDF to read offline or print.
                       </p>
                       <DownloadButton
@@ -168,8 +171,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {guide.relatedGuides && guide.relatedGuides.length > 0 && (
         <Section background="neutral" padding="lg">
           <Container>
-            <h2 className="text-3xl font-display font-bold text-neutral-900 mb-8">
-              Related Guides
+            <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-8">
+              Related guides
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {guide.relatedGuides.slice(0, 3).map((relatedGuide) => (
@@ -184,26 +187,26 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {guide.relatedArticles && guide.relatedArticles.length > 0 && (
         <Section background="white" padding="lg">
           <Container>
-            <h2 className="text-3xl font-display font-bold text-neutral-900 mb-8">
-              Related Articles
+            <h2 className="text-3xl font-display font-bold text-[var(--color-primary)] tracking-tight mb-8">
+              Related articles
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {guide.relatedArticles.slice(0, 3).map((article) => (
                 <a
                   key={article._id}
-                  href={`/blog/${article.category.slug}/${article.slug}`}
-                  className="group block bg-white border border-neutral-200 rounded-xl overflow-hidden hover:border-green-300 hover:shadow-lg transition-all"
+                  href={`/articles/${article.category.slug}/${article.slug}`}
+                  className="group block rounded-2xl border border-[var(--color-sage)]/30 bg-white overflow-hidden hover:border-[var(--color-teal)]/35 hover:shadow-md transition-all"
                 >
                   <div className="p-5">
                     <div className="mb-2">
-                      <span className="text-xs font-medium text-green-700 uppercase tracking-wide">
+                      <span className="eyebrow !normal-case !tracking-wide text-[0.65rem]">
                         {article.category.title}
                       </span>
                     </div>
-                    <h3 className="text-lg font-semibold text-neutral-900 mb-2 line-clamp-2 group-hover:text-green-700 transition-colors">
+                    <h3 className="text-lg font-display font-semibold text-[var(--color-primary)] mb-2 line-clamp-2 group-hover:text-[var(--color-teal)] transition-colors">
                       {article.title}
                     </h3>
-                    <p className="text-sm text-neutral-600 line-clamp-2">
+                    <p className="text-sm text-[var(--color-support)] line-clamp-2 leading-relaxed">
                       {article.excerpt}
                     </p>
                   </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Section, SectionHeader } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/Card";
@@ -66,83 +67,123 @@ const packages = [
 export default function CoachingPage() {
   return (
     <>
-      {/* Hero Section */}
-      <Section background="green" padding="lg">
+      <Section
+        background="green"
+        padding="lg"
+        className="border-b border-[var(--color-teal)]/15"
+      >
         <div className="max-w-3xl">
-          <h1 className="text-4xl lg:text-5xl font-display font-bold text-green-900 mb-6">
-            Personalized Nutrition Coaching
+          <nav
+            className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[var(--color-support)]"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              href="/"
+              className="underline-offset-2 transition-colors hover:text-[var(--color-teal)] hover:underline"
+            >
+              Home
+            </Link>
+            <span className="text-[var(--color-sage)]" aria-hidden>
+              /
+            </span>
+            <span className="font-medium text-[var(--color-primary)]">
+              Coaching
+            </span>
+          </nav>
+
+          <p className="eyebrow mb-3">One-on-one</p>
+          <h1 className="mb-4 font-display text-4xl font-extrabold tracking-tight text-[var(--color-primary)] lg:text-5xl">
+            Personalized nutrition coaching
           </h1>
-          <p className="text-xl text-green-800 mb-8">
-            Work one-on-one with a nutrition expert to achieve your health goals.
-            Evidence-based guidance tailored to your unique needs and lifestyle.
+          <p className="mb-8 text-xl font-light leading-relaxed text-[var(--color-support)]">
+            Work one-on-one with a nutrition expert to reach your goals—with
+            evidence-based guidance tailored to your life.
           </p>
-          <Button variant="accent" size="lg" href="#packages">
-            View Coaching Packages
+          <Button variant="primary" size="lg" href="#packages">
+            View coaching packages
           </Button>
         </div>
       </Section>
 
-      {/* Benefits Section */}
-      <Section background="white" padding="lg">
+      <Section
+        background="white"
+        padding="lg"
+        className="border-t border-[var(--color-sage)]/15"
+      >
         <SectionHeader
-          eyebrow="Why Coaching"
-          title="What You'll Get"
+          eyebrow="Why coaching"
+          title="What you'll get"
           description="Personalized support to help you make lasting changes"
           centered
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit) => (
-            <Card key={benefit} padding="md">
+            <Card
+              key={benefit}
+              padding="md"
+              className="border border-[var(--color-teal)]/15 bg-[color-mix(in_srgb,var(--color-mint)_28%,white)]"
+            >
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
-                  <Check className="h-4 w-4 text-green-700" />
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white/90 text-[var(--color-teal)] ring-1 ring-[var(--color-teal)]/20">
+                  <Check className="h-4 w-4" strokeWidth={2.5} />
                 </div>
-                <p className="text-neutral-800 font-medium">{benefit}</p>
+                <p className="font-medium text-neutral-800">{benefit}</p>
               </div>
             </Card>
           ))}
         </div>
       </Section>
 
-      {/* Packages Section */}
-      <Section id="packages" background="neutral" padding="lg">
+      <Section
+        id="packages"
+        background="neutral"
+        padding="lg"
+        className="border-t border-[var(--color-sage)]/10 bg-[color-mix(in_srgb,var(--color-mint)_12%,var(--neutral-50))]"
+      >
         <SectionHeader
-          eyebrow="Coaching Packages"
-          title="Choose Your Path"
-          description="Select the coaching package that fits your goals and timeline"
+          eyebrow="Coaching packages"
+          title="Choose your path"
+          description="Select the package that fits your goals and timeline"
           centered
         />
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-8 md:grid-cols-3">
           {packages.map((pkg) => (
             <Card
               key={pkg.name}
               padding="lg"
               variant={pkg.featured ? "featured" : "default"}
-              className={pkg.featured ? "border-2 border-green-600" : ""}
+              className={
+                pkg.featured
+                  ? "relative border-2 border-[var(--color-teal)]/40 shadow-md ring-1 ring-[var(--color-gold)]/25"
+                  : "border border-[var(--color-sage)]/20"
+              }
             >
               {pkg.featured && (
                 <div className="mb-4">
-                  <span className="inline-block px-3 py-1 bg-green-600 text-white text-sm font-semibold rounded-full">
-                    Most Popular
+                  <span className="inline-block rounded-full bg-[var(--color-gold)] px-3 py-1 text-sm font-semibold text-[var(--color-primary)]">
+                    Most popular
                   </span>
                 </div>
               )}
 
-              <CardTitle className="text-2xl mb-2">{pkg.name}</CardTitle>
-              <div className="text-3xl font-bold text-green-700 mb-2">
+              <CardTitle className="mb-2 text-2xl text-[var(--color-primary)]">
+                {pkg.name}
+              </CardTitle>
+              <div className="mb-2 text-3xl font-bold text-[var(--color-primary)]">
                 {pkg.price}
               </div>
-              <p className="text-sm text-neutral-600 mb-4">{pkg.duration}</p>
-              <CardDescription className="mb-6">
-                {pkg.description}
-              </CardDescription>
+              <p className="mb-4 text-sm text-neutral-600">{pkg.duration}</p>
+              <CardDescription className="mb-6">{pkg.description}</CardDescription>
 
-              <ul className="space-y-3 mb-6">
+              <ul className="mb-6 space-y-3">
                 {pkg.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
-                    <Check className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <Check
+                      className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--color-teal)]"
+                      strokeWidth={2.25}
+                    />
                     <span className="text-neutral-700">{feature}</span>
                   </li>
                 ))}
@@ -154,35 +195,42 @@ export default function CoachingPage() {
                 href="#contact"
                 fullWidth
               >
-                Get Started
+                Get started
               </Button>
             </Card>
           ))}
         </div>
       </Section>
 
-      {/* Contact CTA */}
-      <Section id="contact" background="white" padding="lg">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
-            Ready to Get Started?
+      <Section
+        id="contact"
+        background="white"
+        padding="lg"
+        className="border-t border-[var(--color-sage)]/15"
+      >
+        <div className="mx-auto max-w-2xl rounded-2xl border border-[var(--color-teal)]/20 bg-[color-mix(in_srgb,var(--color-mint)_30%,white)] px-6 py-10 text-center lg:px-12 lg:py-12">
+          <h2 className="mb-4 font-display text-3xl font-bold text-[var(--color-primary)] lg:text-4xl">
+            Ready to get started?
           </h2>
-          <p className="text-xl text-neutral-600 mb-8">
-            Schedule a free 15-minute consultation to discuss your goals and see
-            if coaching is right for you.
+          <p className="mb-8 text-xl text-neutral-600">
+            Book a free 15-minute consultation to talk through your goals and
+            see if coaching is a good fit—no pressure.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button variant="primary" size="lg" href="/contact">
-              Book Free Consultation
+              Book free consultation
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              href="mailto:hello@foodpulse.co?subject=Coaching Inquiry"
-            >
-              Email Us
+            <Button variant="outline" size="lg" href="/contact">
+              Send a message
             </Button>
           </div>
+          <p className="mt-6 text-sm text-[var(--color-support)]">
+            Prefer to keep it brief? Use the contact form and mention{" "}
+            <span className="font-medium text-[var(--color-primary)]">
+              coaching
+            </span>{" "}
+            in your message.
+          </p>
         </div>
       </Section>
     </>

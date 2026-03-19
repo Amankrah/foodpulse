@@ -18,9 +18,10 @@ const accessIcons = {
 };
 
 const accessColors = {
-  free: "bg-green-100 text-green-700 border-green-200",
-  "email-gated": "bg-blue-100 text-blue-700 border-blue-200",
-  paid: "bg-amber-100 text-amber-700 border-amber-200",
+  free: "bg-[var(--color-mint)]/95 text-[var(--color-teal)] border-[var(--color-teal)]/25",
+  "email-gated":
+    "bg-[color-mix(in_srgb,var(--color-mint)_88%,var(--color-sage)_12%)] text-[var(--color-support)] border-[var(--color-support)]/25",
+  paid: "bg-[color-mix(in_srgb,var(--color-gold)_25%,white)] text-[var(--color-primary)] border-[var(--color-gold)]/45",
 };
 
 const accessLabels = {
@@ -49,9 +50,9 @@ export function GuideCard({ guide, className }: GuideCardProps) {
     <Link href={`/guides/${guide.slug}`} className="group block">
       <div
         className={cn(
-          "h-full bg-white border border-neutral-200 rounded-xl overflow-hidden",
+          "h-full bg-white border border-[var(--color-sage)]/30 rounded-2xl overflow-hidden shadow-sm",
           "transition-all duration-200",
-          "hover:border-green-300 hover:shadow-lg hover:-translate-y-1",
+          "hover:border-[var(--color-teal)]/35 hover:shadow-md hover:-translate-y-0.5",
           className
         )}
       >
@@ -86,23 +87,21 @@ export function GuideCard({ guide, className }: GuideCardProps) {
         <div className="p-5">
           {/* Category */}
           <div className="mb-2">
-            <span className="text-xs font-medium text-green-700 uppercase tracking-wide">
+            <span className="eyebrow !normal-case !tracking-wide text-[0.65rem]">
               {categoryLabels[guide.category] || guide.category}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-semibold text-neutral-900 mb-2 line-clamp-2 transition-colors group-hover:text-green-700">
+          <h3 className="text-lg font-display font-semibold text-[var(--color-primary)] mb-2 line-clamp-2 transition-colors group-hover:text-[var(--color-teal)]">
             {guide.title}
           </h3>
 
-          {/* Excerpt */}
-          <p className="text-sm text-neutral-600 line-clamp-2 mb-4">
+          <p className="text-sm text-[var(--color-support)] line-clamp-2 mb-4 leading-relaxed">
             {guide.excerpt}
           </p>
 
-          {/* Meta */}
-          <div className="flex items-center gap-3 text-xs text-neutral-500">
+          <div className="flex items-center gap-3 text-xs text-[var(--color-support)]">
             {guide.readingTime && (
               <span className="flex items-center gap-1">
                 <svg
@@ -123,13 +122,13 @@ export function GuideCard({ guide, className }: GuideCardProps) {
             )}
             {guide.difficulty && (
               <>
-                <span className="text-neutral-300">•</span>
+                <span className="text-[var(--color-sage)]">•</span>
                 <span className="capitalize">{guide.difficulty}</span>
               </>
             )}
             {guide.guideType === "tool" && (
               <>
-                <span className="text-neutral-300">•</span>
+                <span className="text-[var(--color-sage)]">•</span>
                 <span className="flex items-center gap-1">
                   <svg
                     className="w-3.5 h-3.5"
@@ -151,8 +150,8 @@ export function GuideCard({ guide, className }: GuideCardProps) {
           </div>
 
           {/* CTA */}
-          <div className="mt-4 pt-4 border-t border-neutral-100">
-            <span className="inline-flex items-center gap-2 text-sm font-medium text-green-700 transition-colors group-hover:text-green-800">
+          <div className="mt-4 pt-4 border-t border-[var(--color-sage)]/20">
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-teal)] transition-colors group-hover:text-[var(--color-primary)]">
               {guide.accessType === "paid" ? "View Details" : "Read Guide"}
               <Download className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </span>

@@ -16,7 +16,7 @@ const badgeVariants = {
   warning: "bg-[var(--warning-100)] text-[var(--warning-600)] border-[var(--warning-600)]",
   error: "bg-[var(--error-100)] text-[var(--error-600)] border-[var(--error-600)]",
   info: "bg-[var(--info-100)] text-[var(--info-600)] border-[var(--info-600)]",
-  secondary: "bg-brown-50 text-brown-700 border-brown-200",
+  secondary: "bg-[var(--color-mint)] text-[var(--color-support)] border-green-200",
 };
 
 const badgeSizes = {

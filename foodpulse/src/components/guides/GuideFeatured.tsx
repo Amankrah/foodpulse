@@ -33,7 +33,7 @@ export function GuideFeatured({ guide, className }: GuideFeaturedProps) {
   return (
     <div
       className={cn(
-        "bg-gradient-to-br from-green-50 via-white to-green-50/50 border border-green-200 rounded-2xl overflow-hidden",
+        "bg-gradient-to-br from-[var(--color-mint)] via-white to-[var(--color-mint)]/40 border border-[var(--color-teal)]/20 rounded-2xl overflow-hidden shadow-sm",
         className
       )}
     >
@@ -50,7 +50,7 @@ export function GuideFeatured({ guide, className }: GuideFeaturedProps) {
             {/* Badge */}
             {isPaid && (
               <div className="absolute top-4 right-4">
-                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-100 text-amber-800 border border-amber-200 text-sm font-bold shadow-sm">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[color-mix(in_srgb,var(--color-gold)_28%,white)] text-[var(--color-primary)] border border-[var(--color-gold)]/45 text-sm font-bold shadow-sm">
                   <svg
                     className="w-4 h-4"
                     fill="currentColor"
@@ -68,32 +68,34 @@ export function GuideFeatured({ guide, className }: GuideFeaturedProps) {
         {/* Content */}
         <div className="flex flex-col justify-center">
           <div className="mb-3">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold uppercase tracking-wide">
-              Featured Guide
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-white/90 text-[var(--color-primary)] rounded-full text-xs font-semibold uppercase tracking-wide border border-[var(--color-teal)]/20">
+              Featured guide
             </span>
           </div>
 
-          <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-display font-extrabold text-[var(--color-primary)] tracking-tight mb-4">
             {guide.title}
           </h2>
 
           {guide.subtitle && (
-            <p className="text-lg text-neutral-600 mb-6">{guide.subtitle}</p>
+            <p className="text-lg font-light text-[var(--color-support)] leading-relaxed mb-6">
+              {guide.subtitle}
+            </p>
           )}
 
           {guide.whatYoullLearn && guide.whatYoullLearn.length > 0 && (
             <ul className="space-y-3 mb-8">
               {guide.whatYoullLearn.slice(0, 4).map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-neutral-700">{item}</span>
+                  <Check className="w-5 h-5 text-[var(--color-teal)] flex-shrink-0 mt-0.5" />
+                  <span className="text-[var(--color-support)] leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
           )}
 
           {/* Meta Info */}
-          <div className="flex items-center gap-4 text-sm text-neutral-600 mb-6">
+          <div className="flex items-center gap-4 text-sm text-[var(--color-support)] mb-6">
             {guide.readingTime && (
               <span className="flex items-center gap-1.5">
                 <svg
@@ -129,10 +131,8 @@ export function GuideFeatured({ guide, className }: GuideFeaturedProps) {
                 rel: "noopener noreferrer",
               })}
               className={cn(
-                "inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200",
-                isPaid
-                  ? "bg-amber-600 text-white hover:bg-amber-700 shadow-md hover:shadow-lg"
-                  : "bg-green-700 text-white hover:bg-green-800 shadow-md hover:shadow-lg"
+                "inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg",
+                "bg-[var(--color-gold)] text-[var(--color-primary)] hover:brightness-95"
               )}
             >
               {buttonText}
