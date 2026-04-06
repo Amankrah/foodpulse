@@ -16,6 +16,7 @@ import type {
 } from './types'
 import {
   ARTICLE_LIST_QUERY,
+  ARTICLE_LIST_PAGINATED_QUERY,
   FEATURED_ARTICLES_QUERY,
   ARTICLE_BY_SLUG_QUERY,
   ARTICLES_BY_CATEGORY_QUERY,
@@ -40,6 +41,7 @@ import {
   PRODUCT_BY_SLUG_QUERY,
   ALL_PRODUCT_SLUGS_QUERY,
 } from './queries'
+import { ARTICLES_PER_PAGE } from '@/lib/constants'
 
 // ========================================
 // Article Functions
@@ -47,6 +49,34 @@ import {
 
 export async function getArticles(limit: number = 12): Promise<ArticleListItem[]> {
   return await client.fetch(ARTICLE_LIST_QUERY, { limit })
+}
+
+/** Grid pages: optionally exclude featured doc id so page 1 hero + grid do not duplicate, and page 2+ continue the same sequence. */
+export async function getArticlesPaginated(
+  page: number,
+  options?: { excludeId?: string }
+): Promise<{ articles: ArticleListItem[]; total: number; page: number }> {
+  const excludeId = options?.excludeId ?? ''
+  const slice = (p: number) => ({
+    start: (p - 1) * ARTICLES_PER_PAGE,
+    end: p * ARTICLES_PER_PAGE,
+  })
+
+  let currentPage = Math.max(1, page)
+  const fetchPage = (p: number) =>
+    client.fetch<{ articles: ArticleListItem[]; total: number }>(ARTICLE_LIST_PAGINATED_QUERY, {
+      ...slice(p),
+      excludeId,
+    })
+
+  let { articles, total } = await fetchPage(currentPage)
+  const totalPages = Math.max(1, Math.ceil(total / ARTICLES_PER_PAGE))
+  if (currentPage > totalPages) {
+    currentPage = totalPages
+    ;({ articles } = await fetchPage(currentPage))
+  }
+
+  return { articles, total, page: currentPage }
 }
 
 export async function getFeaturedArticles(limit: number = 4): Promise<ArticleListItem[]> {

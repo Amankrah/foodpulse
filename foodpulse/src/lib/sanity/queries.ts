@@ -74,6 +74,44 @@ export const ARTICLE_LIST_QUERY = `
 }
 `
 
+// Paginated hub: same projection as list, optional exclude (featured id) so grid slices stay consistent
+export const ARTICLE_LIST_PAGINATED_QUERY = `{
+  "articles": *[_type == "article" && defined(publishedAt) && ($excludeId == "" || _id != $excludeId)]
+    | order(publishedAt desc) [$start...$end] {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    featured,
+
+    "category": category->{${categoryFragment}},
+
+    "author": author->{
+      name,
+      "slug": slug.current
+    },
+
+    image {
+      "url": asset->url,
+      alt
+    },
+
+    "readingTime": coalesce(readingTime, round(length(pt::text(body)) / 5 / 200)),
+
+    isRecipe,
+    "recipePreview": select(
+      isRecipe => {
+        "prepTime": recipeData.prepTime,
+        "cookTime": recipeData.cookTime,
+        "servings": recipeData.servings,
+        "difficulty": recipeData.difficulty
+      }
+    )
+  },
+  "total": count(*[_type == "article" && defined(publishedAt) && ($excludeId == "" || _id != $excludeId)])
+}`
+
 // ========================================
 // Featured Articles Query
 // ========================================
