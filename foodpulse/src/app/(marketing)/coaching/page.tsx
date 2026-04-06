@@ -528,27 +528,78 @@ export default function CoachingPage() {
           </h3>
           <div className="space-y-4 text-[1.05rem] leading-relaxed text-[color-mix(in_srgb,white_90%,var(--color-mint))]">
             <p>
-              Kenneth had recently relocated. He managed a demanding schedule and
-              lived in temporary accommodation without a kitchen, and he knew he
-              would soon move into his own space. He wanted to be ready.
+              Kenneth had recently relocated to a new country and was in the
+              final stretch of his studies, navigating exams, job searching, and
+              the particular exhaustion that comes with being between chapters of
+              life. He was living in temporary accommodation with no kitchen
+              access. He also kept a religious fasting practice, which shaped the
+              rhythm of his eating.
             </p>
             <p>
-              Three things needed to work at once: navigating an unfamiliar
-              food environment in a new country, building practical,
-              time-respecting food habits around a packed schedule, and
-              thinking ahead to when he starts a family.
+              He knew he&apos;d soon transition into his own space, into a new
+              job and eventually into starting a family. He didn&apos;t want to
+              arrive at any of those moments without a clear foundation on
+              something that profoundly affects his wellbeing: his food,
+              nutrition and eating habits.
+            </p>
+            <p>He needed three things to work at once:</p>
+            <ol className="list-decimal space-y-3 pl-6 marker:font-medium marker:text-[var(--color-gold)]">
+              <li className="pl-2">
+                Learning to navigate an unfamiliar food environment while
+                staying connected to his original food identity.
+              </li>
+              <li className="pl-2">
+                Building food habits that could hold up against a packed
+                schedule with limited cooking access.
+              </li>
+              <li className="pl-2">
+                Starting to think ahead in terms of what food would look like
+                when he starts his family.
+              </li>
+            </ol>
+            <p>
+              Over six weeks, we worked through all three. His confidence
+              navigating food in different settings including cafeterias,
+              restaurants, grocery stores, and food advertising moved from
+              uncertainty to what he described as very confident. His goals
+              around building healthy food routines around the foods he
+              currently has access to as well as his cultural foods, in his own
+              assessment, were very well achieved. On food choices for his
+              future family, he scored it well achieved, and noted that he would
+              have welcomed even more depth there, similar to how the other
+              areas were handled. That&apos;s fair, and it shaped how this work
+              continues to develop.
             </p>
             <p>
-              Over six weeks we worked through all three: the new food
-              environment, daily habits, and future planning. On the family
-              piece, Kenneth said he wished there had been more depth, as in the
-              other areas. That feedback was honest, fair, and taken seriously.
-              He rated the experience 4 out of 5 and recommends FoodPulse
-              coaching.
+              What surprised him most was the session on variety, discovering
+              how he can build a more expansive, relaxed relationship with
+              food.
+            </p>
+            <p>
+              He rated the overall value of the coaching as much more than he
+              expected.
             </p>
           </div>
-          <blockquote className="mt-8 border-l-4 border-[var(--color-teal)] pl-4 text-lg italic text-[var(--color-mint)]">
-            &quot;[Direct quote to follow.]&quot;
+          <blockquote className="mt-8 space-y-6 border-l-4 border-[var(--color-teal)] pl-4 text-[var(--color-mint)]">
+            <p className="text-lg leading-relaxed">
+              <span className="font-medium not-italic text-white/95">
+                His advice to anyone considering it:{" "}
+              </span>
+              <span className="italic">
+                &quot;Don&apos;t focus on &apos;getting information.&apos; Focus
+                on the action steps you can take daily from the weekly coaching
+                interactions.&quot;
+              </span>
+            </p>
+            <p className="text-lg leading-relaxed">
+              <span className="font-medium not-italic text-white/95">
+                In his own words at the close:{" "}
+              </span>
+              <span className="italic">
+                &quot;Thank you for going the extra mile for me. These things
+                you have shared will stay with me.&quot;
+              </span>
+            </p>
           </blockquote>
           <p className="mt-8 font-semibold text-white">
             Kenneth
