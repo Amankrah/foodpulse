@@ -15,7 +15,7 @@ import { CONTACT_EMAIL, SITE_NAME } from "@/lib/constants";
 export const metadata: Metadata = {
   title: `Coaching | ${SITE_NAME}`,
   description:
-    "Personalised 1:1 coaching that enters your world — your habits, your constraints, your household, your health — and helps you think clearly from the inside out.",
+    "Personalised 1:1 nutrition coaching grounded in your habits, household, health, and schedule. Evidence-informed support to think clearly about food.",
 };
 
 const approachPillars = [
@@ -25,60 +25,60 @@ const approachPillars = [
   },
   {
     title: "Your context. Always.",
-    body: "Household, schedule, culture, health status — all part of the conversation.",
+    body: "Household, schedule, culture, and health status are all part of the conversation.",
   },
   {
     title: "Durable clarity.",
-    body: "You won't just know what to do. You'll understand why — so it holds beyond the coaching.",
+    body: "You will know what to do and why it fits you, so it still makes sense after coaching ends.",
   },
 ];
 
 const whoFor = [
-  "You're navigating a life transition that's thrown your food habits off — a new country, a new job, a health diagnosis, a growing household",
+  "You are navigating a life transition that has disrupted how you eat: a move, a new job, a health diagnosis, or a growing household",
   "You eat reasonably well but still feel uncertain, conflicted, or anxious about decisions",
-  "You've been given medical or dietary guidance you genuinely don't know how to apply to real meals",
-  "You want to understand food — not just follow instructions you'll eventually abandon",
-  "You're managing food for more than yourself and the usual advice simply doesn't account for that",
-  "You've read and researched enough. What you need now is someone to help you think through your specific situation",
+  "You have medical or dietary guidance and need help turning it into real meals",
+  "You want to understand food, not only follow instructions you will not keep long term",
+  "You manage food for others and general advice rarely fits your situation",
+  "You have read widely and now want help thinking through your specific case",
 ];
 
 const faqs = [
   {
     question: "Do I need coaching if I already eat fairly well?",
     answer:
-      "Possibly yes — if you still feel uncertain, conflicted, or anxious about food decisions. Eating well and thinking clearly about food are different things. This coaching is for the second.",
+      "It may still help if food choices still feel stressful or unclear. Eating well on paper and feeling clear in daily decisions are different. This work focuses on the second.",
   },
   {
     question: "Will I receive a meal plan?",
     answer:
-      "No. You'll receive something more durable: understanding and agency. Meal plans tell you what to do. Coaching helps you understand why — so you can decide for yourself, in any situation, long after the coaching ends.",
+      "No. You get understanding and agency instead. Meal plans tell you what to do. Coaching explains why, so you can decide for yourself in real situations after the work ends.",
   },
   {
     question: "Is this the same as seeing a dietitian or nutritionist?",
     answer:
-      "No. FoodPulse coaching is education, context, and decision support — not clinical nutrition therapy. If your situation requires clinical management, that will be communicated clearly, and you'll be directed appropriately.",
+      "No. FoodPulse coaching is education, context, and decision support, not clinical nutrition therapy. If you need clinical care, we say so clearly and point you to the right professionals.",
   },
   {
     question: "How do I know which offer is right for me?",
     answer:
-      "If you're not sure, start with the Clarity Session. It exists precisely to answer that question — and it stands on its own even if you don't continue. Many people find one focused hour clarifies more than months of reading.",
+      "If you are unsure, start with the Clarity Session. It answers that question on its own, even if you stop there. Many people gain more clarity in one hour than from months of reading alone.",
   },
   {
     question: "What if I reach out and it turns out coaching isn't the right fit?",
     answer:
-      "Then that will be said honestly. Before any longer commitment, there's always an exchange first — to make sure this makes sense for both of us. If it doesn't, you'll know.",
+      "We will say so honestly. Before any longer commitment we check fit on both sides. If it is not a match, you will hear that directly.",
   },
   {
     question: "Can I pay in instalments for the longer offers?",
     answer:
-      "Reach out and we can discuss. Practical constraints are part of real life — that conversation is always open.",
+      "Ask when you reach out. Cost and cash flow are part of real life, and we can discuss options.",
   },
 ];
 
 export default function CoachingPage() {
   return (
     <>
-      {/* Section 1 — Hero */}
+      {/* Section 1: Hero */}
       <Section
         background="white"
         padding="lg"
@@ -107,9 +107,9 @@ export default function CoachingPage() {
             Now let&apos;s make sense of it.
           </h1>
           <p className="mb-8 text-xl font-light leading-relaxed text-white/90">
-            Personalised 1:1 coaching that enters your world — your habits,
-            your constraints, your household, your health — and helps you think
-            clearly from the inside out.
+            Personalised 1:1 coaching in your real context: habits, household,
+            health, and schedule. Support to think clearly about food, from the
+            inside out.
           </p>
           <Button variant="primary" size="lg" href="#how-coaching-works">
             See how coaching works ↓
@@ -120,7 +120,7 @@ export default function CoachingPage() {
         </div>
       </Section>
 
-      {/* Section 2 — The problem (no visible section header) */}
+      {/* Section 2: Problem (no section heading) */}
       <Section background="white" padding="lg" className="border-t border-[var(--color-sage)]/15">
         <div className="mx-auto max-w-3xl space-y-6 text-lg leading-relaxed text-neutral-800">
           <p>Most food confusion doesn&apos;t come from a lack of information.</p>
@@ -133,13 +133,13 @@ export default function CoachingPage() {
             someone else&apos;s schedule, someone else&apos;s body.
           </p>
           <p>
-            The noise isn&apos;t going anywhere. What changes is how you relate
-            to it — and who you have in your corner to help you filter it.
+            The noise is not going anywhere. What changes is how you relate to
+            it, and who helps you filter it.
           </p>
         </div>
       </Section>
 
-      {/* Section 3 — The approach */}
+      {/* Section 3: Approach */}
       <Section
         id="how-coaching-works"
         background="white"
@@ -160,15 +160,14 @@ export default function CoachingPage() {
             </p>
             <p>
               FoodPulse coaching works at that level. Before any direction is
-              given, the real situation is understood — not just what you eat,
-              but how your food environment actually works, where the friction
-              is, what your body is dealing with, and what realistic change
-              looks like for you specifically.
+              given, the real situation is understood: not only what you eat, but
+              how your food environment works, where friction sits, what your
+              body is dealing with, and what realistic change looks like for you.
             </p>
             <p>
-              This takes more than asking a few questions. It takes the kind of
-              careful, systematic listening that lets patterns surface — and then
-              the expertise to know what to do with them.
+              That takes more than a short questionnaire. It takes careful,
+              systematic listening so patterns can surface, then judgment about
+              what to do with them.
             </p>
           </div>
 
@@ -191,7 +190,7 @@ export default function CoachingPage() {
         </div>
       </Section>
 
-      {/* Section 4 — Who this is for */}
+      {/* Section 4: Who this is for */}
       <Section background="white" padding="lg" className="border-t border-[var(--color-sage)]/15">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-8 font-display text-3xl font-bold text-[var(--color-primary)] lg:text-4xl">
@@ -212,15 +211,14 @@ export default function CoachingPage() {
             And this is not for you if…{" "}
           </h3>
           <p className="text-lg leading-relaxed text-neutral-800">
-            You want a meal plan to follow to the letter, a structured programme
-            with fixed rules, or a quick transformation. FoodPulse coaching
-            isn&apos;t that — and we&apos;d rather be honest about it now than
-            waste your time.
+            You want a meal plan to follow exactly, a fixed rules programme, or a
+            quick transformation. FoodPulse coaching is not built for that. We
+            would rather say so now than waste your time.
           </p>
         </div>
       </Section>
 
-      {/* Section 5 — The offers */}
+      {/* Section 5: Offers */}
       <Section
         id="packages"
         background="neutral"
@@ -232,18 +230,20 @@ export default function CoachingPage() {
             Three ways to work together.
           </h2>
           <p className="mb-14 text-lg leading-relaxed text-neutral-800">
-            Each is designed for a different stage of readiness and a different
-            kind of need. There&apos;s no right entry point — there&apos;s only
-            the one that fits where you are.
+            Each offer fits a different stage of readiness and a different need.
+            There is no single correct entry point, only the one that fits where
+            you are now.
           </p>
 
           {/* Food Clarity Session */}
-          <article className="mb-16 border-b border-[var(--color-sage)]/20 pb-16">
-            <p className="mb-2 font-semibold uppercase tracking-wide text-[var(--color-teal)]">
-              Food Clarity Session{" "}
-              <span className="font-normal text-neutral-500">·</span>{" "}
-              <span className="text-[var(--color-gold)]">$150</span>{" "}
+          <article className="mb-8 rounded-2xl border-2 border-[var(--color-teal)]/45 bg-[color-mix(in_srgb,var(--color-mint)_32%,white)] p-6 shadow-md shadow-[var(--color-teal)]/10 ring-1 ring-[var(--color-teal)]/20 md:p-8">
+            <p className="mb-1 font-semibold uppercase tracking-wide text-[var(--color-teal)]">
+              Food Clarity Session
+            </p>
+            <p className="mb-4 font-semibold text-[var(--color-gold)]">
+              <span className="text-3xl font-bold">$150</span>
               <span className="font-normal text-neutral-500">
+                {" "}
                 · One-time · 60 minutes
               </span>
             </p>
@@ -252,15 +252,14 @@ export default function CoachingPage() {
             </h3>
             <div className="mb-6 space-y-4 text-lg leading-relaxed text-neutral-800">
               <p>
-                You bring your situation — your questions, your contradictions,
-                what you&apos;ve tried, what&apos;s not working. Together, we
-                work through what&apos;s actually going on.
+                You bring your situation: questions, contradictions, what you
+                have tried, and what is not working. Together we sort through what
+                is really going on.
               </p>
               <p>
-                This isn&apos;t a consultation where you get handed a list of
-                recommendations. It&apos;s a structured conversation that helps
-                you see your food situation more clearly — and leaves you with a
-                direction that makes sense for your specific life.
+                This is not a consultation where you receive a generic list. It
+                is a structured conversation that sharpens how you see your food
+                situation and leaves you with direction that fits your life.
               </p>
               <p>
                 Many people find this session alone is enough. Others use it as
@@ -274,10 +273,10 @@ export default function CoachingPage() {
             </p>
             <ul className="mb-6 space-y-2 text-neutral-800">
               {[
-                "Clearer understanding of your food situation — what matters and what doesn't",
-                "Practical direction tailored to your context — not a generic next step",
+                "Clearer sense of what matters in your food situation and what does not",
+                "Practical direction for your context, not a generic next step",
                 "Better questions to guide your own decisions going forward",
-                "Relief from the low-level anxiety that often surrounds food choices",
+                "Less of the low-level anxiety that often surrounds food choices",
               ].map((line) => (
                 <li key={line} className="flex gap-2">
                   <Check
@@ -295,9 +294,9 @@ export default function CoachingPage() {
             <ul className="mb-8 space-y-2 text-neutral-800">
               {[
                 `"I don't even know where to start"`,
-                "You want expert thinking — not another plan",
+                "You want expert thinking, not another off-the-shelf plan",
                 "Everything you read seems to contradict everything else",
-                "You're not ready to commit to longer coaching but want real insight now",
+                "You are not ready for longer coaching but want real insight now",
               ].map((line) => (
                 <li key={line} className="flex gap-2">
                   <Check
@@ -314,7 +313,7 @@ export default function CoachingPage() {
                 href={coachingInquiryMailto("Food Clarity Session")}
                 className="text-xl font-bold text-white underline-offset-4 hover:underline"
               >
-                Book a Clarity Session — $150
+                Book a Clarity Session: $150
               </a>
               <p className="mt-3 text-sm leading-relaxed text-[#CCDDCC]">
                 Email {CONTACT_EMAIL} · Mention &quot;Food Clarity Session&quot;
@@ -328,12 +327,14 @@ export default function CoachingPage() {
           </article>
 
           {/* Personalized Food Systems Coaching */}
-          <article className="mb-16 border-b border-[var(--color-sage)]/20 pb-16">
-            <p className="mb-2 font-semibold uppercase tracking-wide text-[var(--color-teal)]">
-              Personalized Food Systems Coaching{" "}
-              <span className="font-normal text-neutral-500">·</span>{" "}
-              <span className="text-[var(--color-gold)]">$520</span>{" "}
+          <article className="mb-8 rounded-2xl border-2 border-[var(--color-sage)]/55 bg-[color-mix(in_srgb,var(--color-sage)_14%,white)] p-6 shadow-md shadow-[var(--color-sage)]/10 ring-1 ring-[var(--color-support)]/25 md:p-8">
+            <p className="mb-1 font-semibold uppercase tracking-wide text-[var(--color-support)]">
+              Personalized Food Systems Coaching
+            </p>
+            <p className="mb-4 font-semibold text-[var(--color-gold)]">
+              <span className="text-3xl font-bold">$520</span>
               <span className="font-normal text-neutral-500">
+                {" "}
                 · 3 weeks · 3 sessions + support
               </span>
             </p>
@@ -342,17 +343,15 @@ export default function CoachingPage() {
             </h3>
             <div className="mb-6 space-y-4 text-lg leading-relaxed text-neutral-800">
               <p>
-                This is a short, intensive coaching container built around a
-                single, clearly defined food challenge. We go deep — not just
-                on what to do, but on why it matters for your body, your
-                household, and your daily reality.
+                This is a short, intensive container built around one clearly
+                defined food challenge. We go deep on what to do and why it
+                matters for your body, household, and daily life.
               </p>
               <p>
-                This isn&apos;t advice you could have Googled. It&apos;s the
-                result of carefully mapping your situation and drawing from
-                research across nutrition science, food systems, and how people
-                actually live with food — then translating all of that
-                specifically for you.
+                It is not advice you could paste from a search result. It comes
+                from mapping your situation and drawing on nutrition science,
+                food systems, and how people actually live with food, then
+                translating that for you.
               </p>
             </div>
 
@@ -364,7 +363,7 @@ export default function CoachingPage() {
                 "3 x 60-minute 1:1 sessions over 3 weeks",
                 "Written direction notes and key resources after each session",
                 "Email support between sessions",
-                "A tailored approach built from your specific situation — not a template",
+                "A tailored approach from your situation, not a template",
               ].map((line) => (
                 <li key={line} className="flex gap-2">
                   <Check
@@ -381,10 +380,10 @@ export default function CoachingPage() {
             </p>
             <ul className="mb-8 space-y-2 text-neutral-800">
               {[
-                "You know what you want to work on — one clear food challenge or area of life",
+                "You know what you want to work on: one clear food challenge or life area",
                 "You're managing a specific health concern and need practical, evidence-informed help applying it to real meals",
                 "Your household food system feels chaotic and you want it to actually work",
-                "You want focused, meaningful change — without a long-term coaching commitment",
+                "You want focused change without a long-term coaching commitment",
               ].map((line) => (
                 <li key={line} className="flex gap-2">
                   <Check
@@ -401,7 +400,7 @@ export default function CoachingPage() {
                 href={coachingInquiryMailto("Personalized Food Systems Coaching")}
                 className="text-xl font-bold text-white underline-offset-4 hover:underline"
               >
-                Apply for Focused Coaching — $520
+                Apply for Focused Coaching: $520
               </a>
               <p className="mt-3 text-sm leading-relaxed text-[#CCDDCC]">
                 Email {CONTACT_EMAIL} · Mention &quot;Personalized Food Systems
@@ -415,8 +414,8 @@ export default function CoachingPage() {
           </article>
 
           {/* Ongoing FoodPulse Mentorship */}
-          <article className="mb-4 rounded-2xl border-2 border-[var(--color-gold)]/35 bg-white p-6 shadow-md ring-1 ring-[var(--color-teal)]/10 md:p-8">
-            <p className="mb-1 font-semibold uppercase tracking-wide text-[var(--color-teal)]">
+          <article className="rounded-2xl border-2 border-[var(--color-gold)]/55 bg-[color-mix(in_srgb,var(--color-gold)_14%,white)] p-6 shadow-md shadow-[var(--color-gold)]/15 ring-1 ring-[var(--color-primary)]/15 md:p-8">
+            <p className="mb-1 font-semibold uppercase tracking-wide text-[var(--color-primary)]">
               Ongoing FoodPulse Mentorship
             </p>
             <p className="mb-4 text-sm font-semibold tracking-wide text-[var(--color-gold)]">
@@ -433,18 +432,15 @@ export default function CoachingPage() {
             </h3>
             <div className="mb-6 space-y-4 text-lg leading-relaxed text-neutral-800">
               <p>
-                Some food situations aren&apos;t one-conversation problems.
-                They&apos;re layered — shaped by health history, household
-                complexity, a life in transition, or the kind of accumulated
-                confusion that built up over years of receiving information that
-                never quite fit.
+                Some food situations are not one conversation long. They layer
+                health history, household complexity, transition, or years of
+                advice that never quite fit you.
               </p>
               <p>
-                This is the offer for that. A sustained coaching relationship
-                that has the time and depth to actually get underneath things.
-                Sessions evolve as your situation does. The support between them
-                is real, not perfunctory. And the work is genuinely
-                collaborative — not a programme being delivered to you.
+                This offer is for that depth. You get a sustained relationship
+                with room to go underneath the surface. Sessions evolve as your
+                situation does. Support between sessions is substantive. The
+                work is collaborative, not a programme done to you.
               </p>
               <p>
                 This offer is intentionally limited. There are only two
@@ -459,12 +455,12 @@ export default function CoachingPage() {
             </p>
             <ul className="mb-6 space-y-2 text-neutral-800">
               {[
-                "6 x 60-minute 1:1 sessions — weekly cadence",
-                "Real dialogue between sessions — not just email check-ins",
+                "Six 60-minute 1:1 sessions on a weekly cadence",
+                "Real dialogue between sessions, not only email check-ins",
                 "Adaptive sessions that evolve as your situation changes",
-                "In-depth research and resources drawn specifically for your context",
+                "In-depth research and resources drawn for your context",
                 "Thorough written notes and direction after every session",
-                "Support through complexity — health changes, family needs, periods of stress",
+                "Support through complexity: health changes, family needs, stress periods",
               ].map((line) => (
                 <li key={line} className="flex gap-2">
                   <Check
@@ -481,9 +477,9 @@ export default function CoachingPage() {
             </p>
             <ul className="mb-8 space-y-2 text-neutral-800">
               {[
-                "You're navigating multiple, layered food concerns — not just one clear thing",
+                "You are navigating several layered food concerns, not one simple issue",
                 "You're going through a significant life or health transition that affects how you eat",
-                "You want a thinking partner over time — not a programme to complete",
+                "You want a thinking partner over time, not a programme to complete",
                 "Shorter approaches have helped but haven't gone deep enough",
               ].map((line) => (
                 <li key={line} className="flex gap-2">
@@ -501,7 +497,7 @@ export default function CoachingPage() {
                 href={coachingInquiryMailto("Mentorship")}
                 className="text-xl font-bold text-white underline-offset-4 hover:underline"
               >
-                Inquire About Mentorship — $1,100
+                Inquire About Mentorship: $1,100
               </a>
               <p className="mt-3 text-sm leading-relaxed text-[#CCDDCC]">
                 Email {CONTACT_EMAIL} · Mention &quot;Mentorship&quot; and your
@@ -517,53 +513,54 @@ export default function CoachingPage() {
         </div>
       </Section>
 
-      {/* Section 6 — Client story */}
-      <Section background="white" padding="lg" className="border-t border-[var(--color-sage)]/15">
-        <div className="mx-auto max-w-3xl">
-          <div className="rounded-2xl border border-[var(--color-teal)]/15 border-t-4 border-t-[var(--color-teal)] bg-[#F0F6F3] px-6 py-8 md:px-10 md:py-10">
-            <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-teal)]">
-              Client story
+      {/* Section 6: Client story */}
+      <Section
+        background="white"
+        padding="lg"
+        className="border-t border-[var(--color-gold)]/25 bg-[var(--color-primary)] text-white"
+      >
+        <div className="mx-auto max-w-3xl border-l-4 border-[var(--color-gold)] pl-6 md:pl-8">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-gold)]">
+            Client story
+          </p>
+          <h3 className="mb-8 font-display text-xl font-bold text-white md:text-2xl">
+            Kenneth: six-week FoodPulse Mentorship
+          </h3>
+          <div className="space-y-4 text-[1.05rem] leading-relaxed text-[color-mix(in_srgb,white_90%,var(--color-mint))]">
+            <p>
+              Kenneth had recently relocated. He managed a demanding schedule and
+              lived in temporary accommodation without a kitchen, and he knew he
+              would soon move into his own space. He wanted to be ready.
             </p>
-            <h3 className="mb-6 font-display text-lg font-bold text-[var(--color-primary)]">
-              Kenneth — 6-Week FoodPulse Mentorship
-            </h3>
-            <div className="space-y-4 text-[1.05rem] leading-relaxed text-neutral-800">
-              <p>
-                Kenneth had recently relocated to a new country. He was managing a
-                demanding work schedule and living in temporary accommodation
-                without access to a kitchen — but he knew a transition into his
-                own space was coming. He wanted to be ready.
-              </p>
-              <p>
-                Three things needed to work at once: navigating an unfamiliar
-                food environment in a new country, building practical,
-                time-respecting food habits around a packed schedule, and
-                thinking ahead to when he starts a family.
-              </p>
-              <p>
-                Over six weeks, all three were worked through — the new food
-                environment, the daily habits, the future planning. On the family
-                piece, Kenneth reflected that he wished there had been more
-                depth, similar to the other areas. That was honest and fair — and
-                something taken seriously. Overall, he rated the experience 4 out
-                of 5 and highly recommends FoodPulse coaching.
-              </p>
-            </div>
-            <blockquote className="mt-6 border-l-4 border-[var(--color-teal)]/40 pl-4 italic text-[var(--color-teal)]">
-              &quot;[Direct quote — coming soon]&quot;
-            </blockquote>
-            <p className="mt-6 font-semibold text-[var(--color-primary)]">
-              — Kenneth
-              <span className="mt-2 block text-sm font-normal italic text-neutral-500 md:mt-0 md:inline md:before:content-['_·_']">
-                {" "}
-                Shared with permission. Name used, identity kept private.
-              </span>
+            <p>
+              Three things needed to work at once: navigating an unfamiliar
+              food environment in a new country, building practical,
+              time-respecting food habits around a packed schedule, and
+              thinking ahead to when he starts a family.
+            </p>
+            <p>
+              Over six weeks we worked through all three: the new food
+              environment, daily habits, and future planning. On the family
+              piece, Kenneth said he wished there had been more depth, as in the
+              other areas. That feedback was honest, fair, and taken seriously.
+              He rated the experience 4 out of 5 and recommends FoodPulse
+              coaching.
             </p>
           </div>
+          <blockquote className="mt-8 border-l-4 border-[var(--color-teal)] pl-4 text-lg italic text-[var(--color-mint)]">
+            &quot;[Direct quote to follow.]&quot;
+          </blockquote>
+          <p className="mt-8 font-semibold text-white">
+            Kenneth
+            <span className="mt-2 block text-sm font-normal italic text-white/55 md:mt-0 md:inline md:before:content-['_·_']">
+              {" "}
+              Shared with permission. Name used, identity kept private.
+            </span>
+          </p>
         </div>
       </Section>
 
-      {/* Section 7 — Honest framing */}
+      {/* Section 7: Honest framing */}
       <Section
         background="white"
         padding="lg"
@@ -580,23 +577,21 @@ export default function CoachingPage() {
               a replacement for a registered dietitian or your doctor.
             </p>
             <p>
-              If your situation requires clinical oversight, that will be said
-              directly — and you&apos;ll be pointed toward the right
-              professional. Honesty about what coaching can and can&apos;t do is
-              part of the work.
+              If your situation requires clinical oversight, we say so and help
+              you find the right professional. Honesty about what coaching can
+              and cannot do is part of the work.
             </p>
             <p>
               What it is: a space to think clearly about food with someone who
-              has spent nearly a decade at the intersection of food science,
-              food systems research, and how people actually live with food —
-              without judgment, without extremes, without selling you an ideal
-              version of yourself.
+              has spent nearly a decade where food science, food systems
+              research, and everyday eating meet. No judgment, no extremes, and
+              no pitch for an idealised version of you.
             </p>
           </div>
         </div>
       </Section>
 
-      {/* Section 8 — About the coach */}
+      {/* Section 8: About the coach */}
       <Section background="white" padding="lg" className="border-t border-[var(--color-sage)]/15">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-10 font-display text-3xl font-bold text-[var(--color-primary)] lg:text-4xl">
@@ -607,7 +602,7 @@ export default function CoachingPage() {
               <div className="relative mx-auto aspect-square max-w-md overflow-hidden rounded-2xl shadow-lg lg:mx-0">
                 <Image
                   src="/images/etornam-tsyawo.jpg"
-                  alt="Etornam — FoodPulse coaching"
+                  alt="Etornam C. Tsyawo, FoodPulse coaching"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -616,32 +611,29 @@ export default function CoachingPage() {
             </div>
             <div className="space-y-6 text-lg leading-relaxed text-neutral-800 lg:col-span-3">
               <p>
-                I&apos;m Etornam — a Food Systems Research Engineer currently
-                pursuing doctoral research in consumer food systems at McGill
-                University, where my work centres on household food environments
-                and how people actually make decisions about food in their homes.
+                I&apos;m Etornam, a Food Systems Research Engineer and doctoral
+                researcher in consumer food systems at McGill University. My
+                work centres on household food environments and how people decide
+                what to eat at home.
               </p>
               <p>
-                My path into this wasn&apos;t linear. It started with a
-                conversation with my mother about tin tomatoes and seasonal
-                vegetables in Ghana — and it took me through chemical
-                engineering, food science, food safety research, years working
-                alongside rural farmers, time inside food companies, and
-                eventually into people&apos;s kitchens studying how food
-                decisions really happen at the everyday level.
+                My path was not linear. It began with a conversation with my
+                mother about tin tomatoes and seasonal vegetables in Ghana,
+                then led through chemical engineering, food science, food safety
+                research, fieldwork with rural farmers, roles inside food
+                companies, and research in people&apos;s kitchens on everyday food
+                decisions.
               </p>
               <p>
-                That breadth is what I bring to coaching. It&apos;s not just
-                nutrition knowledge — it&apos;s an understanding of food at
-                every layer, from what&apos;s in a product to how it was produced
-                to what it does in your body to how it fits into your actual
-                week. Connecting those layers, for your specific situation, is
-                what this work is.
+                That breadth is what I bring to coaching. Beyond nutrition
+                knowledge alone, I connect what is in a product, how it was
+                made, what it does in the body, and how it fits a real week. For
+                your situation, tying those layers together is the point of the
+                work.
               </p>
               <p>
-                I take very few coaching clients at once. That&apos;s deliberate.
-                This kind of work requires real attention — and real attention
-                has limits.
+                I take very few coaching clients at once, on purpose. The work
+                needs sustained attention, and attention has a limit.
               </p>
               <p className="text-base italic text-neutral-500">
                 BSc Chemical Engineering · MSc Food Science &amp; Technology ·
@@ -652,7 +644,7 @@ export default function CoachingPage() {
         </div>
       </Section>
 
-      {/* Section 9 — FAQ */}
+      {/* Section 9: FAQ */}
       <Section
         background="neutral"
         padding="lg"
@@ -666,22 +658,21 @@ export default function CoachingPage() {
         </div>
       </Section>
 
-      {/* Section 10 — Final CTA */}
+      {/* Section 10: Final CTA */}
       <Section
         id="contact"
         background="white"
-        padding="lg"
-        className="border-t border-[var(--color-teal)]/20 bg-[var(--color-primary)] text-white"
+        padding="none"
+        className="border-t border-white/15 bg-[var(--color-teal)] pb-16 pt-16 text-white lg:pb-20 lg:pt-20"
       >
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-6 font-display text-3xl font-bold text-white lg:text-4xl">
+        <div className="mx-auto max-w-2xl px-4 text-center lg:px-8">
+          <h2 className="mb-6 font-display text-3xl font-bold lg:text-4xl">
             Not sure where to begin?
           </h2>
           <p className="mb-10 text-lg leading-relaxed text-white/90">
-            The Clarity Session exists for exactly this. One hour. One focused
-            conversation. You leave knowing more about your food situation than
-            when you arrived — and with a clear sense of what, if anything,
-            comes next.
+            The Clarity Session exists for this exact moment. One hour. One
+            focused conversation. You leave with a clearer read on your food
+            situation and a clearer sense of what, if anything, should come next.
           </p>
 
           <div className="rounded-2xl bg-[#0a2418] px-6 py-8 ring-1 ring-white/10">
@@ -689,7 +680,7 @@ export default function CoachingPage() {
               href={coachingInquiryMailto("Clarity Session", "Please include your name.")}
               className="text-xl font-bold text-white underline-offset-4 hover:underline"
             >
-              Book a Clarity Session — $150
+              Book a Clarity Session: $150
             </a>
             <p className="mt-3 text-sm leading-relaxed text-[#CCDDCC]">
               Email {CONTACT_EMAIL} · Subject: Clarity Session · Include your
@@ -697,8 +688,8 @@ export default function CoachingPage() {
             </p>
           </div>
 
-          <p className="mt-10 text-[1.05rem] text-[var(--color-teal)]">
-            Not ready to book? Send a message first →{" "}
+          <p className="mt-10 text-[1.05rem] text-[var(--color-mint)]">
+            Not ready to book? Send a message first.{" "}
             <a
               href={coachingSoftInquiryMailto()}
               className="font-bold text-[var(--color-gold)] underline-offset-4 hover:underline"
@@ -707,7 +698,7 @@ export default function CoachingPage() {
               {CONTACT_EMAIL}
             </a>
           </p>
-          <p className="mt-6 text-sm italic text-white/60">
+          <p className="mt-6 text-sm italic text-white/70">
             Coaching spaces are limited. If you&apos;re curious, sooner is
             better.
           </p>
