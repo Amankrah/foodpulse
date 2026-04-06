@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -95,6 +96,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={montserrat.variable}>
       <body className="antialiased">
+        <Script
+          id="adsbygoogle-init"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8281146123471277"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         {children}
         <Analytics />
         <SpeedInsights />
