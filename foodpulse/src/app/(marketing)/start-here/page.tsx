@@ -16,6 +16,16 @@ import {
 } from "lucide-react";
 import { SITE_NAME } from "@/lib/constants";
 
+/** Foundational article: how to think about food (linked from steps, resources, and final CTA). */
+const FOUNDATIONAL_FOOD_THINKING_ARTICLE =
+  "/articles/food-and-wellbeing/eating-is-simple-yet-profound";
+
+const foundationalArticleBlurb = {
+  title: "How to think about food and nutrition",
+  description:
+    "A foundational piece that explains how to approach food with clarity, nuance, and confidence.",
+};
+
 export const metadata: Metadata = {
   title: `Start Here | ${SITE_NAME}`,
   description:
@@ -90,11 +100,10 @@ const steps = [
 /** Editorial — mint surfaces, brand borders & icons; CTAs = Honey Gold (Button primary) */
 const startingPoints = [
   {
-    title: "How to think about food and nutrition",
-    description:
-      "A foundational piece that explains how to approach food with clarity, nuance, and confidence.",
+    title: foundationalArticleBlurb.title,
+    description: foundationalArticleBlurb.description,
     cta: "Read the article",
-    href: "/articles",
+    href: FOUNDATIONAL_FOOD_THINKING_ARTICLE,
     icon: BookOpen,
     surface: "bg-[var(--color-mint)] border-[var(--color-teal)]/20",
     iconWrap: "bg-white/90 text-[var(--color-teal)] ring-1 ring-[var(--color-teal)]/15",
@@ -251,6 +260,19 @@ export default function StartHerePage() {
                   <p className="text-neutral-600 leading-relaxed">
                     {item.description}
                   </p>
+                  {item.step === 1 && (
+                    <div className="mt-4 rounded-xl border border-[var(--color-teal)]/20 bg-[color-mix(in_srgb,var(--color-mint)_35%,white)] p-4 text-left">
+                      <Link
+                        href={FOUNDATIONAL_FOOD_THINKING_ARTICLE}
+                        className="font-display text-lg font-semibold text-[var(--color-primary)] hover:text-[var(--color-teal)] underline-offset-2 hover:underline"
+                      >
+                        {foundationalArticleBlurb.title}
+                      </Link>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--color-support)]">
+                        {foundationalArticleBlurb.description}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -339,7 +361,11 @@ export default function StartHerePage() {
             Start with this foundational piece on how to think about food and nutrition.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="primary" size="lg" href="/articles">
+            <Button
+              variant="primary"
+              size="lg"
+              href={FOUNDATIONAL_FOOD_THINKING_ARTICLE}
+            >
               Read the Foundational Article
             </Button>
           </div>

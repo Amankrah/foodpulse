@@ -126,7 +126,7 @@ export function Button({
   );
 
   if (href) {
-    if (href.startsWith("http")) {
+    if (href.startsWith("http") || href.startsWith("mailto:")) {
       return (
         <a
           href={href}

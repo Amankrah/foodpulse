@@ -71,6 +71,42 @@ interface MobileNavItemProps {
   onClose: () => void;
 }
 
+/** Literal aria-expanded for Microsoft Edge Tools ARIA static analysis. */
+function MobileNavExpandChevron({
+  expanded,
+  onToggle,
+  className,
+}: {
+  expanded: boolean;
+  onToggle: () => void;
+  className: string;
+}) {
+  if (expanded) {
+    return (
+      <button
+        type="button"
+        onClick={onToggle}
+        className={className}
+        aria-expanded="true"
+        aria-label="Collapse submenu"
+      >
+        <ChevronDown className="mx-auto h-5 w-5 rotate-180 text-[var(--color-teal)] transition-transform" />
+      </button>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className={className}
+      aria-expanded="false"
+      aria-label="Expand submenu"
+    >
+      <ChevronDown className="mx-auto h-5 w-5 text-[var(--color-teal)] transition-transform" />
+    </button>
+  );
+}
+
 function MobileNavItem({
   item,
   expanded,
@@ -89,21 +125,75 @@ function MobileNavItem({
     );
   }
 
+  const parentHref =
+    "href" in item && typeof item.href === "string" ? item.href : undefined;
+
+  const rowClass =
+    "rounded-lg border border-transparent text-base font-medium text-[var(--color-primary)] transition-colors hover:border-[var(--color-teal)]/15 hover:bg-[var(--color-mint)]/80";
+
+  if (parentHref) {
+    return (
+      <div>
+        <div className="flex gap-1">
+          <Link
+            href={parentHref}
+            onClick={onClose}
+            className={`flex-1 px-4 py-3 ${rowClass}`}
+          >
+            {item.label}
+          </Link>
+          <MobileNavExpandChevron
+            expanded={expanded}
+            onToggle={onToggle}
+            className={`shrink-0 px-3 ${rowClass}`}
+          />
+        </div>
+
+        {expanded && item.children && (
+          <div className="ml-4 mt-1 space-y-1">
+            {item.children.map((child) => (
+              <Link
+                key={child.href}
+                href={child.href}
+                onClick={onClose}
+                className="block rounded-lg border border-transparent px-4 py-2 text-sm text-[var(--color-support)] transition-colors hover:border-[var(--color-teal)]/12 hover:bg-[var(--color-mint)]/70 hover:text-[var(--color-primary)]"
+              >
+                {child.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
-      <button
-        onClick={onToggle}
-        type="button"
-        className="flex w-full items-center justify-between rounded-lg border border-transparent px-4 py-3 text-base font-medium text-[var(--color-primary)] transition-colors hover:border-[var(--color-teal)]/15 hover:bg-[var(--color-mint)]/80"
-      >
-        {item.label}
-        <ChevronDown
-          className={cn(
-            "h-5 w-5 text-[var(--color-teal)] transition-transform",
-            expanded && "rotate-180"
-          )}
-        />
-      </button>
+      {expanded ? (
+        <button
+          onClick={onToggle}
+          type="button"
+          className={`flex w-full items-center justify-between px-4 py-3 ${rowClass}`}
+          aria-expanded="true"
+          aria-haspopup="true"
+          aria-label="Collapse submenu"
+        >
+          {item.label}
+          <ChevronDown className="h-5 w-5 rotate-180 text-[var(--color-teal)] transition-transform" />
+        </button>
+      ) : (
+        <button
+          onClick={onToggle}
+          type="button"
+          className={`flex w-full items-center justify-between px-4 py-3 ${rowClass}`}
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-label="Expand submenu"
+        >
+          {item.label}
+          <ChevronDown className="h-5 w-5 text-[var(--color-teal)] transition-transform" />
+        </button>
+      )}
 
       {expanded && item.children && (
         <div className="ml-4 mt-1 space-y-1">

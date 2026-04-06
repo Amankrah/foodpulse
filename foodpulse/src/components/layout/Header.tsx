@@ -112,6 +112,70 @@ interface NavItemProps {
   isTransparent: boolean;
 }
 
+/** Chevron only: literal aria-expanded strings satisfy Microsoft Edge Tools static ARIA checks. */
+function NavSubmenuTrigger({
+  isOpen,
+  isTransparent,
+  label,
+}: {
+  isOpen: boolean;
+  isTransparent: boolean;
+  label: string;
+}) {
+  const className = cn(
+    "rounded p-0.5 transition-colors",
+    isTransparent
+      ? "text-white hover:bg-white/10 hover:text-[var(--color-mint)]"
+      : "text-neutral-700 hover:bg-[var(--color-mint)]/40 hover:text-[var(--color-teal)]"
+  );
+
+  const svg = (
+    <svg
+      className={cn(
+        "h-4 w-4 transition-transform",
+        isOpen && "rotate-180"
+      )}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  );
+
+  if (isOpen) {
+    return (
+      <button
+        type="button"
+        className={className}
+        aria-expanded="true"
+        aria-haspopup="menu"
+        aria-label={`${label} submenu`}
+      >
+        {svg}
+      </button>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={className}
+      aria-expanded="false"
+      aria-haspopup="menu"
+      aria-label={`${label} submenu`}
+    >
+      {svg}
+    </button>
+  );
+}
+
 function NavItem({ item, isTransparent }: NavItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -131,39 +195,33 @@ function NavItem({ item, isTransparent }: NavItemProps) {
     );
   }
 
+  const linkClass = cn(
+    "text-base font-medium transition-colors",
+    isTransparent
+      ? "text-white hover:text-[var(--color-mint)]"
+      : "text-neutral-700 hover:text-[var(--color-teal)]"
+  );
+
   return (
     <div
       className="relative"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <button
-        type="button"
-        className={cn(
-          "flex items-center gap-1 text-base font-medium transition-colors",
-          isTransparent
-            ? "text-white hover:text-[var(--color-mint)]"
-            : "text-neutral-700 hover:text-[var(--color-teal)]"
+      <div className="flex items-center gap-0.5">
+        {item.href ? (
+          <Link href={item.href} className={linkClass}>
+            {item.label}
+          </Link>
+        ) : (
+          <span className={linkClass}>{item.label}</span>
         )}
-      >
-        {item.label}
-        <svg
-          className={cn(
-            "h-4 w-4 transition-transform",
-            isOpen && "rotate-180"
-          )}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
+        <NavSubmenuTrigger
+          isOpen={isOpen}
+          isTransparent={isTransparent}
+          label={item.label}
+        />
+      </div>
 
       {isOpen && (
         <div className="absolute top-full left-0 pt-2 w-72">

@@ -33,6 +33,7 @@ export const mainNavigation: NavGroup[] = [
   },
   {
     label: "Resources",
+    href: "/resources",
     children: [
       {
         label: "Guides",
@@ -114,6 +115,7 @@ export const mobileNavigation = [
   { label: "Home", href: "/" },
   {
     label: "Articles",
+    href: "/articles",
     children: [
       { label: "All Articles", href: "/articles" },
       ...Object.values(categories).map((cat) => ({
@@ -124,6 +126,7 @@ export const mobileNavigation = [
   },
   {
     label: "Resources",
+    href: "/resources",
     children: [
       { label: "Guides", href: "/guides" },
       { label: "Tools", href: "/tools" },
