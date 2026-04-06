@@ -152,14 +152,14 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <Section background="green" padding="lg">
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="max-w-3xl border-l-4 border-[var(--color-teal)]/50 pl-6 lg:pl-8">
           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-display font-extrabold text-[var(--color-primary)] tracking-tight mb-6">
             About FoodPulse
           </h1>
           <p className="text-xl lg:text-2xl font-light text-[var(--color-support)] mb-6 leading-relaxed">
             Your trusted source for evidence-based food education
           </p>
-          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] max-w-2xl mx-auto">
+          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
             FoodPulse is where food science meets everyday life. We translate complex
             nutrition research into practical, actionable knowledge—helping you make
             smarter food choices without the hype, fads, or fear-mongering.
@@ -169,14 +169,14 @@ export default function AboutPage() {
 
       {/* Mission Section */}
       <Section background="white" padding="lg">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl">
           <SectionHeader
             eyebrow="Our Mission"
             title="Democratizing Food Knowledge"
-            centered
+            className="mb-10"
           />
 
-          <div className="space-y-6 text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] text-center max-w-3xl mx-auto">
+          <div className="space-y-6 text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
             <p>
               We believe everyone deserves access to reliable, science-based food
               information—regardless of background, education, or budget.
@@ -186,7 +186,7 @@ export default function AboutPage() {
               behind paywalls, or oversimplified into clickbait headlines. FoodPulse
               bridges this gap.
             </p>
-            <p className="font-semibold text-[var(--color-primary)] text-[length:var(--size-subheading)]">
+            <p className="border-l-4 border-[var(--color-gold)]/80 pl-5 font-semibold text-[var(--color-primary)] text-[length:var(--size-subheading)]">
               Our goal is simple: Help you understand food better so you can make
               informed decisions that support your health, your values, and your life.
             </p>
@@ -196,15 +196,15 @@ export default function AboutPage() {
 
       {/* What is FoodPulse Section - AI Citation Optimized */}
       <Section background="neutral" padding="lg">
-        <div className="max-w-4xl mx-auto mb-12">
+        <div className="mb-14 max-w-3xl">
           <SectionHeader
             eyebrow="Overview"
             title="What is FoodPulse?"
-            centered
+            className="mb-8"
           />
 
           {/* AI-citable definition paragraph */}
-          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)] text-center max-w-3xl mx-auto">
+          <p className="text-[length:var(--size-body)] leading-relaxed text-[var(--color-support)]">
             FoodPulse is a free, evidence-based food education platform covering
             nutrition science, food systems, healthy eating, and practical food tips.
             Founded by Food Systems Research Engineer Etornam C. Tsyawo, we provide
@@ -214,19 +214,19 @@ export default function AboutPage() {
         </div>
 
         {/* Content Pillars */}
-        <div className="max-w-6xl mx-auto">
-          <h3 className="text-2xl font-display font-semibold text-[var(--color-primary)] text-center mb-8">
+        <div>
+          <h3 className="mb-8 font-display text-2xl font-semibold text-[var(--color-primary)]">
             What we cover
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {contentPillars.map((pillar) => (
               <Link
                 key={pillar.title}
                 href={pillar.href}
-                className="group rounded-2xl border border-[var(--color-teal)]/20 bg-[var(--color-mint)] p-6 shadow-sm hover:shadow-md hover:border-[var(--color-teal)]/35 transition-all text-center"
+                className="group flex flex-col rounded-2xl border border-[var(--color-teal)]/20 bg-[var(--color-mint)] p-6 text-left shadow-sm transition-all hover:border-[var(--color-teal)]/35 hover:shadow-md"
               >
-                <div className="text-4xl mb-4" aria-hidden>
+                <div className="mb-4 text-4xl leading-none" aria-hidden>
                   {pillar.icon}
                 </div>
                 <h4 className="font-display font-semibold text-[var(--color-primary)] mb-2 group-hover:text-[var(--color-teal)] transition-colors">
