@@ -7,6 +7,10 @@
 export const SITE_NAME = "FoodPulse";
 export const SITE_DOMAIN = "foodpulse.co";
 export const SITE_URL = `https://${SITE_DOMAIN}`;
+
+/** Google Analytics 4 (gtag.js) */
+export const GOOGLE_ANALYTICS_MEASUREMENT_ID = "G-2R2NETZR8S";
+
 export const SITE_DESCRIPTION =
   "Evidence-based food education covering nutrition science, food systems, healthy eating, and practical tips. Make smarter food choices with science-backed guidance.";
 

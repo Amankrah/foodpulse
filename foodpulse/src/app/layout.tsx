@@ -4,7 +4,13 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SEO_KEYWORDS } from "@/lib/constants";
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_DESCRIPTION,
+  SEO_KEYWORDS,
+  GOOGLE_ANALYTICS_MEASUREMENT_ID,
+} from "@/lib/constants";
 
 /** Brand guide v1.0 — Montserrat only (weights 300–800) */
 const montserrat = Montserrat({
@@ -96,6 +102,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={montserrat.variable}>
       <body className="antialiased">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ANALYTICS_MEASUREMENT_ID}');
+          `}
+        </Script>
         <Script
           id="adsbygoogle-init"
           async
