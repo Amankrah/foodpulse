@@ -1,44 +1,64 @@
 "use client";
 
 import Script from "next/script";
+import { useMemo } from "react";
 
 const FORM_ACTION = "https://app.kit.com/forms/6610123/subscriptions";
 const FORM_UID = "0bacd8cebd";
 const FORM_ID = "6610123";
-
-// Kit form options (after_subscribe message, etc.). Must be valid JSON string.
-const DATA_OPTIONS = JSON.stringify({
-  settings: {
-    after_subscribe: {
-      action: "message",
-      success_message:
-        "Thank you! Now check your email for a surprise gift and let's get acquainted.",
-      redirect_url: "",
-    },
-    analytics: {
-      google: null,
-      fathom: null,
-      facebook: null,
-      segment: null,
-      pinterest: null,
-      sparkloop: null,
-      googletagmanager: null,
-    },
-    powered_by: { show: true, url: "https://kit.com/features/forms" },
-    recaptcha: { enabled: false },
-    return_visitor: { action: "show", custom_content: "" },
-  },
-  version: "5",
-});
 
 type ConvertKitEmbedProps = {
   /** Optional class for the wrapper (e.g. for footer CTA styling) */
   className?: string;
   /** Hide the "Built with Kit" link */
   hidePoweredBy?: boolean;
+  /** Omit in-page title and subheader (hero carries copy) */
+  minimal?: boolean;
+  submitLabel?: string;
+  guaranteeText?: string;
 };
 
-export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedProps) {
+function buildDataOptions(hidePoweredBy: boolean) {
+  return JSON.stringify({
+    settings: {
+      after_subscribe: {
+        action: "message",
+        success_message:
+          "Thank you! Now check your email for a surprise gift and let's get acquainted.",
+        redirect_url: "",
+      },
+      analytics: {
+        google: null,
+        fathom: null,
+        facebook: null,
+        segment: null,
+        pinterest: null,
+        sparkloop: null,
+        googletagmanager: null,
+      },
+      powered_by: {
+        show: !hidePoweredBy,
+        url: "https://kit.com/features/forms",
+      },
+      recaptcha: { enabled: false },
+      return_visitor: { action: "show", custom_content: "" },
+    },
+    version: "5",
+  });
+}
+
+export function ConvertKitEmbed({
+  className,
+  hidePoweredBy = false,
+  minimal = false,
+  submitLabel = "Join Today",
+  guaranteeText = "No worries, you can unsubscribe at any time.",
+}: ConvertKitEmbedProps) {
+  const dataOptions = useMemo(
+    () => buildDataOptions(hidePoweredBy),
+    [hidePoweredBy]
+  );
+
   return (
     <>
       <Script
@@ -54,47 +74,53 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
           data-uid={FORM_UID}
           data-format="inline"
           data-version="5"
-          data-options={DATA_OPTIONS}
+          data-options={dataOptions}
           style={{
             backgroundColor: "#ffffff",
             borderRadius: 12,
             border: "1px solid rgba(43, 122, 107, 0.2)",
             maxWidth: 700,
+            marginLeft: "auto",
+            marginRight: "auto",
             position: "relative",
             overflow: "hidden",
           }}
         >
           <div data-style="minimal" style={{ padding: 20, position: "relative" }}>
-            <div
-              className="formkit-header"
-              data-element="header"
-              style={{
-                color: "rgb(0, 51, 23)",
-                fontSize: 20,
-                fontWeight: 700,
-                margin: "0 0 27px 0",
-                textAlign: "center",
-              }}
-            >
-              <h2>Food Decisions Simplified</h2>
-            </div>
-            <div
-              className="formkit-subheader"
-              data-element="subheader"
-              style={{
-                color: "#245f55",
-                fontSize: 17,
-                lineHeight: 1.6,
-                margin: "18px 0",
-                textAlign: "center",
-              }}
-            >
-              <p>
-                Cut through the noise with monthly updates featuring honest
-                conversations, research-informed perspectives and practical
-                insights for your everyday food decisions.
-              </p>
-            </div>
+            {!minimal && (
+              <>
+                <div
+                  className="formkit-header"
+                  data-element="header"
+                  style={{
+                    color: "rgb(0, 51, 23)",
+                    fontSize: 20,
+                    fontWeight: 700,
+                    margin: "0 0 27px 0",
+                    textAlign: "center",
+                  }}
+                >
+                  <h2>Food Decisions Simplified</h2>
+                </div>
+                <div
+                  className="formkit-subheader"
+                  data-element="subheader"
+                  style={{
+                    color: "#245f55",
+                    fontSize: 17,
+                    lineHeight: 1.6,
+                    margin: "18px 0",
+                    textAlign: "center",
+                  }}
+                >
+                  <p>
+                    Cut through the noise with monthly updates featuring honest
+                    conversations, research-informed perspectives and practical
+                    insights for your everyday food decisions.
+                  </p>
+                </div>
+              </>
+            )}
             <ul
               className="formkit-alert formkit-alert-error"
               data-element="errors"
@@ -107,7 +133,7 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                margin: "25px auto 0 auto",
+                margin: minimal ? "4px auto 0 auto" : "25px auto 0 auto",
               }}
             >
               <div className="formkit-field" style={{ flex: "1 0 100%", marginBottom: 15 }}>
@@ -160,7 +186,7 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
                     width: "100%",
                   }}
                 >
-                  <span>Join Today</span>
+                  <span>{submitLabel}</span>
                 </button>
               </div>
             </div>
@@ -169,12 +195,12 @@ export function ConvertKitEmbed({ className, hidePoweredBy }: ConvertKitEmbedPro
               data-element="guarantee"
               style={{
                 color: "rgb(65, 65, 65)",
-                fontSize: 10,
+                fontSize: 14,
                 margin: "10px 0 15px 0",
                 textAlign: "center",
               }}
             >
-              <p>No worries, you can unsubscribe at any time.</p>
+              <p>{guaranteeText}</p>
             </div>
             {!hidePoweredBy && (
               <div
