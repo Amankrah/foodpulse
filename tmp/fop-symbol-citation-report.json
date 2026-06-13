@@ -1,0 +1,206 @@
+{
+  "summary": {
+    "total": 6,
+    "verified": 6,
+    "flagged": 0,
+    "errors": 0
+  },
+  "results": [
+    {
+      "index": 0,
+      "input": {
+        "title": "Nutrition labelling: Front-of-package nutrition symbol",
+        "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/nutrition-labelling/front-package.html",
+        "author": "Health Canada",
+        "year": "2025"
+      },
+      "url_check": {
+        "status": 200,
+        "final_url": "https://www.canada.ca/en/health-canada/services/food-nutrition/nutrition-labelling/front-package.html",
+        "ok": true
+      },
+      "crossref": {
+        "found": false,
+        "skipped": true
+      },
+      "issues": [],
+      "status": "verified"
+    },
+    {
+      "index": 1,
+      "input": {
+        "title": "Canada Gazette, Part II, Volume 156, Number 15 — Regulations Amending the Food and Drug Regulations (Nutrition Symbols, Other Labelling Provisions, Vitamin D and Hydrogenated Fats or Oils), SOR/2022-168",
+        "url": "https://gazette.gc.ca/rp-pr/p2/2022/2022-07-20/html/sor-dors168-eng.html",
+        "author": "Government of Canada",
+        "year": "2022"
+      },
+      "url_check": {
+        "status": 200,
+        "final_url": "https://gazette.gc.ca/rp-pr/p2/2022/2022-07-20/html/sor-dors168-eng.html",
+        "ok": true
+      },
+      "crossref": {
+        "found": false,
+        "skipped": true
+      },
+      "issues": [],
+      "status": "verified"
+    },
+    {
+      "index": 2,
+      "input": {
+        "title": "Sodium Intake of Canadians in 2017",
+        "url": "https://www.canada.ca/en/health-canada/services/publications/food-nutrition/sodium-intake-canadians-2017.html",
+        "author": "Health Canada",
+        "year": "2018"
+      },
+      "url_check": {
+        "status": 200,
+        "final_url": "https://www.canada.ca/en/health-canada/services/publications/food-nutrition/sodium-intake-canadians-2017.html",
+        "ok": true
+      },
+      "crossref": {
+        "found": false,
+        "skipped": true
+      },
+      "issues": [],
+      "status": "verified"
+    },
+    {
+      "index": 3,
+      "input": {
+        "title": "Implementation plan for amendments to the Food and Drug Regulations (Nutrition Symbols, Other Labelling Provisions, Vitamin D and Hydrogenated Fats or Oils)",
+        "url": "https://inspection.canada.ca/en/food-labels/labelling/implementation-plan",
+        "author": "Canadian Food Inspection Agency",
+        "year": "2025"
+      },
+      "url_check": {
+        "status": 200,
+        "final_url": "https://inspection.canada.ca/en/food-labels/labelling/implementation-food-and-drug-regulations",
+        "ok": true
+      },
+      "crossref": {
+        "found": false,
+        "skipped": true
+      },
+      "issues": [],
+      "status": "verified"
+    },
+    {
+      "index": 4,
+      "input": {
+        "title": "The estimated dietary and health impact of implementing the recently approved 'high in' front-of-package nutrition symbol in Canada: a food substitution scenario modeling study",
+        "url": "https://doi.org/10.3389/fnut.2023.1158498",
+        "author": "Flexner, N. et al.",
+        "year": "2023",
+        "doi": "10.3389/fnut.2023.1158498"
+      },
+      "url_check": {
+        "status": 200,
+        "final_url": "https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2023.1158498/full",
+        "ok": true
+      },
+      "crossref": {
+        "found": true,
+        "doi": "10.3389/fnut.2023.1158498",
+        "match": {
+          "title": "ok",
+          "author": "ok",
+          "year": "ok",
+          "title_overlap": 1,
+          "crossref_title": "The estimated dietary and health impact of implementing the recently approved ‘high in’ front-of-package nutrition symbol in Canada: a food substitution scenario modeling study",
+          "crossref_first_author": "flexner",
+          "crossref_year": 2023
+        },
+        "metadata": {
+          "title": "The estimated dietary and health impact of implementing the recently approved ‘high in’ front-of-package nutrition symbol in Canada: a food substitution scenario modeling study",
+          "container": "Frontiers in Nutrition",
+          "authors": [
+            {
+              "family": "Flexner",
+              "given": "Nadia"
+            },
+            {
+              "family": "Ahmed",
+              "given": "Mavra"
+            },
+            {
+              "family": "Mulligan",
+              "given": "Christine"
+            },
+            {
+              "family": "Bernstein",
+              "given": "Jodi T."
+            },
+            {
+              "family": "Christoforou",
+              "given": "Anthea K."
+            },
+            {
+              "family": "Lee",
+              "given": "Jennifer J."
+            }
+          ],
+          "issued_year": 2023,
+          "type": "journal-article",
+          "publisher": "Frontiers Media SA"
+        }
+      },
+      "issues": [],
+      "status": "verified"
+    },
+    {
+      "index": 5,
+      "input": {
+        "title": "Impact of Five Types of Front-of-Package Nutrition Labels on Consumer Behavior among Young Adults: A Systematic Review",
+        "url": "https://doi.org/10.3390/nu16172819",
+        "author": "Guo, Z.; Ning, Y.; Mustafa, M.",
+        "year": "2024",
+        "doi": "10.3390/nu16172819"
+      },
+      "url_check": {
+        "status": 403,
+        "final_url": "https://www.mdpi.com/2072-6643/16/17/2819",
+        "ok": false
+      },
+      "crossref": {
+        "found": true,
+        "doi": "10.3390/nu16172819",
+        "match": {
+          "title": "ok",
+          "author": "ok",
+          "year": "ok",
+          "title_overlap": 1,
+          "crossref_title": "Impact of Five Types of Front-of-Package Nutrition Labels on Consumer Behavior among Young Adults: A Systematic Review",
+          "crossref_first_author": "guo",
+          "crossref_year": 2024
+        },
+        "metadata": {
+          "title": "Impact of Five Types of Front-of-Package Nutrition Labels on Consumer Behavior among Young Adults: A Systematic Review",
+          "container": "Nutrients",
+          "authors": [
+            {
+              "family": "Guo",
+              "given": "Zhiyi"
+            },
+            {
+              "family": "Ning",
+              "given": "Yueyue"
+            },
+            {
+              "family": "Mustafa",
+              "given": "Muhizam"
+            }
+          ],
+          "issued_year": 2024,
+          "type": "journal-article",
+          "publisher": "MDPI AG"
+        }
+      },
+      "issues": [
+        "url-bot-walled"
+      ],
+      "status": "verified"
+    }
+  ]
+}

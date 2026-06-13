@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Front-of-package nutrition symbol — final regulations",
+    "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrition-labelling/front-package.html",
+    "author": "Health Canada",
+    "year": "2022"
+  },
+  {
+    "title": "Ultra-processed food exposure and adverse health outcomes: umbrella review of epidemiological meta-analyses",
+    "url": "https://doi.org/10.1136/bmj-2023-077310",
+    "author": "Lane, M. M. et al.",
+    "year": "2024",
+    "doi": "10.1136/bmj-2023-077310"
+  },
+  {
+    "title": "Reduction in saturated fat intake for cardiovascular disease",
+    "url": "https://doi.org/10.1002/14651858.CD011737.pub3",
+    "author": "Hooper, L. et al.",
+    "year": "2020",
+    "doi": "10.1002/14651858.CD011737.pub3"
+  },
+  {
+    "title": "Time-restricted eating and metabolic outcomes in adults — a sham 12-week trial (this entry is deliberately fake to demonstrate the doi-not-found flag)",
+    "url": "https://doi.org/10.1234/foodpulse.2026.fake.99999",
+    "author": "Hallucinated, A. et al.",
+    "year": "2026",
+    "doi": "10.1234/foodpulse.2026.fake.99999"
+  }
+]
